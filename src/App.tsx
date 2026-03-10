@@ -174,9 +174,9 @@ function Hero() {
 function About() {
   const { t } = useLanguage();
   return (
-    <section className="py-24 bg-slate-50 dark:bg-slate-900/30" id="about">
+    <section className="py-16 sm:py-24 bg-slate-50 dark:bg-slate-900/30" id="about">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid md:grid-cols-2 gap-20 items-center">
+        <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-4">
               <div 
@@ -221,36 +221,36 @@ function Services() {
   const { t } = useLanguage();
   const icons = ["devices", "search_insights", "ads_click", "share_reviews", "smart_toy", "query_stats"];
   return (
-    <section className="relative py-24 overflow-hidden" id="services">
+    <section className="relative py-16 sm:py-24 overflow-hidden" id="services">
       <div className="pointer-events-none absolute inset-0 bg-tech-grid opacity-50" />
       <div className="pointer-events-none absolute inset-0 bg-scanlines" />
       <div className="pointer-events-none absolute -top-32 -left-32 w-[34rem] h-[34rem] bg-primary/20 rounded-full blur-[110px]" />
       <div className="pointer-events-none absolute -bottom-32 -right-32 w-[30rem] h-[30rem] bg-primary/15 rounded-full blur-[110px]" />
       <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 sm:mb-16">
           <h2 className="text-primary font-bold uppercase tracking-widest mb-4">{t.services.tag}</h2>
           <h3 className="text-4xl font-black">{t.services.title}</h3>
         </div>
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-5 sm:gap-8">
           {t.services.items.map((item, i) => (
-            <div key={i} className="glass-card p-10 rounded-3xl cursor-default neon-border hover-lift group flex flex-col">
-              <div className="flex items-start justify-between gap-4 mb-8">
-                <div className="w-14 h-14 rounded-2xl bg-primary/15 border border-primary/25 flex items-center justify-center text-primary shadow-[0_0_0_1px_rgba(100,103,242,0.10)] group-hover:shadow-[0_0_40px_rgba(34,211,238,0.18)] transition-shadow">
-                  <span className="material-symbols-outlined text-3xl">{icons[i]}</span>
+            <div key={i} className="glass-card p-6 sm:p-8 md:p-10 rounded-3xl cursor-default neon-border hover-lift group flex flex-col">
+              <div className="flex items-start justify-between gap-4 mb-6 sm:mb-8">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-primary/15 border border-primary/25 flex items-center justify-center text-primary shadow-[0_0_0_1px_rgba(100,103,242,0.10)] group-hover:shadow-[0_0_40px_rgba(34,211,238,0.18)] transition-shadow">
+                  <span className="material-symbols-outlined text-[28px] sm:text-3xl">{icons[i]}</span>
                 </div>
                 <div className="text-primary/70 text-xs font-black tracking-widest uppercase pt-2">
                   {String(i + 1).padStart(2, '0')}
                 </div>
               </div>
 
-              <h4 className="text-xl font-black mb-3 tracking-tight group-hover:text-primary transition-colors">
+              <h4 className="text-lg sm:text-xl font-black mb-3 tracking-tight group-hover:text-primary transition-colors">
                 {item.title}
               </h4>
-              <p className="text-slate-600 dark:text-slate-300 leading-relaxed flex-grow">
+              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed flex-grow">
                 {item.desc}
               </p>
 
-              <div className="mt-8 pt-6 border-t border-primary/10 text-xs font-bold text-slate-500 dark:text-slate-400 flex items-center gap-2">
+              <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-primary/10 text-xs font-bold text-slate-500 dark:text-slate-400 flex items-center gap-2">
                 <span className="material-symbols-outlined text-sm text-primary">bolt</span>
                 نتائج قابلة للقياس + تنفيذ سريع
               </div>
@@ -271,18 +271,18 @@ function WebsitesIBuilt() {
     return portfolioAiWidget;
   };
   return (
-    <section className="relative py-24 overflow-hidden" id="websites">
+    <section className="relative py-16 sm:py-24 overflow-hidden" id="websites">
       <div className="pointer-events-none absolute inset-0 bg-tech-grid opacity-35" />
       <div className="pointer-events-none absolute -top-32 -right-32 w-[30rem] h-[30rem] bg-primary/15 rounded-full blur-[110px]" />
       <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 sm:mb-16">
           <h2 className="text-primary font-bold uppercase tracking-widest mb-4">{t.websites.tag}</h2>
           <h3 className="text-4xl font-black mb-6">{t.websites.title}</h3>
           <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">
             {t.websites.desc}
           </p>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {t.websites.projects.map((site, index) => {
             const previewUrl = getWebsiteScreenshot(site.title);
             
@@ -294,15 +294,15 @@ function WebsitesIBuilt() {
               rel="noopener noreferrer"
               className="glass-card rounded-3xl overflow-hidden group transition-all duration-500 cursor-pointer neon-border hover-lift flex flex-col"
             >
-              <div className="p-4 pb-0">
+              <div className="p-3 sm:p-4 pb-0">
                 <div className="rounded-2xl overflow-hidden border border-primary/15 bg-slate-950/30">
-                  <div className="h-9 flex items-center justify-between px-3 border-b border-primary/10 bg-white/70 dark:bg-slate-950/40 backdrop-blur">
+                  <div className="h-9 flex items-center justify-between px-3 border-b border-primary/10 bg-white/70 dark:bg-slate-950/40 backdrop-blur min-w-0 gap-3">
                     <div className="flex items-center gap-2">
                       <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
                       <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/80" />
                       <span className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
                     </div>
-                    <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400 truncate max-w-[65%]" dir="ltr">
+                    <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400 truncate flex-1 min-w-0 text-left" dir="ltr">
                       {site.link.replace(/^https?:\/\//, '')}
                     </div>
                   </div>
@@ -321,7 +321,7 @@ function WebsitesIBuilt() {
                 </div>
               </div>
 
-              <div className="p-6 flex flex-col flex-grow">
+              <div className="p-4 sm:p-6 flex flex-col flex-grow">
                 <h4 className="text-lg font-black tracking-tight mb-2 group-hover:text-primary transition-colors">
                   {site.title}
                 </h4>
@@ -338,7 +338,7 @@ function WebsitesIBuilt() {
                     </span>
                   ))}
                 </div>
-                <div className="mt-6 pt-5 border-t border-primary/10 text-xs font-black text-primary flex items-center justify-between">
+                <div className="mt-5 sm:mt-6 pt-4 sm:pt-5 border-t border-primary/10 text-xs font-black text-primary flex items-center justify-between">
                   <span>افتح الموقع</span>
                   <span className="material-symbols-outlined text-sm">open_in_new</span>
                 </div>
@@ -516,11 +516,11 @@ function Testimonials() {
 function Contact() {
   const { t } = useLanguage();
   return (
-    <section className="py-24 bg-slate-50 dark:bg-slate-900/30" id="contact">
+    <section className="py-16 sm:py-24 bg-slate-50 dark:bg-slate-900/30" id="contact">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="glass-card rounded-[3rem] p-8 md:p-20 overflow-hidden relative">
+        <div className="glass-card rounded-[2.25rem] sm:rounded-[3rem] p-6 sm:p-8 md:p-20 overflow-hidden relative">
           <div className="absolute bottom-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[80px] -z-10"></div>
-          <div className="grid md:grid-cols-2 gap-20">
+          <div className="grid md:grid-cols-2 gap-12 md:gap-20">
             <div>
               <h3 className="text-4xl md:text-5xl font-black mb-6">{t.contact.title}</h3>
               <p className="text-slate-600 dark:text-slate-400 mb-10 leading-relaxed text-lg">{t.contact.desc}</p>
@@ -529,7 +529,7 @@ function Contact() {
                   <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
                     <span className="material-symbols-outlined">mail</span>
                   </div>
-                  <span className="font-bold text-lg">mostafa.elkholy.dp@gmail.com</span>
+                  <span className="font-bold text-lg break-words">mostafa.elkholy.dp@gmail.com</span>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center text-green-500">
@@ -560,7 +560,7 @@ function Contact() {
               </div>
             </div>
             <form className="space-y-6">
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div className="space-y-2">
                   <label className="text-sm font-bold mx-1">{t.contact.nameLabel}</label>
                   <input className="w-full bg-white dark:bg-background-dark border-primary/20 rounded-xl p-4 focus:ring-2 focus:ring-primary outline-none transition-all" placeholder={t.contact.namePlaceholder} type="text" />
@@ -592,10 +592,16 @@ function Contact() {
 function Footer() {
   const { t } = useLanguage();
   return (
-    <footer className="py-12 border-t border-primary/10">
-      <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
-        <a className="hover:text-primary transition-colors" href="#">{t.footer.privacy}</a>
-        <a className="hover:text-primary transition-colors" href="#">{t.footer.terms}</a>
+    <footer className="py-8 sm:py-10 border-t border-primary/10 bg-white/40 dark:bg-slate-950/20 backdrop-blur">
+      <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-8 text-sm">
+        <div className="text-slate-600 dark:text-slate-400 font-bold">
+          © {new Date().getFullYear()} Mostafa Elkholy
+        </div>
+        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
+          <a className="hover:text-primary transition-colors font-bold" href="#">{t.footer.privacy}</a>
+          <a className="hover:text-primary transition-colors font-bold" href="#">{t.footer.terms}</a>
+          <a className="hover:text-primary transition-colors font-bold" href="#contact">WhatsApp</a>
+        </div>
       </div>
     </footer>
   );
@@ -604,7 +610,7 @@ function Footer() {
 export default function App() {
   return (
     <LanguageProvider>
-      <div id="top" className="min-h-screen">
+      <div id="top" className="min-h-screen overflow-x-hidden">
         <Navbar />
         <Hero />
         <About />

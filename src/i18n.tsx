@@ -243,6 +243,8 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   useEffect(() => {
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.lang = lang;
+    // Keep the portfolio in dark mode across devices.
+    document.documentElement.classList.add('dark');
   }, [lang]);
 
   return (
