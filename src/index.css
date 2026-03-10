@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #6467f2;
+  --color-background-light: #f6f6f8;
+  --color-background-dark: #101122;
+  --font-display: "Inter", sans-serif;
+}
+
+@layer utilities {
+  .glass-card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02));
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(100, 103, 242, 0.16);
+    box-shadow:
+      0 20px 60px rgba(0, 0, 0, 0.10),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+  .animate-bounce-slow {
+    animation: bounce 3s infinite;
+  }
+  .hero-spotlight {
+    opacity: 0.9;
+    filter: blur(0px);
+  }
+
+  .bg-tech-grid {
+    background-image:
+      linear-gradient(to right, rgba(100,103,242,0.14) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(100,103,242,0.12) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.95), transparent 70%);
+  }
+
+  .bg-scanlines {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.05) 0px,
+      rgba(255,255,255,0.05) 1px,
+      rgba(255,255,255,0) 3px,
+      rgba(255,255,255,0) 6px
+    );
+    opacity: 0.14;
+    mix-blend-mode: overlay;
+  }
+
+  .neon-border {
+    position: relative;
+  }
+  .neon-border::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: linear-gradient(90deg, rgba(100,103,242,0.45), rgba(34,211,238,0.35), rgba(167,139,250,0.35));
+    filter: blur(10px);
+    opacity: 0.55;
+    z-index: -1;
+  }
+
+  .btn-neon {
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-neon::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.22), transparent 40%);
+    opacity: 0;
+    transition: opacity 180ms ease;
+    pointer-events: none;
+  }
+  .btn-neon:hover::after {
+    opacity: 1;
+  }
+
+  .hover-lift {
+    transform: translateY(0);
+    transition: transform 260ms ease, box-shadow 260ms ease;
+  }
+  .hover-lift:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.16);
+  }
+
+  .ai-tile {
+    border-radius: 1rem;
+    border: 1px solid rgba(100, 103, 242, 0.18);
+    box-shadow:
+      0 18px 60px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    position: relative;
+    overflow: hidden;
+  }
+  .ai-tile::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(700px circle at 30% 20%, rgba(34,211,238,0.16), transparent 55%);
+    pointer-events: none;
+    opacity: 0.9;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
