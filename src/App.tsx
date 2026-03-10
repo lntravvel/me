@@ -201,7 +201,7 @@ function About() {
           </div>
           <div>
             <h2 className="text-primary font-bold uppercase tracking-widest mb-4">{t.about.tag}</h2>
-            <h3 className="text-4xl font-black mb-6 leading-tight">{t.about.title}</h3>
+          <h3 className="text-3xl md:text-4xl font-black mb-6 leading-tight">{t.about.title}</h3>
             <p className="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
               {t.about.desc}
             </p>
@@ -228,10 +228,10 @@ function Services() {
       <div className="pointer-events-none absolute -bottom-32 -right-32 w-[30rem] h-[30rem] bg-primary/15 rounded-full blur-[110px]" />
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-10 sm:mb-16">
-          <h2 className="text-primary font-bold uppercase tracking-widest mb-4">{t.services.tag}</h2>
-          <h3 className="text-4xl font-black">{t.services.title}</h3>
+          <h2 className="text-primary font-bold uppercase tracking-widest mb-3">{t.services.tag}</h2>
+          <h3 className="text-3xl md:text-4xl font-black">{t.services.title}</h3>
         </div>
-        <div className="grid md:grid-cols-3 gap-5 sm:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {t.services.items.map((item, i) => (
             <div key={i} className="glass-card p-6 sm:p-8 md:p-10 rounded-3xl cursor-default neon-border hover-lift group flex flex-col">
               <div className="flex items-start justify-between gap-4 mb-6 sm:mb-8">
@@ -277,7 +277,7 @@ function WebsitesIBuilt() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-10 sm:mb-16">
           <h2 className="text-primary font-bold uppercase tracking-widest mb-4">{t.websites.tag}</h2>
-          <h3 className="text-4xl font-black mb-6">{t.websites.title}</h3>
+          <h3 className="text-3xl md:text-4xl font-black mb-6">{t.websites.title}</h3>
           <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">
             {t.websites.desc}
           </p>
@@ -360,7 +360,7 @@ function Portfolio() {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
             <h2 className="text-primary font-bold uppercase tracking-widest mb-4">{t.portfolio.tag}</h2>
-            <h3 className="text-4xl font-black">{t.portfolio.title}</h3>
+            <h3 className="text-3xl md:text-4xl font-black">{t.portfolio.title}</h3>
           </div>
           <div className="flex flex-wrap gap-4">
             {t.portfolio.filters.map((filter, i) => (
@@ -439,7 +439,7 @@ function VideoShowcase() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-primary font-bold uppercase tracking-widest mb-4">{t.video.tag}</h2>
-          <h3 className="text-4xl font-black">{t.video.title}</h3>
+          <h3 className="text-3xl md:text-4xl font-black">{t.video.title}</h3>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
           <a href="https://www.facebook.com/reel/1615266119891862" target="_blank" rel="noopener noreferrer" className="aspect-[9/16] bg-slate-200 dark:bg-slate-800 rounded-2xl relative overflow-hidden group cursor-pointer block">
@@ -491,7 +491,7 @@ function Testimonials() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-primary font-bold uppercase tracking-widest mb-4">{t.testimonials.tag}</h2>
-          <h3 className="text-4xl font-black">{t.testimonials.title}</h3>
+          <h3 className="text-3xl md:text-4xl font-black">{t.testimonials.title}</h3>
         </div>
         <div className="grid md:grid-cols-3 gap-8">
           {t.testimonials.items.map((item, i) => (
@@ -522,7 +522,7 @@ function Contact() {
           <div className="absolute bottom-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[80px] -z-10"></div>
           <div className="grid md:grid-cols-2 gap-12 md:gap-20">
             <div>
-              <h3 className="text-4xl md:text-5xl font-black mb-6">{t.contact.title}</h3>
+              <h3 className="text-3xl md:text-5xl font-black mb-6">{t.contact.title}</h3>
               <p className="text-slate-600 dark:text-slate-400 mb-10 leading-relaxed text-lg">{t.contact.desc}</p>
               <div className="space-y-6">
                 <div className="flex items-center gap-4">
