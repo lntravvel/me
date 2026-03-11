@@ -237,27 +237,27 @@ function Services() {
           <h2 className="text-primary font-bold uppercase tracking-widest mb-3">{t.services.tag}</h2>
           <h3 className="text-3xl md:text-4xl font-black">{t.services.title}</h3>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 md:gap-8">
           {t.services.items.map((item, i) => (
-            <div key={i} className="glass-card p-6 sm:p-8 md:p-10 rounded-[2rem] cursor-default neon-border hover-lift group flex flex-col">
-              <div className="flex items-start justify-between gap-4 mb-5 sm:mb-8">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-primary/15 border border-primary/25 flex items-center justify-center text-primary shadow-[0_0_0_1px_rgba(100,103,242,0.10)] group-hover:shadow-[0_0_40px_rgba(34,211,238,0.18)] transition-shadow">
-                  <span className="material-symbols-outlined text-[28px] sm:text-3xl">{icons[i]}</span>
+            <div key={i} className="glass-card p-4 sm:p-6 md:p-10 rounded-2xl md:rounded-[2rem] cursor-default neon-border hover-lift group flex flex-col">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 sm:mb-8">
+                <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-primary/15 border border-primary/25 flex items-center justify-center text-primary shadow-[0_0_0_1px_rgba(100,103,242,0.10)] group-hover:shadow-[0_0_40px_rgba(34,211,238,0.18)] transition-shadow">
+                  <span className="material-symbols-outlined text-[22px] sm:text-3xl">{icons[i]}</span>
                 </div>
-                <div className="text-primary/70 text-xs font-black tracking-widest uppercase pt-2">
+                <div className="text-primary/70 text-[10px] sm:text-xs font-black tracking-widest uppercase self-end sm:self-auto pt-1 sm:pt-2">
                   {String(i + 1).padStart(2, '0')}
                 </div>
               </div>
 
-              <h4 className="text-lg sm:text-xl font-black mb-3 tracking-tight group-hover:text-primary transition-colors">
+              <h4 className="text-sm sm:text-lg md:text-xl font-black mb-2 sm:mb-3 tracking-tight group-hover:text-primary transition-colors">
                 {item.title}
               </h4>
-              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed flex-grow">
+              <p className="text-[11px] sm:text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed flex-grow">
                 {item.desc}
               </p>
 
-              <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-primary/10 text-[11px] sm:text-xs font-bold text-slate-500 dark:text-slate-400 flex items-center gap-2">
-                <span className="material-symbols-outlined text-sm text-primary">bolt</span>
+              <div className="mt-4 sm:mt-8 pt-3 sm:pt-6 border-t border-primary/10 text-[9px] sm:text-[11px] md:text-xs font-bold text-slate-500 dark:text-slate-400 flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2">
+                <span className="material-symbols-outlined text-xs sm:text-sm text-primary">bolt</span>
                 نتائج قابلة للقياس + تنفيذ سريع
               </div>
             </div>
@@ -288,7 +288,7 @@ function WebsitesIBuilt() {
             {t.websites.desc}
           </p>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 md:gap-6">
           {t.websites.projects.map((site, index) => {
             const previewUrl = getWebsiteScreenshot(site.title);
 
@@ -298,17 +298,17 @@ function WebsitesIBuilt() {
                 href={site.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="glass-card rounded-[2rem] overflow-hidden group transition-all duration-500 cursor-pointer neon-border hover-lift flex flex-col"
+                className="glass-card rounded-2xl md:rounded-[2rem] overflow-hidden group transition-all duration-500 cursor-pointer neon-border hover-lift flex flex-col"
               >
-                <div className="p-3 sm:p-4 pb-0">
-                  <div className="rounded-2xl overflow-hidden border border-primary/15 bg-slate-950/30">
-                    <div className="h-9 flex items-center justify-between px-3 border-b border-primary/10 bg-white/70 dark:bg-slate-950/40 backdrop-blur min-w-0 gap-3">
-                      <div className="flex items-center gap-2">
-                        <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
-                        <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/80" />
-                        <span className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
+                <div className="p-2 sm:p-3 md:p-4 pb-0">
+                  <div className="rounded-xl md:rounded-2xl overflow-hidden border border-primary/15 bg-slate-950/30">
+                    <div className="h-6 sm:h-8 md:h-9 flex items-center justify-between px-2 md:px-3 border-b border-primary/10 bg-white/70 dark:bg-slate-950/40 backdrop-blur min-w-0 gap-2 md:gap-3">
+                      <div className="flex items-center gap-1 md:gap-2">
+                        <span className="w-1.5 h-1.5 md:w-2.5 md:h-2.5 rounded-full bg-red-400/80" />
+                        <span className="w-1.5 h-1.5 md:w-2.5 md:h-2.5 rounded-full bg-yellow-400/80" />
+                        <span className="w-1.5 h-1.5 md:w-2.5 md:h-2.5 rounded-full bg-green-400/80" />
                       </div>
-                      <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400 truncate flex-1 min-w-0 text-left" dir="ltr">
+                      <div className="text-[8px] sm:text-[10px] md:text-[11px] font-bold text-slate-500 dark:text-slate-400 truncate flex-1 min-w-0 text-left" dir="ltr">
                         {site.link.replace(/^https?:\/\//, '')}
                       </div>
                     </div>
@@ -320,33 +320,33 @@ function WebsitesIBuilt() {
                         loading="lazy"
                         referrerPolicy="no-referrer"
                       />
-                      <div className="absolute top-3 right-3 bg-white/90 dark:bg-slate-950/70 backdrop-blur-sm text-primary font-black text-[11px] px-3 py-1.5 rounded-full border border-primary/15">
+                      <div className="absolute top-2 right-2 md:top-3 md:right-3 bg-white/90 dark:bg-slate-950/70 backdrop-blur-sm text-primary font-black text-[8px] sm:text-[10px] md:text-[11px] px-2 py-1 md:px-3 md:py-1.5 rounded-full border border-primary/15">
                         {site.category}
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="p-5 sm:p-6 flex flex-col flex-grow">
-                  <h4 className="text-lg font-black tracking-tight mb-2 group-hover:text-primary transition-colors">
+                <div className="p-3 sm:p-4 md:p-6 flex flex-col flex-grow">
+                  <h4 className="text-xs sm:text-base md:text-lg font-black tracking-tight mb-1 md:mb-2 group-hover:text-primary transition-colors">
                     {site.title}
                   </h4>
-                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed flex-grow line-clamp-3">
+                  <p className="text-[10px] sm:text-[13px] md:text-sm text-slate-600 dark:text-slate-300 leading-relaxed flex-grow line-clamp-2 md:line-clamp-3">
                     {site.description}
                   </p>
-                  <div className="flex flex-wrap gap-2 mt-4">
+                  <div className="flex flex-wrap gap-1 sm:gap-2 mt-3 md:mt-4">
                     {site.technologies.slice(0, 3).map((tech, i) => (
                       <span
                         key={i}
-                        className="bg-slate-100/80 dark:bg-slate-900/40 border border-primary/10 text-slate-600 dark:text-slate-300 text-[11px] font-bold px-2.5 py-1 rounded-md"
+                        className="bg-slate-100/80 dark:bg-slate-900/40 border border-primary/10 text-slate-600 dark:text-slate-300 text-[8px] sm:text-[10px] md:text-[11px] font-bold px-1.5 py-0.5 sm:px-2 md:px-2.5 md:py-1 rounded-md"
                       >
                         {tech}
                       </span>
                     ))}
                   </div>
-                  <div className="mt-5 sm:mt-6 pt-4 sm:pt-5 border-t border-primary/10 text-[11px] sm:text-xs font-black text-primary flex items-center justify-between">
+                  <div className="mt-3 sm:mt-4 md:mt-6 pt-2 sm:pt-3 md:pt-5 border-t border-primary/10 text-[9px] sm:text-[10px] md:text-xs font-black text-primary flex items-center justify-between">
                     <span>افتح الموقع</span>
-                    <span className="material-symbols-outlined text-sm">open_in_new</span>
+                    <span className="material-symbols-outlined text-[10px] sm:text-[12px] md:text-sm mb-0.5">open_in_new</span>
                   </div>
                 </div>
               </a>
@@ -499,11 +499,11 @@ function Testimonials() {
           <h2 className="text-primary font-bold uppercase tracking-widest mb-4">{t.testimonials.tag}</h2>
           <h3 className="text-3xl md:text-4xl font-black">{t.testimonials.title}</h3>
         </div>
-        <div className="grid md:grid-cols-3 gap-6 sm:gap-8">
+        <div className="flex overflow-x-auto overflow-y-hidden snap-x snap-mandatory hide-scrollbar gap-4 sm:gap-6 pb-6 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible">
           {t.testimonials.items.map((item, i) => (
-            <div key={i} className="glass-card p-6 sm:p-8 md:p-10 rounded-3xl relative">
+            <div key={i} className="min-w-[85vw] sm:min-w-[400px] md:min-w-0 snap-center glass-card p-6 sm:p-8 md:p-10 rounded-3xl relative flex-shrink-0">
               <span className="material-symbols-outlined text-primary text-5xl md:text-6xl opacity-20 absolute top-4 right-5 sm:right-8">format_quote</span>
-              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 italic mb-6 sm:mb-8 leading-relaxed mt-4 sm:mt-0 relative z-10">"{item.quote}"</p>
+              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 italic mb-6 sm:mb-8 leading-relaxed mt-4 sm:mt-0 relative z-10 w-full whitespace-normal">"{item.quote}"</p>
               <div className="flex items-center gap-4 border-t border-primary/10 pt-5">
                 <img className="w-12 h-12 rounded-full object-cover border-2 border-primary/20" src={images[i]} alt={item.name} referrerPolicy="no-referrer" />
                 <div>
@@ -617,6 +617,26 @@ export default function App() {
   return (
     <LanguageProvider>
       <div id="top" className="min-h-screen overflow-x-hidden">
+        <style>
+          {`
+            .hide-scrollbar::-webkit-scrollbar {
+              display: none;
+            }
+            .hide-scrollbar {
+              -ms-overflow-style: none;
+              scrollbar-width: none;
+            }
+            @media (max-width: 768px) {
+              .hover-lift {
+                transform: none !important;
+              }
+              .hover-lift:hover {
+                transform: none !important;
+                box-shadow: inherit !important;
+              }
+            }
+          `}
+        </style>
         <Navbar />
         <Hero />
         <About />

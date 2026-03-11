@@ -10,11 +10,19 @@
 @layer utilities {
   .glass-card {
     background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02));
-    backdrop-filter: blur(14px);
+    backdrop-filter: blur(8px);
     border: 1px solid rgba(100, 103, 242, 0.16);
     box-shadow:
-      0 20px 60px rgba(0, 0, 0, 0.10),
+      0 10px 30px rgba(0, 0, 0, 0.05),
       inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+  @media (min-width: 768px) {
+    .glass-card {
+      backdrop-filter: blur(14px);
+      box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.10),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
   }
   .animate-bounce-slow {
     animation: bounce 3s infinite;
@@ -40,22 +48,29 @@
       rgba(255,255,255,0) 3px,
       rgba(255,255,255,0) 6px
     );
-    opacity: 0.14;
-    mix-blend-mode: overlay;
+    opacity: 0.05;
+  }
+  @media (min-width: 768px) {
+    .bg-scanlines {
+      opacity: 0.14;
+      mix-blend-mode: overlay;
+    }
   }
 
   .neon-border {
     position: relative;
   }
-  .neon-border::before {
-    content: "";
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    background: linear-gradient(90deg, rgba(100,103,242,0.45), rgba(34,211,238,0.35), rgba(167,139,250,0.35));
-    filter: blur(10px);
-    opacity: 0.55;
-    z-index: -1;
+  @media (min-width: 768px) {
+    .neon-border::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      background: linear-gradient(90deg, rgba(100,103,242,0.45), rgba(34,211,238,0.35), rgba(167,139,250,0.35));
+      filter: blur(10px);
+      opacity: 0.55;
+      z-index: -1;
+    }
   }
 
   .btn-neon {
