@@ -37,32 +37,38 @@ const WhatsAppIcon: React.FC<{ className?: string }> = ({ className }) => (
 
 function Navbar() {
   const { t, lang, setLang } = useLanguage();
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-primary/10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <a href="#top" className="flex items-center gap-2 group cursor-pointer">
+        <a href="#top" className="flex items-center gap-2 group cursor-pointer z-50">
           <div className="bg-primary p-1.5 rounded-lg">
             <span className="material-symbols-outlined text-white">rocket_launch</span>
           </div>
           <span className="text-xl font-black tracking-tighter">{lang === 'ar' ? 'مصطفى ' : 'Mostafa '}<span className="text-primary">{lang === 'ar' ? 'الخولي' : 'Elkholy'}</span></span>
         </a>
-        <div className="hidden md:flex items-center gap-8">
-          <a className="text-sm font-medium hover:text-primary transition-colors" href="#about">{t.nav.about}</a>
-          <a className="text-sm font-medium hover:text-primary transition-colors" href="#services">{t.nav.services}</a>
-          <a className="text-sm font-medium hover:text-primary transition-colors" href="#portfolio">{t.nav.portfolio}</a>
-          <a className="text-sm font-medium hover:text-primary transition-colors" href="#results">{t.nav.results}</a>
-          <div className="flex items-center gap-4 mx-4 border-x border-primary/20 px-4">
-            <button onClick={() => setLang('en')} className={`text-xs font-bold transition-colors ${lang === 'en' ? 'text-primary' : 'hover:text-primary'}`}>EN</button>
-            <span className="text-primary text-xs">/</span>
-            <button onClick={() => setLang('ar')} className={`text-xs font-bold transition-colors ${lang === 'ar' ? 'text-primary' : 'hover:text-primary'}`}>AR</button>
+        <div className={`fixed inset-0 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-xl z-[45] flex flex-col items-center justify-center gap-8 transition-all duration-300 md:static md:bg-transparent md:dark:bg-transparent md:flex-row md:gap-8 md:p-0 ${isMenuOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-full pointer-events-none md:opacity-100 md:translate-y-0 md:pointer-events-auto'}`}>
+          <a onClick={() => setIsMenuOpen(false)} className="text-2xl md:text-sm font-medium hover:text-primary transition-colors cursor-pointer" href="#about">{t.nav.about}</a>
+          <a onClick={() => setIsMenuOpen(false)} className="text-2xl md:text-sm font-medium hover:text-primary transition-colors cursor-pointer" href="#services">{t.nav.services}</a>
+          <a onClick={() => setIsMenuOpen(false)} className="text-2xl md:text-sm font-medium hover:text-primary transition-colors cursor-pointer" href="#portfolio">{t.nav.portfolio}</a>
+          <a onClick={() => setIsMenuOpen(false)} className="text-2xl md:text-sm font-medium hover:text-primary transition-colors cursor-pointer" href="#results">{t.nav.results}</a>
+          <div className="flex items-center justify-center gap-4 md:border-x border-primary/20 md:px-4 z-[50] w-full">
+            <button type="button" onClick={() => { setLang('en'); setIsMenuOpen(false); }} className={`px-4 py-2 text-lg md:text-xs font-bold transition-colors cursor-pointer ${lang === 'en' ? 'text-primary' : 'text-slate-500 hover:text-primary'}`}>EN</button>
+            <span className="text-primary text-lg md:text-xs">/</span>
+            <button type="button" onClick={() => { setLang('ar'); setIsMenuOpen(false); }} className={`px-4 py-2 text-lg md:text-xs font-bold transition-colors cursor-pointer ${lang === 'ar' ? 'text-primary' : 'text-slate-500 hover:text-primary'}`}>AR</button>
           </div>
           <a
+            onClick={() => setIsMenuOpen(false)}
             href="#contact"
-            className="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold transition-all transform hover:scale-105"
+            className="bg-primary hover:bg-primary/90 text-white px-8 py-3 md:px-6 md:py-2.5 rounded-full text-lg md:text-sm font-bold transition-all transform hover:scale-105 cursor-pointer"
           >
             {t.nav.contact}
           </a>
         </div>
+        <button className="md:hidden text-primary z-50 relative" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <span className="material-symbols-outlined">{isMenuOpen ? 'close' : 'menu'}</span>
+        </button>
         <button className="md:hidden text-primary">
           <span className="material-symbols-outlined">menu</span>
         </button>
@@ -104,21 +110,21 @@ function Hero() {
           background: `radial-gradient(600px circle at ${spot.x}% ${spot.y}%, rgba(100, 103, 242, 0.22), rgba(100, 103, 242, 0) 55%)`,
         }}
       />
-      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-        <div className="space-y-8">
+      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+        <div className="space-y-6 md:space-y-8 mt-10 md:mt-0">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-wider">
             <span className="material-symbols-outlined text-sm">verified</span> {t.hero.badge}
           </div>
-          <h1 className="text-5xl md:text-7xl font-black leading-[1.1] tracking-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black leading-[1.1] tracking-tight">
             {t.hero.title} <span className="text-primary">{t.hero.titleHighlight}</span>
           </h1>
-          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed">
+          <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed">
             {t.hero.desc}
           </p>
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-4">
             <a
               href="#portfolio"
-              className="bg-primary text-white px-8 py-4 rounded-xl font-bold flex items-center gap-2 hover:shadow-[0_0_20px_rgba(100,103,242,0.4)] transition-all btn-neon"
+              className="bg-primary text-white px-6 py-4 md:px-8 md:py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(100,103,242,0.4)] transition-all btn-neon w-full sm:w-auto"
               onMouseMove={(e) => {
                 const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
                 (e.currentTarget as HTMLElement).style.setProperty('--mx', `${((e.clientX - r.left) / r.width) * 100}%`);
@@ -132,7 +138,7 @@ function Hero() {
               href="https://wa.me/201127718978"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white px-8 py-4 rounded-xl font-bold hover:bg-slate-300 dark:hover:bg-slate-700 transition-all flex items-center gap-2 btn-neon"
+              className="bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white px-6 py-4 md:px-8 md:py-4 rounded-xl font-bold hover:bg-slate-300 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2 btn-neon w-full sm:w-auto"
               onMouseMove={(e) => {
                 const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
                 (e.currentTarget as HTMLElement).style.setProperty('--mx', `${((e.clientX - r.left) / r.width) * 100}%`);
@@ -144,9 +150,9 @@ function Hero() {
             </a>
           </div>
         </div>
-        <div className="relative">
+        <div className="relative mt-8 md:mt-0 w-[85%] sm:w-3/4 mx-auto md:w-full">
           <div className="aspect-square rounded-3xl overflow-hidden glass-card p-4 neon-border hover-lift">
-            <div 
+            <div
               className="w-full h-full rounded-2xl bg-slate-200 dark:bg-slate-800 bg-cover bg-center"
               style={{
                 backgroundImage: `url(${profileImg})`,
@@ -179,29 +185,29 @@ function About() {
         <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-4">
-              <div 
-                className="h-48 bg-cover bg-center ai-tile hover-lift" 
+              <div
+                className="h-48 bg-cover bg-center ai-tile hover-lift"
                 style={{ backgroundImage: `url(${about1})` }}
               ></div>
-              <div 
-                className="h-64 bg-cover bg-center ai-tile hover-lift" 
+              <div
+                className="h-64 bg-cover bg-center ai-tile hover-lift"
                 style={{ backgroundImage: `url(${heroTechBg})` }}
               ></div>
             </div>
             <div className="space-y-4 pt-12">
-              <div 
-                className="h-64 bg-cover bg-center ai-tile hover-lift" 
+              <div
+                className="h-64 bg-cover bg-center ai-tile hover-lift"
                 style={{ backgroundImage: `url(${portfolioAiWidget})` }}
               ></div>
-              <div 
-                className="h-48 bg-cover bg-center ai-tile hover-lift" 
+              <div
+                className="h-48 bg-cover bg-center ai-tile hover-lift"
                 style={{ backgroundImage: `url(${about2})` }}
               ></div>
             </div>
           </div>
           <div>
             <h2 className="text-primary font-bold uppercase tracking-widest mb-4">{t.about.tag}</h2>
-          <h3 className="text-3xl md:text-4xl font-black mb-6 leading-tight">{t.about.title}</h3>
+            <h3 className="text-3xl md:text-4xl font-black mb-6 leading-tight">{t.about.title}</h3>
             <p className="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
               {t.about.desc}
             </p>
@@ -231,10 +237,10 @@ function Services() {
           <h2 className="text-primary font-bold uppercase tracking-widest mb-3">{t.services.tag}</h2>
           <h3 className="text-3xl md:text-4xl font-black">{t.services.title}</h3>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
           {t.services.items.map((item, i) => (
-            <div key={i} className="glass-card p-6 sm:p-8 md:p-10 rounded-3xl cursor-default neon-border hover-lift group flex flex-col">
-              <div className="flex items-start justify-between gap-4 mb-6 sm:mb-8">
+            <div key={i} className="glass-card p-6 sm:p-8 md:p-10 rounded-[2rem] cursor-default neon-border hover-lift group flex flex-col">
+              <div className="flex items-start justify-between gap-4 mb-5 sm:mb-8">
                 <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-primary/15 border border-primary/25 flex items-center justify-center text-primary shadow-[0_0_0_1px_rgba(100,103,242,0.10)] group-hover:shadow-[0_0_40px_rgba(34,211,238,0.18)] transition-shadow">
                   <span className="material-symbols-outlined text-[28px] sm:text-3xl">{icons[i]}</span>
                 </div>
@@ -250,7 +256,7 @@ function Services() {
                 {item.desc}
               </p>
 
-              <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-primary/10 text-xs font-bold text-slate-500 dark:text-slate-400 flex items-center gap-2">
+              <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-primary/10 text-[11px] sm:text-xs font-bold text-slate-500 dark:text-slate-400 flex items-center gap-2">
                 <span className="material-symbols-outlined text-sm text-primary">bolt</span>
                 نتائج قابلة للقياس + تنفيذ سريع
               </div>
@@ -285,65 +291,65 @@ function WebsitesIBuilt() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {t.websites.projects.map((site, index) => {
             const previewUrl = getWebsiteScreenshot(site.title);
-            
-            return (
-            <a
-              key={index}
-              href={site.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="glass-card rounded-3xl overflow-hidden group transition-all duration-500 cursor-pointer neon-border hover-lift flex flex-col"
-            >
-              <div className="p-3 sm:p-4 pb-0">
-                <div className="rounded-2xl overflow-hidden border border-primary/15 bg-slate-950/30">
-                  <div className="h-9 flex items-center justify-between px-3 border-b border-primary/10 bg-white/70 dark:bg-slate-950/40 backdrop-blur min-w-0 gap-3">
-                    <div className="flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
-                      <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/80" />
-                      <span className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
-                    </div>
-                    <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400 truncate flex-1 min-w-0 text-left" dir="ltr">
-                      {site.link.replace(/^https?:\/\//, '')}
-                    </div>
-                  </div>
-                  <div className="relative aspect-[16/10] overflow-hidden bg-slate-200 dark:bg-slate-900">
-                    <img
-                      src={previewUrl}
-                      alt={site.title}
-                      className="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-700"
-                      loading="lazy"
-                      referrerPolicy="no-referrer"
-                    />
-                    <div className="absolute top-3 right-3 bg-white/90 dark:bg-slate-950/70 backdrop-blur-sm text-primary font-black text-[11px] px-3 py-1.5 rounded-full border border-primary/15">
-                      {site.category}
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              <div className="p-4 sm:p-6 flex flex-col flex-grow">
-                <h4 className="text-lg font-black tracking-tight mb-2 group-hover:text-primary transition-colors">
-                  {site.title}
-                </h4>
-                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed flex-grow line-clamp-3">
-                  {site.description}
-                </p>
-                <div className="flex flex-wrap gap-2 mt-5">
-                  {site.technologies.slice(0, 3).map((tech, i) => (
-                    <span
-                      key={i}
-                      className="bg-slate-100/80 dark:bg-slate-900/40 border border-primary/10 text-slate-600 dark:text-slate-300 text-[11px] font-bold px-2.5 py-1 rounded-md"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+            return (
+              <a
+                key={index}
+                href={site.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="glass-card rounded-[2rem] overflow-hidden group transition-all duration-500 cursor-pointer neon-border hover-lift flex flex-col"
+              >
+                <div className="p-3 sm:p-4 pb-0">
+                  <div className="rounded-2xl overflow-hidden border border-primary/15 bg-slate-950/30">
+                    <div className="h-9 flex items-center justify-between px-3 border-b border-primary/10 bg-white/70 dark:bg-slate-950/40 backdrop-blur min-w-0 gap-3">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/80" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
+                      </div>
+                      <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400 truncate flex-1 min-w-0 text-left" dir="ltr">
+                        {site.link.replace(/^https?:\/\//, '')}
+                      </div>
+                    </div>
+                    <div className="relative aspect-[16/10] overflow-hidden bg-slate-200 dark:bg-slate-900">
+                      <img
+                        src={previewUrl}
+                        alt={site.title}
+                        className="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-700"
+                        loading="lazy"
+                        referrerPolicy="no-referrer"
+                      />
+                      <div className="absolute top-3 right-3 bg-white/90 dark:bg-slate-950/70 backdrop-blur-sm text-primary font-black text-[11px] px-3 py-1.5 rounded-full border border-primary/15">
+                        {site.category}
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="mt-5 sm:mt-6 pt-4 sm:pt-5 border-t border-primary/10 text-xs font-black text-primary flex items-center justify-between">
-                  <span>افتح الموقع</span>
-                  <span className="material-symbols-outlined text-sm">open_in_new</span>
+
+                <div className="p-5 sm:p-6 flex flex-col flex-grow">
+                  <h4 className="text-lg font-black tracking-tight mb-2 group-hover:text-primary transition-colors">
+                    {site.title}
+                  </h4>
+                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed flex-grow line-clamp-3">
+                    {site.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    {site.technologies.slice(0, 3).map((tech, i) => (
+                      <span
+                        key={i}
+                        className="bg-slate-100/80 dark:bg-slate-900/40 border border-primary/10 text-slate-600 dark:text-slate-300 text-[11px] font-bold px-2.5 py-1 rounded-md"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="mt-5 sm:mt-6 pt-4 sm:pt-5 border-t border-primary/10 text-[11px] sm:text-xs font-black text-primary flex items-center justify-between">
+                    <span>افتح الموقع</span>
+                    <span className="material-symbols-outlined text-sm">open_in_new</span>
+                  </div>
                 </div>
-              </div>
-            </a>
+              </a>
             );
           })}
         </div>
@@ -371,7 +377,7 @@ function Portfolio() {
           </div>
         </div>
         <div className="space-y-12">
-          <div className="glass-card rounded-[2rem] p-6 md:p-8 flex flex-col lg:flex-row items-center gap-6 border border-primary/40 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent overflow-hidden relative neon-border hover-lift">
+          <div className="glass-card rounded-[2rem] p-6 lg:p-8 flex flex-col lg:flex-row items-center gap-6 border border-primary/40 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent overflow-hidden relative neon-border hover-lift">
             <div
               className="pointer-events-none absolute inset-0 opacity-20"
               style={{
@@ -384,33 +390,33 @@ function Portfolio() {
               <FacebookIcon className="w-10 h-10" />
             </div>
             <div className="flex-1 text-center lg:text-right relative">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/30 text-xs font-bold tracking-widest text-primary mb-3">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/30 text-[11px] sm:text-xs font-bold tracking-widest text-primary mb-3">
                 <span className="material-symbols-outlined text-sm">auto_awesome</span>
                 <span>من أعمالي</span>
               </div>
-              <h4 className="text-2xl font-black mb-2">معرض فيديوهات وريلز لعملائي بالذكاء الاصطناعي</h4>
-              <p className="text-slate-600 dark:text-slate-300 mb-4">
+              <h4 className="text-xl sm:text-2xl font-black mb-3">معرض فيديوهات وريلز لعملائي بالذكاء الاصطناعي</h4>
+              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 mb-5 max-w-2xl mx-auto lg:mx-0">
                 شاهد أعمال حقيقية قمت بتنفيذها لعملائي على فيسبوك، تضم ريلز وفيديوهات دعائية تم إنتاجها وتطويرها بالذكاء الاصطناعي.
               </p>
               <a
                 href="https://www.facebook.com/profile.php?id=100071726420422"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#1877F2] text-white font-bold hover:bg-[#1459b8] transition-colors"
+                className="inline-flex flex-row-reverse items-center justify-center lg:justify-start gap-2 px-5 py-3 rounded-xl bg-[#1877F2] text-white font-bold hover:bg-[#1459b8] transition-colors text-sm sm:text-base w-full sm:w-auto"
               >
-                من أعمالي على فيسبوك
                 <span className="material-symbols-outlined text-sm">open_in_new</span>
+                من أعمالي على فيسبوك
               </a>
             </div>
           </div>
           <div className="glass-card rounded-[2rem] overflow-hidden flex flex-col lg:flex-row group border-0 shadow-2xl">
-            <div className="lg:w-1/2 overflow-hidden">
-              <img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkZ1u2sSLJC88v352CESQt0cj5BDAV5mu54AUb-wZYaQUFhFN9NDj5xD2Sid61EgLBhX_wtsvch4HWjqRzeJ_UJ-1MOyDdOBX-sxs6A1A_9iwlvSvVvc80i5WRM5UA8RFOUqlIybyFNEKvKwI2P48uwOA-1N-o14EFwEaY4e63_-9blZq6A-vjnw2PA1ycdsSoJi7Yf4YA2XEprpB2PYIT9ehYtfCcC0N2gv-U9pGxjdgHzGsSU1qhyG71WJY3RCdwaUXfRysHK5g" alt="Modern e-commerce interface mockup on laptop" referrerPolicy="no-referrer" />
+            <div className="lg:w-1/2 overflow-hidden h-64 lg:h-auto">
+              <img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 object-top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkZ1u2sSLJC88v352CESQt0cj5BDAV5mu54AUb-wZYaQUFhFN9NDj5xD2Sid61EgLBhX_wtsvch4HWjqRzeJ_UJ-1MOyDdOBX-sxs6A1A_9iwlvSvVvc80i5WRM5UA8RFOUqlIybyFNEKvKwI2P48uwOA-1N-o14EFwEaY4e63_-9blZq6A-vjnw2PA1ycdsSoJi7Yf4YA2XEprpB2PYIT9ehYtfCcC0N2gv-U9pGxjdgHzGsSU1qhyG71WJY3RCdwaUXfRysHK5g" alt="Modern e-commerce interface mockup on laptop" referrerPolicy="no-referrer" />
             </div>
-            <div className="lg:w-1/2 p-12 flex flex-col justify-center">
-              <div className="text-primary font-bold text-sm mb-4">{t.portfolio.case.tag}</div>
-              <h4 className="text-3xl font-black mb-8 italic">{t.portfolio.case.title}</h4>
-              <div className="grid grid-cols-2 gap-8">
+            <div className="lg:w-1/2 p-6 md:p-10 lg:p-12 flex flex-col justify-center">
+              <div className="text-primary font-bold text-xs sm:text-sm mb-3">{t.portfolio.case.tag}</div>
+              <h4 className="text-2xl sm:text-3xl font-black mb-6 md:mb-8 italic">{t.portfolio.case.title}</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
                 <div>
                   <h5 className="font-bold text-primary mb-2 flex items-center gap-2"><span className="material-symbols-outlined text-sm">problem</span> {t.portfolio.case.problemTitle}</h5>
                   <p className="text-sm text-slate-500 leading-relaxed">{t.portfolio.case.problemDesc}</p>
@@ -419,9 +425,9 @@ function Portfolio() {
                   <h5 className="font-bold text-primary mb-2 flex items-center gap-2"><span className="material-symbols-outlined text-sm">rocket</span> {t.portfolio.case.strategyTitle}</h5>
                   <p className="text-sm text-slate-500 leading-relaxed">{t.portfolio.case.strategyDesc}</p>
                 </div>
-                <div className="col-span-2 border-t border-slate-200 dark:border-slate-800 pt-6">
+                <div className="col-span-1 sm:col-span-2 border-t border-slate-200 dark:border-slate-800 pt-5 md:pt-6">
                   <h5 className="font-bold text-primary mb-2 flex items-center gap-2"><span className="material-symbols-outlined text-sm">analytics</span> {t.portfolio.case.resultsTitle}</h5>
-                  <p className="text-2xl font-black text-slate-900 dark:text-white">{t.portfolio.case.resultsDesc}</p>
+                  <p className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">{t.portfolio.case.resultsDesc}</p>
                 </div>
               </div>
             </div>
@@ -466,11 +472,11 @@ function Results() {
     <section className="py-24 bg-primary text-white overflow-hidden relative" id="results">
       <div className="absolute top-0 right-0 w-1/2 h-full bg-white/5 skew-x-12 translate-x-1/2"></div>
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid md:grid-cols-4 gap-12 text-center">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 text-center">
           {t.results.stats.map((stat, i) => (
             <div key={i}>
-              <div className="text-6xl font-black mb-2">{stat.value}</div>
-              <div className="text-primary-100/70 font-bold uppercase tracking-widest text-sm">{stat.label}</div>
+              <div className="text-4xl md:text-5xl lg:text-6xl font-black mb-2">{stat.value}</div>
+              <div className="text-primary-100/70 font-bold uppercase tracking-widest text-xs sm:text-sm">{stat.label}</div>
             </div>
           ))}
         </div>
@@ -493,16 +499,16 @@ function Testimonials() {
           <h2 className="text-primary font-bold uppercase tracking-widest mb-4">{t.testimonials.tag}</h2>
           <h3 className="text-3xl md:text-4xl font-black">{t.testimonials.title}</h3>
         </div>
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-6 sm:gap-8">
           {t.testimonials.items.map((item, i) => (
-            <div key={i} className="glass-card p-10 rounded-3xl relative">
-              <span className="material-symbols-outlined text-primary text-6xl opacity-20 absolute top-4 right-8">format_quote</span>
-              <p className="text-slate-600 dark:text-slate-400 italic mb-8 leading-relaxed">"{item.quote}"</p>
-              <div className="flex items-center gap-4">
-                <img className="w-12 h-12 rounded-full object-cover" src={images[i]} alt={item.name} referrerPolicy="no-referrer" />
+            <div key={i} className="glass-card p-6 sm:p-8 md:p-10 rounded-3xl relative">
+              <span className="material-symbols-outlined text-primary text-5xl md:text-6xl opacity-20 absolute top-4 right-5 sm:right-8">format_quote</span>
+              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 italic mb-6 sm:mb-8 leading-relaxed mt-4 sm:mt-0 relative z-10">"{item.quote}"</p>
+              <div className="flex items-center gap-4 border-t border-primary/10 pt-5">
+                <img className="w-12 h-12 rounded-full object-cover border-2 border-primary/20" src={images[i]} alt={item.name} referrerPolicy="no-referrer" />
                 <div>
-                  <div className="font-bold">{item.name}</div>
-                  <div className="text-xs text-slate-500 uppercase">{item.role}</div>
+                  <div className="font-bold text-sm sm:text-base text-slate-900 dark:text-white">{item.name}</div>
+                  <div className="text-[11px] sm:text-xs text-slate-500 uppercase font-medium">{item.role}</div>
                 </div>
               </div>
             </div>
@@ -518,48 +524,48 @@ function Contact() {
   return (
     <section className="py-16 sm:py-24 bg-slate-50 dark:bg-slate-900/30" id="contact">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="glass-card rounded-[2.25rem] sm:rounded-[3rem] p-6 sm:p-8 md:p-20 overflow-hidden relative">
+        <div className="glass-card rounded-[2.25rem] sm:rounded-[3rem] p-6 sm:p-8 md:p-14 lg:p-20 overflow-hidden relative">
           <div className="absolute bottom-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[80px] -z-10"></div>
-          <div className="grid md:grid-cols-2 gap-12 md:gap-20">
+          <div className="grid md:grid-cols-2 gap-10 md:gap-20">
             <div>
-              <h3 className="text-3xl md:text-5xl font-black mb-6">{t.contact.title}</h3>
-              <p className="text-slate-600 dark:text-slate-400 mb-10 leading-relaxed text-lg">{t.contact.desc}</p>
-              <div className="space-y-6">
+              <h3 className="text-3xl lg:text-5xl font-black mb-4 sm:mb-6">{t.contact.title}</h3>
+              <p className="text-sm sm:text-base lg:text-lg text-slate-600 dark:text-slate-400 mb-8 lg:mb-10 leading-relaxed">{t.contact.desc}</p>
+              <div className="space-y-5 sm:space-y-6">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
-                    <span className="material-symbols-outlined">mail</span>
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary shrink-0">
+                    <span className="material-symbols-outlined text-xl sm:text-2xl">mail</span>
                   </div>
-                  <span className="font-bold text-lg break-words">mostafa.elkholy.dp@gmail.com</span>
+                  <span className="font-bold text-sm sm:text-base lg:text-lg break-all">mostafa.elkholy.dp@gmail.com</span>
                 </div>
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center text-green-500">
-                    <WhatsAppIcon className="w-6 h-6" />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500/10 rounded-xl flex items-center justify-center text-green-500 shrink-0">
+                    <WhatsAppIcon className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
-                  <span className="font-bold text-lg" dir="ltr">01127718978</span>
+                  <span className="font-bold text-base sm:text-lg" dir="ltr">01127718978</span>
                 </div>
               </div>
-              <div className="flex gap-4 mt-12">
+              <div className="flex gap-4 mt-8 sm:mt-12">
                 <a
-                  className="w-12 h-12 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition-all"
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition-all shadow-sm"
                   href="https://www.facebook.com/mostafakholy007/"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Personal Facebook page"
                 >
-                  <FacebookIcon className="w-6 h-6" />
+                  <FacebookIcon className="w-5 h-5 sm:w-6 sm:h-6" />
                 </a>
                 <a
-                  className="w-12 h-12 rounded-full bg-green-500/10 text-green-500 flex items-center justify-center hover:bg-green-500 hover:text-white transition-all"
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-green-500/10 text-green-500 flex items-center justify-center hover:bg-green-500 hover:text-white transition-all shadow-sm"
                   href="https://wa.me/201127718978"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="WhatsApp chat"
                 >
-                  <WhatsAppIcon className="w-6 h-6" />
+                  <WhatsAppIcon className="w-5 h-5 sm:w-6 sm:h-6" />
                 </a>
               </div>
             </div>
-            <form className="space-y-6">
+            <form className="space-y-5 sm:space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div className="space-y-2">
                   <label className="text-sm font-bold mx-1">{t.contact.nameLabel}</label>
