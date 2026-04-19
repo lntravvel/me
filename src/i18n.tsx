@@ -2,57 +2,72 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const translations = {
   ar: {
-    nav: { about: "عن الخبير", services: "الخدمات", portfolio: "الأعمال", results: "النتائج", contact: "تواصل معي" },
+    nav: { about: "من أنا", services: "الخدمات", portfolio: "أعمالي", results: "النتائج", contact: "تواصل معي" },
     hero: {
       badge: "متاح لمشاريع جديدة",
-      title: "خبير نمو رقمي ومطور مواقع يساعد العلامات التجارية على",
-      titleHighlight: "التوسع عبر الإنترنت",
-      desc: "أبرز مشاريعك و مهاراتك بشكل احترافي مع تصميم عصري وسرعة أداء فائقة، واجعل تواجدك الرقمي قوة لا يستهان بها.",
+      title: "إعلانات فيديو بالذكاء الاصطناعي وتصميم مواقع احترافية تضمن لك",
+      titleHighlight: "مضاعفة مبيعاتك",
+      desc: "أقدم لك حلولاً تسويقية ورقمية متكاملة: من إنتاج إعلانات فيديو مبهرة بأحدث تقنيات الـ AI، إلى تصميم وبناء مواقع ومتاجر إلكترونية عصرية، مع إنشاء وإدارة صفحات السوشيال ميديا والحملات الإعلانية لتحقيق أهداف بيزنسك.",
       btnWork: "شاهد أعمالي",
-      btnContact: "تواصل معي",
-      statsGrowth: "متوسط النمو"
+      btnContact: "اطلب خدمتك الآن",
+      statsGrowth: "إعلان فيديو منتج"
     },
     about: {
-      tag: "الخبير",
-      title: "بناء مواقع احترافية ودمج التسويق والذكاء الاصطناعي",
-      desc: "أنا متخصص في بناء وتطوير مواقع ويب سريعة وعصرية لا تكتفي بالمظهر الجذاب فحسب، بل تحقق التحويلات والنتائج. من خلال الجمع بين تطوير الواجهات الأمامية وتحسين محركات البحث، أساعد العلامات التجارية على السيطرة في مجالها.",
-      skills: ["تطوير المواقع", "تصميم الواجهات", "تحسين SEO", "الإعلانات الرقمية", "استراتيجية المحتوى", "تحسين معدل التحويل"]
+      tag: "من أنا",
+      title: "خبير إنتاج إعلانات فيديو بالذكاء الاصطناعي ومطور مواقع",
+      desc: "أجمع بين قوة الذكاء الاصطناعي في إنتاج محتوى بصري مبهر وخبرة تقنية عميقة في بناء المواقع والمتاجر الإلكترونية. لا حدود للخيال: أي فكرة لمنتجك أو شركتك أو حتى لك شخصياً، يمكنني تحويلها إلى فيديو إعلاني احترافي يخطف الأنظار ويحقق نتائج ملموسة.",
+      skills: ["إعلانات فيديو بالـ AI", "تطوير المواقع والمتاجر", "تحسين SEO", "الحملات الإعلانية", "محتوى بصري إبداعي", "استراتيجيات النمو الرقمي"]
+    },
+    videoShowcase: {
+      tag: "معرض الأعمال الإعلانية",
+      title: "إعلانات فيديو احترافية بالذكاء الاصطناعي",
+      desc: "شاهد أمثلة حقيقية من أعمالي: إعلانات تجارية لمنتجات وشركات، ومحتوى إبداعي تم إنتاجه بالكامل باستخدام أحدث تقنيات الذكاء الاصطناعي. كل الفيديوهات تعمل مباشرة هنا بدون الخروج من الموقع.",
+      commercialTag: "إعلانات تجارية لوكالة",
+      creativeTag: "أعمال إبداعية متنوعة",
+      englishTag: "محتوى إبداعي باللغة الإنجليزية"
     },
     services: {
       tag: "الخدمات",
       title: "حلول رقمية متكاملة لنمو عملك",
       items: [
-        { title: "تطوير المواقع", desc: "بناء مواقع سريعة، متجاوبة، ومحسنة لمحركات البحث باستخدام أحدث التقنيات." },
-        { title: "تصميم UI/UX", desc: "تصميم واجهات مستخدم جذابة توفر تجربة سلسة وترفع معدلات التحويل." },
+        { title: "إعلانات فيديو بالـ AI", desc: "تحويل أي فكرة إلى فيديو إعلاني احترافي يخطف الأنظار ويحقق أعلى نسب تفاعل ومبيعات." },
+        { title: "إنشاء وإدارة صفحات السوشيال ميديا", desc: "إنشاء وإدارة صفحاتك على فيسبوك وانستغرام وتيك توك بشكل كامل، مع تصميم المحتوى وجدولة النشر وإدارة الحملات الإعلانية لضمان وصول أكبر عدد من العملاء والجمهور." },
+        { title: "تطوير المواقع والمتاجر", desc: "بناء مواقع ومتاجر إلكترونية سريعة، متجاوبة، ومحسنة لتحقيق أعلى تحويلات." },
         { title: "تحسين محركات البحث", desc: "تصدر نتائج البحث العضوية وزيادة الزيارات المستهدفة لموقعك." },
-        { title: "إدارة منصات التواصل", desc: "بناء مجتمع مخلص من خلال محتوى استراتيجي وتفاعل فعال." },
-        { title: "حلول الذكاء الاصطناعي", desc: "أتمتة سير العمل التسويقي وصناعة المحتوى باستخدام أحدث تقنيات الذكاء الاصطناعي." },
-        { title: "تحسين معدل التحويل", desc: "تحويل الزيارات الحالية إلى إيرادات من خلال المحفزات النفسية واختبارات A/B." }
+        { title: "محتوى بصري إبداعي", desc: "إنتاج محتوى مرئي مبتكر يعزز هوية علامتك التجارية ويجذب جمهورك المستهدف." },
+        { title: "استراتيجيات النمو الرقمي", desc: "بناء خطط تسويقية شاملة تدمج الإعلانات والمحتوى والتقنية لتحقيق نمو مستدام." }
       ]
     },
     websites: {
       tag: "مواقع قمت ببنائها",
       title: "مشاريع تصميم وتطوير المواقع",
-      desc: "مجموعة من المواقع الحقيقية التي قمت بتصميمها وتطويرها لعملائي، مع التركيز على تجربة المستخدم، الأداء السريع، وتحسين محركات البحث.",
+      desc: "مجموعة من المواقع الحقيقية التي قمت بتصميمها وتطويرها، مع التركيز على تجربة المستخدم والأداء السريع.",
       visit: "زيارة الموقع",
       projects: [
         {
+          title: "AI Nexus Hub",
+          description: "منصة ذكاء اصطناعي متكاملة تجمع أدوات وخدمات الـ AI في مكان احترافي واحد.",
+          category: "منصة AI",
+          technologies: ["React", "Tailwind CSS", "AI Integration"],
+          link: "https://ai-nexus-huub.vercel.app/"
+        },
+        {
           title: "Pyramids",
-          desc: "موقع حديث يعرض خدمات ومنتجات بشكل احترافي مع تصميم متجاوب وأداء عالي.",
+          description: "موقع حديث يعرض خدمات ومنتجات بشكل احترافي مع تصميم متجاوب وأداء عالي.",
           category: "مدونة سياحية",
           technologies: ["React", "Tailwind CSS", "Frontend Development"],
           link: "https://pyramids-eight.vercel.app/"
         },
         {
           title: "XMan",
-          desc: "متجر إلكتروني حديث للملابس مع تجربة تسوق سلسة وتصميم جذاب.",
+          description: "متجر إلكتروني حديث للملابس مع تجربة تسوق سلسة وتصميم جذاب.",
           category: "متجر ملابس",
           technologies: ["React", "Tailwind CSS", "E-commerce"],
           link: "https://xman-nine.vercel.app/"
         },
         {
           title: "Al-Shams Furniture",
-          desc: "متجر إلكتروني متخصص في بيع الأثاث المنزلي الراقي بتصميم عصري وجذاب.",
+          description: "متجر إلكتروني متخصص في بيع الأثاث المنزلي الراقي بتصميم عصري وجذاب.",
           category: "متجر أثاث",
           technologies: ["React", "Tailwind CSS", "E-commerce"],
           link: "https://al-shams-furniture.vercel.app/"
@@ -61,8 +76,8 @@ const translations = {
     },
     portfolio: {
       tag: "دراسات حالة",
-      title: "قصص نمو مثبتة",
-      filters: ["الكل", "المواقع", "التسويق", "فيديوهات الذكاء الاصطناعي"],
+      title: "قصص نجاح حقيقية",
+      filters: ["الكل", "إعلانات فيديو", "المواقع", "التسويق"],
       case: {
         tag: "نمو التجارة الإلكترونية",
         title: "توسيع FashionFlow لتصل لمليون دولار سنوياً",
@@ -80,8 +95,8 @@ const translations = {
     },
     results: {
       stats: [
-        { value: "500k+", label: "عملاء محتملون" },
-        { value: "$500k", label: "إدارة ميزانية إعلانية" },
+        { value: "50+", label: "إعلان فيديو منتج" },
+        { value: "10+", label: "مواقع ومتاجر" },
         { value: "200+", label: "مشاريع منجزة" },
         { value: "15M", label: "وصول اجتماعي" }
       ]
@@ -96,14 +111,14 @@ const translations = {
       ]
     },
     contact: {
-      title: "لنبنِ شيئاً رائعاً معاً",
-      desc: "هل أنت مستعد لنقل علامتك التجارية إلى المستوى التالي؟ أنا متاح حالياً لاستلام مشاريع جديدة.",
+      title: "جاهز تبدأ مشروعك الإعلاني؟",
+      desc: "سواء كنت تحتاج إعلان فيديو احترافي لمنتجك، أو موقع إلكتروني يحقق مبيعات، أنا متاح حالياً لاستلام مشاريع جديدة.",
       nameLabel: "الاسم الكامل",
       namePlaceholder: "أدخل اسمك هنا",
       emailLabel: "البريد الإلكتروني",
       emailPlaceholder: "name@company.com",
       subjectLabel: "الموضوع",
-      subjects: ["تطوير وتصميم المواقع", "استشارات استراتيجية النمو", "التسويق وSEO", "تنفيذ الذكاء الاصطناعي"],
+      subjects: ["إنتاج إعلان فيديو بالـ AI", "إنشاء وإدارة صفحات السوشيال ميديا", "تطوير وتصميم المواقع", "حملة إعلانية متكاملة", "استشارات استراتيجية النمو"],
       messageLabel: "الرسالة",
       messagePlaceholder: "أخبرني المزيد عن مشروعك...",
       submit: "إرسال الرسالة"
@@ -117,54 +132,69 @@ const translations = {
     nav: { about: "About", services: "Services", portfolio: "Portfolio", results: "Results", contact: "Contact Me" },
     hero: {
       badge: "Available for new projects",
-      title: "Web Developer & Digital Growth Expert Helping Brands",
-      titleHighlight: "Scale Online",
-      desc: "I help businesses grow by building fast, modern websites, implementing SEO, and executing powerful digital marketing strategies.",
+      title: "AI Video Ads & Professional Website Design That Guarantee",
+      titleHighlight: "Doubling Your Sales",
+      desc: "I provide complete digital & marketing solutions: from producing stunning AI-powered video ads, to designing and building modern websites and e-commerce stores, plus full social media page management and ad campaigns to achieve your business goals.",
       btnWork: "View My Work",
-      btnContact: "Contact Me",
-      statsGrowth: "Avg Growth"
+      btnContact: "Order Your Service Now",
+      statsGrowth: "Video Ads Produced"
     },
     about: {
-      tag: "The Expert",
-      title: "Building High-Performance Websites & Scaling Brands",
-      desc: "I specialize in building digital systems that don't just look good, but convert. By combining high-end frontend development with data-driven SEO and marketing, I help brands dominate their niche.",
-      skills: ["Web Development", "UI/UX Design", "SEO Optimization", "Digital Ads", "Content Strategy", "CRO"]
+      tag: "About Me",
+      title: "AI Video Ads Expert & Full-Stack Web Developer",
+      desc: "I combine the power of AI in producing stunning visual content with deep technical expertise in building websites and e-commerce stores. No limits to imagination: any idea for your product, company, or even for you personally, I can turn it into a professional video ad that captures attention and delivers real results.",
+      skills: ["AI Video Ads", "Web & E-commerce Dev", "SEO Optimization", "Ad Campaigns", "Creative Visual Content", "Digital Growth Strategies"]
+    },
+    videoShowcase: {
+      tag: "Ad Portfolio",
+      title: "Professional AI-Powered Video Ads",
+      desc: "Watch real examples of my work: commercial ads for products and companies, and creative content produced entirely using the latest AI technologies. All videos play right here without leaving the site.",
+      commercialTag: "Commercial Ads for Agency",
+      creativeTag: "Various Creative Works",
+      englishTag: "English Creative Content"
     },
     services: {
       tag: "Services",
       title: "Complete Digital Solutions for Your Growth",
       items: [
-        { title: "Web Development", desc: "Building fast, responsive, and SEO-optimized websites using modern technologies." },
-        { title: "UI/UX Design", desc: "Designing engaging user interfaces that provide a seamless experience and boost conversions." },
+        { title: "AI Video Ads", desc: "Turning any idea into a professional video ad that captures attention and achieves the highest engagement and sales rates." },
+        { title: "Social Media Page Management", desc: "Full creation and management of your Facebook, Instagram, and TikTok pages including content design, scheduling, and running ad campaigns to reach the maximum number of clients and audience." },
+        { title: "Web & E-commerce Dev", desc: "Building fast, responsive websites and online stores optimized for maximum conversions." },
         { title: "SEO Optimization", desc: "Dominating organic search results and driving targeted traffic to your website." },
-        { title: "Social Media Management", desc: "Building a loyal community through strategic content and active engagement." },
-        { title: "AI Solutions", desc: "Automating marketing workflows and content creation using the latest AI technologies." },
-        { title: "Conversion Rate Optimization", desc: "Turning existing traffic into revenue through psychological triggers and A/B testing." }
+        { title: "Creative Visual Content", desc: "Producing innovative visual content that strengthens your brand identity and attracts your target audience." },
+        { title: "Digital Growth Strategies", desc: "Building comprehensive marketing plans that integrate ads, content, and technology for sustainable growth." }
       ]
     },
     websites: {
       tag: "Websites I Built",
       title: "Web Design & Development Projects",
-      desc: "A collection of real websites I designed and developed for my clients, focusing on user experience, fast performance, and SEO.",
+      desc: "A collection of real websites I designed and developed, focusing on user experience and fast performance.",
       visit: "Visit Website",
       projects: [
         {
+          title: "AI Nexus Hub",
+          description: "An integrated AI platform bringing AI tools and services into one professional place.",
+          category: "AI Platform",
+          technologies: ["React", "Tailwind CSS", "AI Integration"],
+          link: "https://ai-nexus-huub.vercel.app/"
+        },
+        {
           title: "Pyramids",
-          desc: "A modern website showcasing services and products professionally with responsive design and high performance.",
+          description: "A modern website showcasing services and products professionally with responsive design and high performance.",
           category: "Travel Blog",
           technologies: ["React", "Tailwind CSS", "Frontend Development"],
           link: "https://pyramids-eight.vercel.app/"
         },
         {
           title: "XMan",
-          desc: "A modern clothing e-commerce store with a seamless shopping experience and attractive design.",
+          description: "A modern clothing e-commerce store with a seamless shopping experience and attractive design.",
           category: "Clothing Store",
           technologies: ["React", "Tailwind CSS", "E-commerce"],
           link: "https://xman-nine.vercel.app/"
         },
         {
           title: "Al-Shams Furniture",
-          desc: "An e-commerce store specializing in high-end home furniture with a modern and attractive design.",
+          description: "An e-commerce store specializing in high-end home furniture with a modern and attractive design.",
           category: "Furniture Store",
           technologies: ["React", "Tailwind CSS", "E-commerce"],
           link: "https://al-shams-furniture.vercel.app/"
@@ -173,8 +203,8 @@ const translations = {
     },
     portfolio: {
       tag: "Case Studies",
-      title: "Proven Growth Stories",
-      filters: ["All", "Websites", "Marketing", "AI Videos"],
+      title: "Real Success Stories",
+      filters: ["All", "Video Ads", "Websites", "Marketing"],
       case: {
         tag: "E-commerce Growth",
         title: "Scaling FashionFlow to $1M ARR",
@@ -192,30 +222,30 @@ const translations = {
     },
     results: {
       stats: [
-        { value: "500k+", label: "Leads Generated" },
-        { value: "$12M", label: "Ad Spend Managed" },
+        { value: "50+", label: "Video Ads Produced" },
+        { value: "10+", label: "Websites & Stores" },
         { value: "200+", label: "Projects Completed" },
         { value: "15M", label: "Social Reach" }
       ]
     },
     testimonials: {
       tag: "Testimonials",
-      title: "Trusted by Global Brands",
+      title: "Trusted by Entrepreneurs Across the Middle East",
       items: [
-        { quote: "The growth strategy implemented for our SaaS product exceeded all expectations. Our organic traffic doubled in just 3 months.", name: "David Chen", role: "CEO, TechNova" },
-        { quote: "Unmatched expertise in AI marketing. They helped us automate 70% of our content production without losing quality.", name: "Sarah Jenkins", role: "Marketing Director, GlobeBrand" },
-        { quote: "Professional, fast, and results-driven. The new website design achieved a 45% better conversion rate than our previous site.", name: "Marcus Weber", role: "Founder, Urban Eats" }
+        { quote: "Outstanding work and results came faster than expected. The new store design helped us double our sales in the UAE within a few months.", name: "Abdullah Al-Otaibi", role: "Founder of Elfeet Store, Saudi Arabia" },
+        { quote: "The website update made a huge difference in customer engagement. The speed and professionalism made us rely on them for all our future projects.", name: "Ahmed El-Naggar", role: "CEO, Property Finders, Egypt" },
+        { quote: "Deep understanding of market needs and excellent use of AI tools. They saved us a lot of time in content management and helped us gain new clients.", name: "Mariam Al-Shamsi", role: "Marketing Director, UAE" }
       ]
     },
     contact: {
-      title: "Let's Build Something Great",
-      desc: "Ready to take your brand to the next level? I'm currently available for new projects.",
+      title: "Ready to Start Your Ad Project?",
+      desc: "Whether you need a professional AI video ad for your product or a website that drives sales, I'm currently available for new projects.",
       nameLabel: "Full Name",
       namePlaceholder: "Enter your name",
       emailLabel: "Email Address",
       emailPlaceholder: "name@company.com",
       subjectLabel: "Subject",
-      subjects: ["Web Design & Development", "Growth Strategy Consulting", "Marketing & SEO", "AI Implementation"],
+      subjects: ["AI Video Ad Production", "Social Media Page Management", "Web Design & Development", "Full Ad Campaign", "Growth Strategy Consulting"],
       messageLabel: "Message",
       messagePlaceholder: "Tell me more about your project...",
       submit: "Send Message"

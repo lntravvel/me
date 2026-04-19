@@ -49,9 +49,9 @@ function Navbar() {
           <span className="text-xl font-black tracking-tighter">{lang === 'ar' ? 'مصطفى ' : 'Mostafa '}<span className="text-primary">{lang === 'ar' ? 'الخولي' : 'Elkholy'}</span></span>
         </a>
         <div className={`fixed inset-0 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-xl z-[45] flex flex-col items-center justify-center gap-8 transition-all duration-300 md:static md:bg-transparent md:dark:bg-transparent md:flex-row md:gap-8 md:p-0 ${isMenuOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-full pointer-events-none md:opacity-100 md:translate-y-0 md:pointer-events-auto'}`}>
+          <a onClick={() => setIsMenuOpen(false)} className="text-2xl md:text-sm font-medium hover:text-primary transition-colors cursor-pointer" href="#video-ads">{t.nav.portfolio}</a>
           <a onClick={() => setIsMenuOpen(false)} className="text-2xl md:text-sm font-medium hover:text-primary transition-colors cursor-pointer" href="#about">{t.nav.about}</a>
           <a onClick={() => setIsMenuOpen(false)} className="text-2xl md:text-sm font-medium hover:text-primary transition-colors cursor-pointer" href="#services">{t.nav.services}</a>
-          <a onClick={() => setIsMenuOpen(false)} className="text-2xl md:text-sm font-medium hover:text-primary transition-colors cursor-pointer" href="#portfolio">{t.nav.portfolio}</a>
           <a onClick={() => setIsMenuOpen(false)} className="text-2xl md:text-sm font-medium hover:text-primary transition-colors cursor-pointer" href="#results">{t.nav.results}</a>
           <div className="flex items-center justify-center gap-4 md:border-x border-primary/20 md:px-4 z-[50] w-full">
             <button type="button" onClick={() => { setLang('en'); setIsMenuOpen(false); }} className={`px-4 py-2 text-lg md:text-xs font-bold transition-colors cursor-pointer ${lang === 'en' ? 'text-primary' : 'text-slate-500 hover:text-primary'}`}>EN</button>
@@ -69,9 +69,6 @@ function Navbar() {
         <button className="md:hidden text-primary z-50 relative" onClick={() => setIsMenuOpen(!isMenuOpen)}>
           <span className="material-symbols-outlined">{isMenuOpen ? 'close' : 'menu'}</span>
         </button>
-        <button className="md:hidden text-primary">
-          <span className="material-symbols-outlined">menu</span>
-        </button>
       </div>
     </nav>
   );
@@ -82,7 +79,7 @@ function Hero() {
   const [spot, setSpot] = React.useState({ x: 50, y: 35 });
   return (
     <section
-      className="relative overflow-hidden pt-20 pb-32"
+      className="relative overflow-hidden py-20 sm:py-28 md:py-36"
       onMouseMove={(e) => {
         const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
         const x = ((e.clientX - rect.left) / rect.width) * 100;
@@ -91,7 +88,7 @@ function Hero() {
       }}
     >
       <div
-        className="pointer-events-none absolute inset-0 -z-10 opacity-35"
+        className="pointer-events-none absolute inset-0 -z-10 opacity-25"
         style={{
           backgroundImage: `url(${heroTechBg})`,
           backgroundSize: 'cover',
@@ -103,6 +100,7 @@ function Hero() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-20 dark:opacity-40">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/30 rounded-full blur-[120px]"></div>
         <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-primary/20 rounded-full blur-[100px]"></div>
+        <div className="absolute top-[20%] right-[20%] w-[25%] h-[25%] bg-cyan-500/15 rounded-full blur-[100px]"></div>
       </div>
       <div
         className="pointer-events-none absolute inset-0 -z-10 hero-spotlight"
@@ -110,21 +108,21 @@ function Hero() {
           background: `radial-gradient(600px circle at ${spot.x}% ${spot.y}%, rgba(100, 103, 242, 0.22), rgba(100, 103, 242, 0) 55%)`,
         }}
       />
-      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
-        <div className="space-y-6 md:space-y-8 mt-10 md:mt-0">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-wider">
+      <div className="max-w-5xl mx-auto px-6 text-center">
+        <div className="space-y-6 md:space-y-8">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-wider">
             <span className="material-symbols-outlined text-sm">verified</span> {t.hero.badge}
           </div>
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black leading-[1.1] tracking-tight">
-            {t.hero.title} <span className="text-primary">{t.hero.titleHighlight}</span>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[1.1] tracking-tight">
+            {t.hero.title} <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-400 to-primary">{t.hero.titleHighlight}</span>
           </h1>
-          <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed">
+          <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
             {t.hero.desc}
           </p>
-          <div className="flex flex-col sm:flex-row flex-wrap gap-4">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center pt-2">
             <a
-              href="#portfolio"
-              className="bg-primary text-white px-6 py-4 md:px-8 md:py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(100,103,242,0.4)] transition-all btn-neon w-full sm:w-auto"
+              href="#video-ads"
+              className="bg-primary text-white px-8 py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:shadow-[0_0_30px_rgba(100,103,242,0.5)] transition-all btn-neon text-lg"
               onMouseMove={(e) => {
                 const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
                 (e.currentTarget as HTMLElement).style.setProperty('--mx', `${((e.clientX - r.left) / r.width) * 100}%`);
@@ -138,7 +136,7 @@ function Hero() {
               href="https://wa.me/201127718978"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white px-6 py-4 md:px-8 md:py-4 rounded-xl font-bold hover:bg-slate-300 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2 btn-neon w-full sm:w-auto"
+              className="bg-green-500 text-white px-8 py-4 rounded-xl font-bold hover:bg-green-600 transition-all flex items-center justify-center gap-2 btn-neon text-lg hover:shadow-[0_0_30px_rgba(34,197,94,0.4)]"
               onMouseMove={(e) => {
                 const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
                 (e.currentTarget as HTMLElement).style.setProperty('--mx', `${((e.clientX - r.left) / r.width) * 100}%`);
@@ -146,30 +144,22 @@ function Hero() {
               }}
             >
               {t.hero.btnContact}
-              <span className="material-symbols-outlined">chat</span>
+              <WhatsAppIcon className="w-6 h-6" />
             </a>
           </div>
-        </div>
-        <div className="relative mt-8 md:mt-0 w-[85%] sm:w-3/4 mx-auto md:w-full">
-          <div className="aspect-square rounded-3xl overflow-hidden glass-card p-4 neon-border hover-lift">
-            <div
-              className="w-full h-full rounded-2xl bg-slate-200 dark:bg-slate-800 bg-cover bg-center"
-              style={{
-                backgroundImage: `url(${profileImg})`,
-                backgroundPosition: '50% 18%',
-              }}
-              role="img"
-              aria-label="Profile photo"
-            ></div>
-          </div>
-          <div className="absolute -bottom-6 -left-6 glass-card p-6 rounded-2xl shadow-xl flex items-center gap-4 animate-bounce-slow">
-            <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center text-primary">
-              <span className="material-symbols-outlined">trending_up</span>
-            </div>
-            <div>
-              <div className="text-2xl font-bold">145%</div>
-              <div className="text-xs text-slate-500 uppercase font-bold">{t.hero.statsGrowth}</div>
-            </div>
+          {/* Stats row */}
+          <div className="flex flex-wrap justify-center gap-6 sm:gap-10 pt-8 border-t border-primary/10 mt-8">
+            {[{ icon: 'play_circle', val: '50+', label: t.hero.statsGrowth }, { icon: 'devices', val: '10+', label: 'مواقع و متاجر' }, { icon: 'groups', val: '15M+', label: 'وصول اجتماعي' }].map((s, i) => (
+              <div key={i} className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                  <span className="material-symbols-outlined text-xl">{s.icon}</span>
+                </div>
+                <div>
+                  <div className="text-xl font-black">{s.val}</div>
+                  <div className="text-[11px] text-slate-500 font-bold uppercase">{s.label}</div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -225,7 +215,7 @@ function About() {
 
 function Services() {
   const { t } = useLanguage();
-  const icons = ["devices", "search_insights", "ads_click", "share_reviews", "smart_toy", "query_stats"];
+  const icons = ["play_circle", "share", "devices", "search_insights", "palette", "trending_up"];
   return (
     <section className="relative py-16 sm:py-24 overflow-hidden" id="services">
       <div className="pointer-events-none absolute inset-0 bg-tech-grid opacity-50" />
@@ -274,6 +264,7 @@ function WebsitesIBuilt() {
     if (title === 'Pyramids') return websitePyramid;
     if (title === 'XMan') return websiteXman;
     if (title === 'Al-Shams Furniture') return websiteAlShams;
+    if (title === 'AI Nexus Hub') return portfolioAiWidget;
     return portfolioAiWidget;
   };
   return (
@@ -358,108 +349,165 @@ function WebsitesIBuilt() {
   );
 }
 
-function Portfolio() {
-  const { t } = useLanguage();
+function AIVideoShowcase() {
+  const { t, lang } = useLanguage();
+
+  // Agency commercial ads - Vertical
+  const commercialVertical = [
+    { type: 'fb', id: '1472681251240450' },
+  ];
+  // Agency commercial ads - Landscape (horizontal)
+  const commercialLandscape = [
+    { type: 'fb', id: '2358849327945161' },
+    { type: 'fb', id: '1196649792393051' },
+  ];
+  // Creative works - Vertical (all YouTube + FB)
+  const creativeVideos = [
+    { type: 'yt', id: '9UrwxO4C8TE' },
+    { type: 'yt', id: 'bTKv6BfYec0' },
+    { type: 'yt', id: '5OjOQ6ykHAs' },
+    { type: 'yt', id: 'KPTgQjd_crk' },
+    { type: 'fb', id: '1254706086846854' },
+    { type: 'fb', id: '1615266119891862' },
+    { type: 'fb', id: '1424679619137107' },
+    { type: 'fb', id: '944444398380081' },
+    { type: 'fb', id: '1463842972197747' },
+    { type: 'fb', id: '918730174316668' },
+    { type: 'fb', id: '1500853358092952' },
+    { type: 'fb', id: '1509421381193474' },
+    { type: 'fb', id: '1601747434391611' },
+    { type: 'fb', id: '4357041854578147' },
+    { type: 'fb', id: '2413641192433777' },
+    { type: 'fb', id: '1656151849167213' },
+    { type: 'fb', id: '2790411684641633' },
+  ];
+  // English content
+  const englishVideos = [
+    { type: 'fb', id: '1731469424498210' },
+    { type: 'fb', id: '919910437344952' },
+    { type: 'fb', id: '2502420673511127' },
+  ];
+
+  const VideoEmbed = ({ video, landscape = false }: { video: { type: string; id: string }; landscape?: boolean }) => {
+    const aspectClass = landscape ? 'aspect-video' : 'aspect-[9/16]';
+
+    if (video.type === 'yt') {
+      return (
+        <div className={`${aspectClass} rounded-2xl overflow-hidden bg-slate-900 border border-primary/15`}>
+          <iframe
+            src={`https://www.youtube.com/embed/${video.id}`}
+            title="YouTube video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="w-full h-full"
+            loading="lazy"
+          />
+        </div>
+      );
+    }
+
+    // Use exact Facebook embed format based on orientation
+    const fbSrc = landscape
+      ? `https://www.facebook.com/plugins/video.php?height=315&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F${video.id}%2F&show_text=false&width=560&t=0`
+      : `https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F${video.id}%2F&show_text=false&width=267&t=0`;
+
+    return (
+      <div className={`${aspectClass} rounded-2xl overflow-hidden bg-slate-900 border border-primary/15 relative group`}>
+        <iframe
+          src={fbSrc}
+          title="Facebook video"
+          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+          allowFullScreen
+          className="w-full h-full"
+          loading="lazy"
+          scrolling="no"
+          style={{ border: 'none', overflow: 'hidden' }}
+        />
+        <a
+          href={`https://www.facebook.com/reel/${video.id}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute bottom-2 right-2 bg-[#1877F2] text-white rounded-full w-8 h-8 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10"
+          title="Open on Facebook"
+        >
+          <span className="material-symbols-outlined text-sm">open_in_new</span>
+        </a>
+      </div>
+    );
+  };
+
   return (
-    <section className="py-24 bg-slate-50 dark:bg-slate-900/30" id="portfolio">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-          <div>
-            <h2 className="text-primary font-bold uppercase tracking-widest mb-4">{t.portfolio.tag}</h2>
-            <h3 className="text-3xl md:text-4xl font-black">{t.portfolio.title}</h3>
+    <section className="relative py-16 sm:py-24 overflow-hidden" id="video-ads">
+      <div className="pointer-events-none absolute inset-0 bg-tech-grid opacity-40" />
+      <div className="pointer-events-none absolute -top-32 -left-32 w-[34rem] h-[34rem] bg-primary/20 rounded-full blur-[110px]" />
+      <div className="pointer-events-none absolute -bottom-32 -right-32 w-[30rem] h-[30rem] bg-primary/15 rounded-full blur-[110px]" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="text-center mb-10 sm:mb-16">
+          <h2 className="text-primary font-bold uppercase tracking-widest mb-3">{t.videoShowcase.tag}</h2>
+          <h3 className="text-3xl md:text-4xl font-black mb-4">{t.videoShowcase.title}</h3>
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+            {t.videoShowcase.desc}
+          </p>
+        </div>
+
+        {/* Commercial Ads - Vertical Reels */}
+        <div className="mb-10">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-xl bg-primary/15 border border-primary/25 flex items-center justify-center text-primary">
+              <span className="material-symbols-outlined">campaign</span>
+            </div>
+            <h4 className="text-lg sm:text-xl font-black">{t.videoShowcase.commercialTag}</h4>
           </div>
-          <div className="flex flex-wrap gap-4">
-            {t.portfolio.filters.map((filter, i) => (
-              <button key={i} className={`px-6 py-2 rounded-full border font-bold text-sm transition-all ${i === 0 ? 'border-primary bg-primary text-white' : 'border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-primary'}`}>
-                {filter}
-              </button>
+          <div className="grid grid-cols-1 gap-3 sm:gap-4 max-w-xs">
+            {commercialVertical.map((video, i) => (
+              <VideoEmbed key={`cv-${i}`} video={video} />
             ))}
           </div>
         </div>
-        <div className="space-y-12">
-          <div className="glass-card rounded-[2rem] p-6 lg:p-8 flex flex-col lg:flex-row items-center gap-6 border border-primary/40 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent overflow-hidden relative neon-border hover-lift">
-            <div
-              className="pointer-events-none absolute inset-0 opacity-20"
-              style={{
-                backgroundImage: `url(${portfolioAiWidget})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-              }}
-            />
-            <div className="shrink-0 w-20 h-20 rounded-2xl bg-[#1877F2] flex items-center justify-center text-white">
-              <FacebookIcon className="w-10 h-10" />
-            </div>
-            <div className="flex-1 text-center lg:text-right relative">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/30 text-[11px] sm:text-xs font-bold tracking-widest text-primary mb-3">
-                <span className="material-symbols-outlined text-sm">auto_awesome</span>
-                <span>من أعمالي</span>
-              </div>
-              <h4 className="text-xl sm:text-2xl font-black mb-3">معرض فيديوهات وريلز لعملائي بالذكاء الاصطناعي</h4>
-              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 mb-5 max-w-2xl mx-auto lg:mx-0">
-                شاهد أعمال حقيقية قمت بتنفيذها لعملائي على فيسبوك، تضم ريلز وفيديوهات دعائية تم إنتاجها وتطويرها بالذكاء الاصطناعي.
-              </p>
-              <a
-                href="https://www.facebook.com/profile.php?id=100071726420422"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex flex-row-reverse items-center justify-center lg:justify-start gap-2 px-5 py-3 rounded-xl bg-[#1877F2] text-white font-bold hover:bg-[#1459b8] transition-colors text-sm sm:text-base w-full sm:w-auto"
-              >
-                <span className="material-symbols-outlined text-sm">open_in_new</span>
-                من أعمالي على فيسبوك
-              </a>
-            </div>
-          </div>
-          <div className="glass-card rounded-[2rem] overflow-hidden flex flex-col lg:flex-row group border-0 shadow-2xl">
-            <div className="lg:w-1/2 overflow-hidden h-64 lg:h-auto">
-              <img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 object-top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkZ1u2sSLJC88v352CESQt0cj5BDAV5mu54AUb-wZYaQUFhFN9NDj5xD2Sid61EgLBhX_wtsvch4HWjqRzeJ_UJ-1MOyDdOBX-sxs6A1A_9iwlvSvVvc80i5WRM5UA8RFOUqlIybyFNEKvKwI2P48uwOA-1N-o14EFwEaY4e63_-9blZq6A-vjnw2PA1ycdsSoJi7Yf4YA2XEprpB2PYIT9ehYtfCcC0N2gv-U9pGxjdgHzGsSU1qhyG71WJY3RCdwaUXfRysHK5g" alt="Modern e-commerce interface mockup on laptop" referrerPolicy="no-referrer" />
-            </div>
-            <div className="lg:w-1/2 p-6 md:p-10 lg:p-12 flex flex-col justify-center">
-              <div className="text-primary font-bold text-xs sm:text-sm mb-3">{t.portfolio.case.tag}</div>
-              <h4 className="text-2xl sm:text-3xl font-black mb-6 md:mb-8 italic">{t.portfolio.case.title}</h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
-                <div>
-                  <h5 className="font-bold text-primary mb-2 flex items-center gap-2"><span className="material-symbols-outlined text-sm">problem</span> {t.portfolio.case.problemTitle}</h5>
-                  <p className="text-sm text-slate-500 leading-relaxed">{t.portfolio.case.problemDesc}</p>
-                </div>
-                <div>
-                  <h5 className="font-bold text-primary mb-2 flex items-center gap-2"><span className="material-symbols-outlined text-sm">rocket</span> {t.portfolio.case.strategyTitle}</h5>
-                  <p className="text-sm text-slate-500 leading-relaxed">{t.portfolio.case.strategyDesc}</p>
-                </div>
-                <div className="col-span-1 sm:col-span-2 border-t border-slate-200 dark:border-slate-800 pt-5 md:pt-6">
-                  <h5 className="font-bold text-primary mb-2 flex items-center gap-2"><span className="material-symbols-outlined text-sm">analytics</span> {t.portfolio.case.resultsTitle}</h5>
-                  <p className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">{t.portfolio.case.resultsDesc}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
-function VideoShowcase() {
-  const { t } = useLanguage();
-  return (
-    <section className="py-24">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-primary font-bold uppercase tracking-widest mb-4">{t.video.tag}</h2>
-          <h3 className="text-3xl md:text-4xl font-black">{t.video.title}</h3>
+        {/* Commercial Ads - Landscape */}
+        <div className="mb-10">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-xl bg-primary/15 border border-primary/25 flex items-center justify-center text-primary">
+              <span className="material-symbols-outlined">desktop_windows</span>
+            </div>
+            <h4 className="text-lg sm:text-xl font-black">{lang === 'ar' ? 'فيديوهات إعلانية' : 'Ad Videos'}</h4>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+            {commercialLandscape.map((video, i) => (
+              <VideoEmbed key={`cl-${i}`} video={video} landscape />
+            ))}
+          </div>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-          <a href="https://www.facebook.com/reel/1615266119891862" target="_blank" rel="noopener noreferrer" className="aspect-[9/16] bg-slate-200 dark:bg-slate-800 rounded-2xl relative overflow-hidden group cursor-pointer block">
-            <img className="w-full h-full object-cover" src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=800&auto=format&fit=crop" alt="Facebook Reel 1" referrerPolicy="no-referrer" />
-            <div className="absolute inset-0 bg-primary/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-              <span className="material-symbols-outlined text-6xl text-white">play_circle</span>
+
+        {/* Creative Works - Vertical */}
+        <div>
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-xl bg-primary/15 border border-primary/25 flex items-center justify-center text-primary">
+              <span className="material-symbols-outlined">auto_awesome</span>
             </div>
-          </a>
-          <a href="https://www.facebook.com/reel/1254706086846854/?s=single_unit" target="_blank" rel="noopener noreferrer" className="aspect-[9/16] bg-slate-200 dark:bg-slate-800 rounded-2xl relative overflow-hidden group cursor-pointer block">
-            <img className="w-full h-full object-cover" src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?q=80&w=800&auto=format&fit=crop" alt="Facebook Reel 2" referrerPolicy="no-referrer" />
-            <div className="absolute inset-0 bg-primary/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-              <span className="material-symbols-outlined text-6xl text-white">play_circle</span>
+            <h4 className="text-lg sm:text-xl font-black">{t.videoShowcase.creativeTag}</h4>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+            {creativeVideos.map((video, i) => (
+              <VideoEmbed key={`cr-${i}`} video={video} />
+            ))}
+          </div>
+        </div>
+
+        {/* English Content */}
+        <div className="mt-10">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-xl bg-primary/15 border border-primary/25 flex items-center justify-center text-primary">
+              <span className="material-symbols-outlined">language</span>
             </div>
-          </a>
+            <h4 className="text-lg sm:text-xl font-black">{lang === 'ar' ? 'محتوى إبداعي باللغة الإنجليزية' : 'English Creative Content'}</h4>
+          </div>
+          <div className="grid grid-cols-3 gap-3 sm:gap-4 max-w-2xl">
+            {englishVideos.map((video, i) => (
+              <VideoEmbed key={`en-${i}`} video={video} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -639,15 +687,25 @@ export default function App() {
         </style>
         <Navbar />
         <Hero />
+        <AIVideoShowcase />
+        <WebsitesIBuilt />
         <About />
         <Services />
-        <WebsitesIBuilt />
-        <Portfolio />
-        <VideoShowcase />
         <Results />
         <Testimonials />
         <Contact />
         <Footer />
+
+        {/* Floating WhatsApp Button */}
+        <a
+          href="https://wa.me/201127718978"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center shadow-[0_4px_20px_rgba(34,197,94,0.5)] hover:shadow-[0_4px_30px_rgba(34,197,94,0.7)] transition-all hover:scale-110 animate-bounce-slow"
+          aria-label="Chat on WhatsApp"
+        >
+          <WhatsAppIcon className="w-7 h-7 sm:w-8 sm:h-8" />
+        </a>
       </div>
     </LanguageProvider>
   );
