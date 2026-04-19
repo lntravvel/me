@@ -1,6 +1,6 @@
 import React from 'react';
 import { LanguageProvider, useLanguage } from './i18n';
-import profileImg from './assets/profile.png';
+// Profile image removed
 import heroTechBg from './assets/ai/hero-tech-bg.png';
 import about1 from './assets/ai/about-1.png';
 import about2 from './assets/ai/about-2.png';
@@ -79,7 +79,7 @@ function Hero() {
   const [spot, setSpot] = React.useState({ x: 50, y: 35 });
   return (
     <section
-      className="relative overflow-hidden py-20 sm:py-28 md:py-36"
+      className="relative overflow-hidden py-14 sm:py-20 md:py-28"
       onMouseMove={(e) => {
         const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
         const x = ((e.clientX - rect.left) / rect.width) * 100;
@@ -148,7 +148,7 @@ function Hero() {
             </a>
           </div>
           {/* Stats row */}
-          <div className="flex flex-wrap justify-center gap-6 sm:gap-10 pt-8 border-t border-primary/10 mt-8">
+          <div className="flex flex-wrap justify-center gap-6 sm:gap-10 pt-6 border-t border-primary/10 mt-6">
             {[{ icon: 'play_circle', val: '50+', label: t.hero.statsGrowth }, { icon: 'devices', val: '10+', label: 'مواقع و متاجر' }, { icon: 'groups', val: '15M+', label: 'وصول اجتماعي' }].map((s, i) => (
               <div key={i} className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
@@ -170,7 +170,7 @@ function Hero() {
 function About() {
   const { t } = useLanguage();
   return (
-    <section className="py-16 sm:py-24 bg-slate-50 dark:bg-slate-900/30" id="about">
+    <section className="py-12 sm:py-16 bg-slate-50 dark:bg-slate-900/30" id="about">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
           <div className="grid grid-cols-2 gap-4">
@@ -214,10 +214,10 @@ function About() {
 }
 
 function Services() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const icons = ["play_circle", "share", "devices", "search_insights", "palette", "trending_up"];
   return (
-    <section className="relative py-16 sm:py-24 overflow-hidden" id="services">
+    <section className="relative py-12 sm:py-16 overflow-hidden" id="services">
       <div className="pointer-events-none absolute inset-0 bg-tech-grid opacity-50" />
       <div className="pointer-events-none absolute inset-0 bg-scanlines" />
       <div className="pointer-events-none absolute -top-32 -left-32 w-[34rem] h-[34rem] bg-primary/20 rounded-full blur-[110px]" />
@@ -248,7 +248,7 @@ function Services() {
 
               <div className="mt-4 sm:mt-8 pt-3 sm:pt-6 border-t border-primary/10 text-[9px] sm:text-[11px] md:text-xs font-bold text-slate-500 dark:text-slate-400 flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2">
                 <span className="material-symbols-outlined text-xs sm:text-sm text-primary">bolt</span>
-                نتائج قابلة للقياس + تنفيذ سريع
+                {lang === 'ar' ? 'نتائج قابلة للقياس + تنفيذ سريع' : 'Measurable Results + Fast Delivery'}
               </div>
             </div>
           ))}
@@ -268,7 +268,7 @@ function WebsitesIBuilt() {
     return portfolioAiWidget;
   };
   return (
-    <section className="relative py-16 sm:py-24 overflow-hidden" id="websites">
+    <section className="relative py-12 sm:py-16 overflow-hidden" id="websites">
       <div className="pointer-events-none absolute inset-0 bg-tech-grid opacity-35" />
       <div className="pointer-events-none absolute -top-32 -right-32 w-[30rem] h-[30rem] bg-primary/15 rounded-full blur-[110px]" />
       <div className="max-w-7xl mx-auto px-6">
@@ -361,31 +361,34 @@ function AIVideoShowcase() {
     { type: 'fb', id: '2358849327945161' },
     { type: 'fb', id: '1196649792393051' },
   ];
-  // Creative works - Vertical (all YouTube + FB)
+  // Creative works - Arabic YouTube
   const creativeVideos = [
     { type: 'yt', id: '9UrwxO4C8TE' },
     { type: 'yt', id: 'bTKv6BfYec0' },
     { type: 'yt', id: '5OjOQ6ykHAs' },
     { type: 'yt', id: 'KPTgQjd_crk' },
-    { type: 'fb', id: '1254706086846854' },
-    { type: 'fb', id: '1615266119891862' },
-    { type: 'fb', id: '1424679619137107' },
-    { type: 'fb', id: '944444398380081' },
-    { type: 'fb', id: '1463842972197747' },
-    { type: 'fb', id: '918730174316668' },
-    { type: 'fb', id: '1500853358092952' },
-    { type: 'fb', id: '1509421381193474' },
-    { type: 'fb', id: '1601747434391611' },
-    { type: 'fb', id: '4357041854578147' },
-    { type: 'fb', id: '2413641192433777' },
-    { type: 'fb', id: '1656151849167213' },
-    { type: 'fb', id: '2790411684641633' },
+    { type: 'yt', id: '0Wie5OCS6iI' },
+    { type: 'yt', id: 'blBTGPGpdHY' },
+    { type: 'yt', id: 'TYRUjMeQ4vU' },
+    { type: 'yt', id: 'PILbptQAFfQ' },
+    { type: 'yt', id: 'khIN9O_Qtnc' },
+    { type: 'yt', id: 'ILQpbKpRUyw' },
+    { type: 'yt', id: 'b4WyWk1bpkM' },
+    { type: 'yt', id: 'n5DzAx6guRc' },
+    { type: 'yt', id: '5OuHwlRx5hw' },
+    { type: 'yt', id: 'GWlLfYCROhA' },
+    { type: 'yt', id: 'ipX_80ISY2Q' },
+    { type: 'yt', id: '3GqULo2NXk4' },
+    { type: 'yt', id: 'DQS6UZcfLXo' },
   ];
-  // English content
+  // English content - YouTube
   const englishVideos = [
-    { type: 'fb', id: '1731469424498210' },
-    { type: 'fb', id: '919910437344952' },
-    { type: 'fb', id: '2502420673511127' },
+    { type: 'yt', id: 'Q6OgKInJ_iA' },
+    { type: 'yt', id: 'eqPAE9miB9I' },
+    { type: 'yt', id: 'PevzmmcuaJQ' },
+    { type: 'yt', id: 'yLfHh83FXbY' },
+    { type: 'yt', id: 'S6xk7pVQZTs' },
+    { type: 'yt', id: 'qV-mjR78Fqc' },
   ];
 
   const VideoEmbed = ({ video, landscape = false }: { video: { type: string; id: string }; landscape?: boolean }) => {
@@ -503,7 +506,7 @@ function AIVideoShowcase() {
             </div>
             <h4 className="text-lg sm:text-xl font-black">{lang === 'ar' ? 'محتوى إبداعي باللغة الإنجليزية' : 'English Creative Content'}</h4>
           </div>
-          <div className="grid grid-cols-3 gap-3 sm:gap-4 max-w-2xl">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
             {englishVideos.map((video, i) => (
               <VideoEmbed key={`en-${i}`} video={video} />
             ))}
@@ -517,7 +520,7 @@ function AIVideoShowcase() {
 function Results() {
   const { t } = useLanguage();
   return (
-    <section className="py-24 bg-primary text-white overflow-hidden relative" id="results">
+    <section className="py-14 sm:py-16 bg-primary text-white overflow-hidden relative" id="results">
       <div className="absolute top-0 right-0 w-1/2 h-full bg-white/5 skew-x-12 translate-x-1/2"></div>
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 text-center">
@@ -541,7 +544,7 @@ function Testimonials() {
     "https://lh3.googleusercontent.com/aida-public/AB6AXuAxSRkbjEUDTPXhfntxC1MD146ViHtZl3Pi_wagWW8gavSRyZ3uwiFpHEyQylSOpGEr14E7IituVV5xfvLT4WqPn3oG8LGEgl3VZksWrKRKaX5G1GwhfpRB_zwCmLtu1L-25q6gzMme2hlIiEC28A0n8CL_okbQVIkJuxO8rEL6hUMuA5dG0ln2FhJjKbZUqUh3x2DtmH7W1zuPCdMh4gNkJDsP1Y1RCyvRwtRm-sULwhsHWDFc57diEjkRYYOZJKu54DgMTQF63ZM"
   ];
   return (
-    <section className="py-24">
+    <section className="py-12 sm:py-16">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-primary font-bold uppercase tracking-widest mb-4">{t.testimonials.tag}</h2>
@@ -568,75 +571,67 @@ function Testimonials() {
 }
 
 function Contact() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   return (
-    <section className="py-16 sm:py-24 bg-slate-50 dark:bg-slate-900/30" id="contact">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="glass-card rounded-[2.25rem] sm:rounded-[3rem] p-6 sm:p-8 md:p-14 lg:p-20 overflow-hidden relative">
-          <div className="absolute bottom-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[80px] -z-10"></div>
-          <div className="grid md:grid-cols-2 gap-10 md:gap-20">
-            <div>
-              <h3 className="text-3xl lg:text-5xl font-black mb-4 sm:mb-6">{t.contact.title}</h3>
-              <p className="text-sm sm:text-base lg:text-lg text-slate-600 dark:text-slate-400 mb-8 lg:mb-10 leading-relaxed">{t.contact.desc}</p>
-              <div className="space-y-5 sm:space-y-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary shrink-0">
-                    <span className="material-symbols-outlined text-xl sm:text-2xl">mail</span>
-                  </div>
-                  <span className="font-bold text-sm sm:text-base lg:text-lg break-all">mostafa.elkholy.dp@gmail.com</span>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500/10 rounded-xl flex items-center justify-center text-green-500 shrink-0">
-                    <WhatsAppIcon className="w-5 h-5 sm:w-6 sm:h-6" />
-                  </div>
-                  <span className="font-bold text-base sm:text-lg" dir="ltr">01127718978</span>
-                </div>
-              </div>
-              <div className="flex gap-4 mt-8 sm:mt-12">
-                <a
-                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition-all shadow-sm"
-                  href="https://www.facebook.com/mostafakholy007/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Personal Facebook page"
-                >
-                  <FacebookIcon className="w-5 h-5 sm:w-6 sm:h-6" />
-                </a>
-                <a
-                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-green-500/10 text-green-500 flex items-center justify-center hover:bg-green-500 hover:text-white transition-all shadow-sm"
-                  href="https://wa.me/201127718978"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="WhatsApp chat"
-                >
-                  <WhatsAppIcon className="w-5 h-5 sm:w-6 sm:h-6" />
-                </a>
-              </div>
+    <section className="py-12 sm:py-16 bg-slate-50 dark:bg-slate-900/30" id="contact">
+      <div className="max-w-4xl mx-auto px-6">
+        <div className="text-center mb-8 sm:mb-12">
+          <h3 className="text-3xl lg:text-4xl font-black mb-3">{t.contact.title}</h3>
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-xl mx-auto">{t.contact.desc}</p>
+        </div>
+
+        <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 mb-8">
+          {/* WhatsApp CTA */}
+          <a
+            href="https://wa.me/201127718978"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="glass-card rounded-2xl p-6 sm:p-8 flex flex-col items-center text-center gap-4 group hover:shadow-[0_0_40px_rgba(34,197,94,0.2)] transition-all neon-border cursor-pointer"
+          >
+            <div className="w-16 h-16 rounded-2xl bg-green-500/15 border border-green-500/25 flex items-center justify-center text-green-500 group-hover:scale-110 transition-transform">
+              <WhatsAppIcon className="w-8 h-8" />
             </div>
-            <form className="space-y-5 sm:space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                <div className="space-y-2">
-                  <label className="text-sm font-bold mx-1">{t.contact.nameLabel}</label>
-                  <input className="w-full bg-white dark:bg-background-dark border-primary/20 rounded-xl p-4 focus:ring-2 focus:ring-primary outline-none transition-all" placeholder={t.contact.namePlaceholder} type="text" />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-bold mx-1">{t.contact.emailLabel}</label>
-                  <input className="w-full bg-white dark:bg-background-dark border-primary/20 rounded-xl p-4 focus:ring-2 focus:ring-primary outline-none transition-all" placeholder={t.contact.emailPlaceholder} type="email" />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-bold mx-1">{t.contact.subjectLabel}</label>
-                <select className="w-full bg-white dark:bg-background-dark border-primary/20 rounded-xl p-4 focus:ring-2 focus:ring-primary outline-none transition-all appearance-none">
-                  {t.contact.subjects.map((sub, i) => <option key={i}>{sub}</option>)}
-                </select>
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-bold mx-1">{t.contact.messageLabel}</label>
-                <textarea className="w-full bg-white dark:bg-background-dark border-primary/20 rounded-xl p-4 focus:ring-2 focus:ring-primary outline-none transition-all" placeholder={t.contact.messagePlaceholder} rows={4}></textarea>
-              </div>
-              <button className="w-full bg-primary text-white py-4 rounded-xl font-bold hover:shadow-xl transition-all uppercase tracking-widest">{t.contact.submit}</button>
-            </form>
-          </div>
+            <div>
+              <h4 className="text-lg font-black mb-1 group-hover:text-green-500 transition-colors">{lang === 'ar' ? 'تواصل عبر واتساب' : 'Chat on WhatsApp'}</h4>
+              <p className="text-sm text-slate-500" dir="ltr">01127718978</p>
+              <p className="text-xs text-green-500 font-bold mt-2">{lang === 'ar' ? 'رد فوري خلال دقائق ⚡' : 'Instant reply within minutes ⚡'}</p>
+            </div>
+          </a>
+
+          {/* Email CTA */}
+          <a
+            href="mailto:mostafa.elkholy.dp@gmail.com"
+            className="glass-card rounded-2xl p-6 sm:p-8 flex flex-col items-center text-center gap-4 group hover:shadow-[0_0_40px_rgba(100,103,242,0.2)] transition-all neon-border cursor-pointer"
+          >
+            <div className="w-16 h-16 rounded-2xl bg-primary/15 border border-primary/25 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+              <span className="material-symbols-outlined text-3xl">mail</span>
+            </div>
+            <div>
+              <h4 className="text-lg font-black mb-1 group-hover:text-primary transition-colors">{lang === 'ar' ? 'أرسل بريد إلكتروني' : 'Send an Email'}</h4>
+              <p className="text-sm text-slate-500 break-all">mostafa.elkholy.dp@gmail.com</p>
+              <p className="text-xs text-primary font-bold mt-2">{lang === 'ar' ? 'رد خلال 24 ساعة 📩' : 'Reply within 24 hours 📩'}</p>
+            </div>
+          </a>
+        </div>
+
+        {/* Social links */}
+        <div className="flex justify-center gap-4">
+          <a
+            className="w-11 h-11 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center hover:bg-[#1877F2] hover:text-white transition-all"
+            href="https://www.facebook.com/mostafakholy007/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FacebookIcon className="w-5 h-5" />
+          </a>
+          <a
+            className="w-11 h-11 rounded-full bg-green-500/10 text-green-500 flex items-center justify-center hover:bg-green-500 hover:text-white transition-all"
+            href="https://wa.me/201127718978"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <WhatsAppIcon className="w-5 h-5" />
+          </a>
         </div>
       </div>
     </section>
