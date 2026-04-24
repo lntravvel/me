@@ -155,3 +155,19 @@ html, body {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+@media (max-width: 767px) {
+  .glass-card {
+    backdrop-filter: none;
+    box-shadow: 0 8px 20px rgba(2, 6, 23, 0.18);
+  }
+
+  .bg-tech-grid {
+    background-size: 90px 90px;
+    opacity: 0.45;
+  }
+
+  .marquee-track {
+    animation-duration: 45s;
+  }
+}

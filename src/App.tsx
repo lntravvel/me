@@ -224,7 +224,7 @@ function Hero() {
 function About() {
   const { t } = useLanguage();
   return (
-    <FadeIn className="py-12 sm:py-16 bg-slate-50 dark:bg-slate-900/30" id="about">
+    <FadeIn className="py-12 sm:py-16 bg-slate-100 dark:bg-slate-950/80" id="about">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
           <div className="grid grid-cols-2 gap-4">
@@ -249,15 +249,15 @@ function About() {
               ></div>
             </div>
           </div>
-          <div>
+          <div className="rounded-3xl bg-white/70 dark:bg-slate-900/65 border border-primary/10 p-5 sm:p-7">
             <h2 className="text-primary font-bold uppercase tracking-widest mb-4">{t.about.tag}</h2>
-            <h3 className="text-3xl md:text-4xl font-black mb-6 leading-tight">{t.about.title}</h3>
-            <p className="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl text-slate-900 dark:text-slate-100 font-black mb-6 leading-tight">{t.about.title}</h3>
+            <p className="text-sm sm:text-base text-slate-700 dark:text-slate-200 mb-8 leading-relaxed">
               {t.about.desc}
             </p>
-            <div className="grid grid-cols-2 gap-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-y-6">
               {t.about.skills.map((skill, i) => (
-                <div key={i} className="flex items-center gap-3"><span className="material-symbols-outlined text-primary">check_circle</span><span className="font-bold">{skill}</span></div>
+                <div key={i} className="flex items-center gap-3"><span className="material-symbols-outlined text-primary">check_circle</span><span className="font-bold text-slate-800 dark:text-slate-100">{skill}</span></div>
               ))}
             </div>
           </div>
@@ -324,7 +324,7 @@ function PerformanceAdsSection() {
   const { t, lang } = useLanguage();
 
   return (
-    <section className="relative py-12 sm:py-16 overflow-hidden bg-slate-50 dark:bg-slate-900/30" id="ad-management">
+    <section className="relative py-12 sm:py-16 overflow-hidden bg-slate-100 dark:bg-slate-950/85" id="ad-management">
       <div className="pointer-events-none absolute inset-0 bg-tech-grid opacity-35" />
       <div className="pointer-events-none absolute -top-24 -left-24 w-[26rem] h-[26rem] bg-primary/20 rounded-full blur-[100px]" />
       <div className="pointer-events-none absolute -bottom-24 -right-24 w-[24rem] h-[24rem] bg-cyan-500/10 rounded-full blur-[100px]" />
@@ -333,7 +333,7 @@ function PerformanceAdsSection() {
         <div className="text-center mb-8 sm:mb-12">
           <h2 className="text-primary font-bold uppercase tracking-widest mb-3">{t.performanceAds.tag}</h2>
           <h3 className="text-3xl md:text-4xl font-black mb-4">{t.performanceAds.title}</h3>
-          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base text-slate-700 dark:text-slate-100 max-w-3xl mx-auto leading-relaxed">
             {t.performanceAds.desc}
           </p>
         </div>
@@ -342,13 +342,13 @@ function PerformanceAdsSection() {
           <div className="lg:col-span-2 glass-card rounded-3xl p-6 sm:p-8 neon-border">
             <div className="flex items-center gap-3 mb-6">
               <span className="material-symbols-outlined text-primary text-2xl">ads_click</span>
-              <h4 className="text-xl font-black">{lang === 'ar' ? 'ماذا يشمل التنفيذ؟' : 'What is included?'}</h4>
+              <h4 className="text-xl text-slate-900 dark:text-slate-100 font-black">{lang === 'ar' ? 'ماذا يشمل التنفيذ؟' : 'What is included?'}</h4>
             </div>
             <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
               {t.performanceAds.points.map((point, i) => (
                 <div key={i} className="rounded-2xl border border-primary/15 bg-white/60 dark:bg-slate-950/30 p-4 flex items-start gap-3">
                   <span className="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
-                  <p className="text-sm text-slate-700 dark:text-slate-200 leading-relaxed">{point}</p>
+                  <p className="text-sm text-slate-800 dark:text-slate-100 leading-relaxed">{point}</p>
                 </div>
               ))}
             </div>
@@ -357,11 +357,11 @@ function PerformanceAdsSection() {
           <div className="glass-card rounded-3xl p-6 sm:p-8 neon-border flex flex-col">
             <div className="flex items-center gap-3 mb-5">
               <span className="material-symbols-outlined text-primary text-2xl">trending_up</span>
-              <h4 className="text-xl font-black">{lang === 'ar' ? 'النتائج المتوقعة' : 'Expected outcomes'}</h4>
+              <h4 className="text-xl text-slate-900 dark:text-slate-100 font-black">{lang === 'ar' ? 'النتائج المتوقعة' : 'Expected outcomes'}</h4>
             </div>
             <div className="space-y-3 mb-8">
               {t.performanceAds.outcomes.map((outcome, i) => (
-                <div key={i} className="flex items-center gap-3 text-sm font-bold text-slate-700 dark:text-slate-200">
+                <div key={i} className="flex items-center gap-3 text-sm font-bold text-slate-800 dark:text-slate-100">
                   <span className="material-symbols-outlined text-primary">bolt</span>
                   <span>{outcome}</span>
                 </div>
@@ -483,9 +483,20 @@ function WebsitesIBuilt() {
 
 function AIVideoShowcase() {
   const { t, lang } = useLanguage();
+  const [isMobile, setIsMobile] = React.useState(false);
+  const [showAllCreative, setShowAllCreative] = React.useState(false);
+  const [showAllEnglish, setShowAllEnglish] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Agency commercial ads - Vertical
   const commercialVertical = [
+    { type: 'yt', id: 'QI9ROeA6FEE' },
     { type: 'fb', id: '1472681251240450' },
     { type: 'yt', id: '_EB5fRzWhhY' },
   ];
@@ -528,6 +539,9 @@ function AIVideoShowcase() {
     { type: 'yt', id: 'qV-mjR78Fqc' },
   ];
 
+  const visibleCreativeVideos = isMobile && !showAllCreative ? creativeVideos.slice(0, 8) : creativeVideos;
+  const visibleEnglishVideos = isMobile && !showAllEnglish ? englishVideos.slice(0, 4) : englishVideos;
+
   const VideoEmbed = ({ video, landscape = false, index = 0 }: { video: { type: string; id: string }; landscape?: boolean; index?: number }) => {
     const aspectClass = landscape ? 'aspect-video' : 'aspect-[9/16]';
     const staggerDelay = (index % 5) * 0.15;
@@ -539,7 +553,7 @@ function AIVideoShowcase() {
           whileInView={{ opacity: 1, x: 0, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, delay: staggerDelay, ease: "easeOut" }}
-          className={`${aspectClass} rounded-2xl overflow-hidden bg-slate-900 border border-primary/15`}
+          className={`${aspectClass} rounded-2xl overflow-hidden bg-slate-900 border border-primary/15 shadow-[0_10px_25px_rgba(2,6,23,0.35)] hover:shadow-[0_18px_40px_rgba(15,23,42,0.45)] transition-shadow`}
         >
           <iframe
             src={`https://www.youtube.com/embed/${video.id}`}
@@ -564,7 +578,7 @@ function AIVideoShowcase() {
         whileInView={{ opacity: 1, x: 0, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 0.6, delay: staggerDelay, ease: "easeOut" }}
-        className={`${aspectClass} rounded-2xl overflow-hidden bg-slate-900 border border-primary/15 relative group`}
+        className={`${aspectClass} rounded-2xl overflow-hidden bg-slate-900 border border-primary/15 relative group shadow-[0_10px_25px_rgba(2,6,23,0.35)] hover:shadow-[0_18px_40px_rgba(15,23,42,0.45)] transition-shadow`}
       >
         <iframe
           src={fbSrc}
@@ -604,14 +618,14 @@ function AIVideoShowcase() {
         </div>
 
         {/* Commercial Ads - Vertical Reels */}
-        <div className="mb-10">
+        <div className="mb-10 glass-card rounded-3xl p-4 sm:p-6 md:p-8 border border-primary/10">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl bg-primary/15 border border-primary/25 flex items-center justify-center text-primary">
               <span className="material-symbols-outlined">campaign</span>
             </div>
             <h4 className="text-lg sm:text-xl font-black">{t.videoShowcase.commercialTag}</h4>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-xs sm:max-w-none">
+          <div className="grid grid-cols-1 min-[480px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
             {commercialVertical.map((video, i) => (
               <VideoEmbed key={`cv-${i}`} video={video} index={i} />
             ))}
@@ -619,7 +633,7 @@ function AIVideoShowcase() {
         </div>
 
         {/* Commercial Ads - Landscape */}
-        <div className="mb-10">
+        <div className="mb-10 glass-card rounded-3xl p-4 sm:p-6 md:p-8 border border-primary/10">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl bg-primary/15 border border-primary/25 flex items-center justify-center text-primary">
               <span className="material-symbols-outlined">desktop_windows</span>
@@ -635,33 +649,55 @@ function AIVideoShowcase() {
 
 
         {/* Creative Works - Vertical */}
-        <div>
+        <div className="glass-card rounded-3xl p-4 sm:p-6 md:p-8 border border-primary/10">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl bg-primary/15 border border-primary/25 flex items-center justify-center text-primary">
               <span className="material-symbols-outlined">auto_awesome</span>
             </div>
             <h4 className="text-lg sm:text-xl font-black">{t.videoShowcase.creativeTag}</h4>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
-            {creativeVideos.map((video, i) => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            {visibleCreativeVideos.map((video, i) => (
               <VideoEmbed key={`cr-${i}`} video={video} index={i} />
             ))}
           </div>
+          {isMobile && creativeVideos.length > 8 && (
+            <div className="mt-5 flex justify-center">
+              <button
+                type="button"
+                onClick={() => setShowAllCreative((prev) => !prev)}
+                className="px-5 py-2 rounded-xl bg-primary/10 text-primary font-bold text-sm border border-primary/20"
+              >
+                {showAllCreative ? (lang === 'ar' ? 'عرض أقل' : 'Show less') : (lang === 'ar' ? 'عرض المزيد' : 'Show more')}
+              </button>
+            </div>
+          )}
         </div>
 
         {/* English Content */}
-        <div className="mt-10">
+        <div className="mt-10 glass-card rounded-3xl p-4 sm:p-6 md:p-8 border border-primary/10">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl bg-primary/15 border border-primary/25 flex items-center justify-center text-primary">
               <span className="material-symbols-outlined">language</span>
             </div>
             <h4 className="text-lg sm:text-xl font-black">{t.videoShowcase.englishTag}</h4>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
-            {englishVideos.map((video, i) => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+            {visibleEnglishVideos.map((video, i) => (
               <VideoEmbed key={`en-${i}`} video={video} index={i} />
             ))}
           </div>
+          {isMobile && englishVideos.length > 4 && (
+            <div className="mt-5 flex justify-center">
+              <button
+                type="button"
+                onClick={() => setShowAllEnglish((prev) => !prev)}
+                className="px-5 py-2 rounded-xl bg-primary/10 text-primary font-bold text-sm border border-primary/20"
+              >
+                {showAllEnglish ? (lang === 'ar' ? 'عرض أقل' : 'Show less') : (lang === 'ar' ? 'عرض المزيد' : 'Show more')}
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </FadeIn>
@@ -701,7 +737,7 @@ function Testimonials() {
           <h2 className="text-primary font-bold uppercase tracking-widest mb-4">{t.testimonials.tag}</h2>
           <h3 className="text-3xl md:text-4xl font-black">{t.testimonials.title}</h3>
         </div>
-        <div className="flex overflow-x-auto overflow-y-hidden snap-x snap-mandatory hide-scrollbar gap-4 sm:gap-6 pb-6 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {t.testimonials.items.map((item, i) => (
             <motion.div
               key={i}
@@ -709,10 +745,10 @@ function Testimonials() {
               whileInView={{ opacity: 1, x: 0, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: i * 0.15, ease: "easeOut" }}
-              className="min-w-[85vw] sm:min-w-[400px] md:min-w-0 snap-center glass-card p-6 sm:p-8 md:p-10 rounded-3xl relative flex-shrink-0"
+              className="glass-card p-5 sm:p-7 md:p-10 rounded-3xl relative"
             >
               <span className="material-symbols-outlined text-primary text-5xl md:text-6xl opacity-20 absolute top-4 right-5 sm:right-8">format_quote</span>
-              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 italic mb-6 sm:mb-8 leading-relaxed mt-4 sm:mt-0 relative z-10 w-full whitespace-normal">"{item.quote}"</p>
+              <p className="text-sm sm:text-base text-slate-700 dark:text-slate-200 italic mb-6 sm:mb-8 leading-relaxed mt-4 sm:mt-0 relative z-10 w-full whitespace-normal">"{item.quote}"</p>
               <div className="flex items-center gap-4 border-t border-primary/10 pt-5">
                 <img className="w-12 h-12 rounded-full object-cover border-2 border-primary/20" src={images[i]} alt={item.name} referrerPolicy="no-referrer" />
                 <div>
@@ -731,27 +767,27 @@ function Testimonials() {
 function Contact() {
   const { t, lang } = useLanguage();
   return (
-    <FadeIn className="py-12 sm:py-16 bg-slate-50 dark:bg-slate-900/30" id="contact">
+    <FadeIn className="py-12 sm:py-16 bg-slate-100 dark:bg-slate-950/80" id="contact">
       <div className="max-w-4xl mx-auto px-6">
         <div className="text-center mb-8 sm:mb-12">
-          <h3 className="text-3xl lg:text-4xl font-black mb-3">{t.contact.title}</h3>
-          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-xl mx-auto">{t.contact.desc}</p>
+          <h3 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 font-black mb-3">{t.contact.title}</h3>
+          <p className="text-sm sm:text-base text-slate-700 dark:text-slate-200 max-w-xl mx-auto">{t.contact.desc}</p>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 mb-8">
+        <div className="grid sm:grid-cols-2 gap-3 sm:gap-6 mb-8">
           {/* WhatsApp CTA */}
           <a
             href="https://wa.me/201127718978"
             target="_blank"
             rel="noopener noreferrer"
-            className="glass-card rounded-2xl p-6 sm:p-8 flex flex-col items-center text-center gap-4 group hover:shadow-[0_0_40px_rgba(34,197,94,0.2)] transition-all neon-border cursor-pointer"
+            className="glass-card rounded-2xl p-4 sm:p-8 flex flex-col items-center text-center gap-3 sm:gap-4 group hover:shadow-[0_0_40px_rgba(34,197,94,0.2)] transition-all neon-border cursor-pointer"
           >
-            <div className="w-16 h-16 rounded-2xl bg-green-500/15 border border-green-500/25 flex items-center justify-center text-green-500 group-hover:scale-110 transition-transform">
-              <WhatsAppIcon className="w-8 h-8" />
+            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-green-500/15 border border-green-500/25 flex items-center justify-center text-green-500 group-hover:scale-110 transition-transform">
+              <WhatsAppIcon className="w-7 h-7 sm:w-8 sm:h-8" />
             </div>
             <div>
-              <h4 className="text-lg font-black mb-1 group-hover:text-green-500 transition-colors">{lang === 'ar' ? 'تواصل عبر واتساب' : 'Chat on WhatsApp'}</h4>
-              <p className="text-sm text-slate-500" dir="ltr">01127718978</p>
+              <h4 className="text-base sm:text-lg font-black mb-1 group-hover:text-green-500 transition-colors">{lang === 'ar' ? 'تواصل عبر واتساب' : 'Chat on WhatsApp'}</h4>
+              <p className="text-sm text-slate-600 dark:text-slate-300" dir="ltr">01127718978</p>
               <p className="text-xs text-green-500 font-bold mt-2">{lang === 'ar' ? 'رد فوري خلال دقائق ⚡' : 'Instant reply within minutes ⚡'}</p>
             </div>
           </a>
@@ -759,14 +795,14 @@ function Contact() {
           {/* Email CTA */}
           <a
             href="mailto:info@kholy.co"
-            className="glass-card rounded-2xl p-6 sm:p-8 flex flex-col items-center text-center gap-4 group hover:shadow-[0_0_40px_rgba(100,103,242,0.2)] transition-all neon-border cursor-pointer"
+            className="glass-card rounded-2xl p-4 sm:p-8 flex flex-col items-center text-center gap-3 sm:gap-4 group hover:shadow-[0_0_40px_rgba(100,103,242,0.2)] transition-all neon-border cursor-pointer"
           >
-            <div className="w-16 h-16 rounded-2xl bg-primary/15 border border-primary/25 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-              <span className="material-symbols-outlined text-3xl">mail</span>
+            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-primary/15 border border-primary/25 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+              <span className="material-symbols-outlined text-[28px] sm:text-3xl">mail</span>
             </div>
             <div>
-              <h4 className="text-lg font-black mb-1 group-hover:text-primary transition-colors">{lang === 'ar' ? 'أرسل بريد إلكتروني' : 'Send an Email'}</h4>
-              <p className="text-sm text-slate-500 break-all">info@kholy.co</p>
+              <h4 className="text-base sm:text-lg font-black mb-1 group-hover:text-primary transition-colors">{lang === 'ar' ? 'أرسل بريد إلكتروني' : 'Send an Email'}</h4>
+              <p className="text-sm text-slate-600 dark:text-slate-300 break-all">info@kholy.co</p>
               <p className="text-xs text-primary font-bold mt-2">{lang === 'ar' ? 'رد خلال 24 ساعة 📩' : 'Reply within 24 hours 📩'}</p>
             </div>
           </a>
@@ -776,7 +812,7 @@ function Contact() {
         <div className="flex justify-center gap-4">
           <a
             className="w-11 h-11 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center hover:bg-[#1877F2] hover:text-white transition-all"
-            href="https://www.facebook.com/"
+            href="https://www.facebook.com/profile.php?id=61569741423866"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -808,7 +844,7 @@ function Pricing() {
           <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">{t.pricing.desc}</p>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto">
           {t.pricing.packages.map((pkg, i) => (
             <motion.div
               key={i}
@@ -819,26 +855,26 @@ function Pricing() {
               className="h-full"
             >
               <Tilt 
-                tiltMaxAngleX={10} 
-                tiltMaxAngleY={10} 
-                scale={1.02} 
+                tiltMaxAngleX={6} 
+                tiltMaxAngleY={6} 
+                scale={1.01} 
                 transitionSpeed={2000}
-                className={`glass-card rounded-3xl p-6 sm:p-8 flex flex-col h-full relative overflow-hidden ${i === 1 ? 'pricing-popular transform md:-translate-y-4 shadow-[0_20px_40px_rgba(100,103,242,0.15)]' : ''}`}
+                className={`glass-card rounded-3xl p-4 sm:p-6 md:p-8 flex flex-col h-full relative overflow-hidden ${i === 1 ? 'pricing-popular transform md:-translate-y-4 shadow-[0_20px_40px_rgba(100,103,242,0.15)]' : ''}`}
               >
                 {i === 1 && (
                   <div className="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-4 py-1.5 rounded-bl-2xl uppercase tracking-wider">
                     {t.pricing.popular}
                   </div>
                 )}
-                <h4 className="text-xl font-black mb-2">{pkg.name}</h4>
-                <div className="flex items-baseline gap-1 mb-6 border-b border-primary/10 pb-6">
-                  <span className="text-4xl font-black text-primary">{pkg.price}</span>
+                <h4 className="text-lg sm:text-xl font-black mb-2">{pkg.name}</h4>
+                <div className="flex items-baseline gap-1 mb-4 sm:mb-6 border-b border-primary/10 pb-4 sm:pb-6">
+                  <span className="text-3xl sm:text-4xl font-black text-primary">{pkg.price}</span>
                   <span className="text-sm text-slate-500 font-bold">{t.pricing.currency}</span>
                 </div>
                 
-                <ul className="space-y-4 mb-8 flex-grow">
+                <ul className="space-y-3 mb-6 sm:mb-8 flex-grow">
                   {pkg.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start gap-3 text-sm">
+                    <li key={idx} className="flex items-start gap-2.5 text-[13px] sm:text-sm">
                       <span className="material-symbols-outlined text-green-500 text-lg shrink-0">check_circle</span>
                       <span className="text-slate-700 dark:text-slate-300">{feature}</span>
                     </li>
@@ -907,12 +943,12 @@ export default function App() {
         </style>
         <Navbar />
         <Hero />
+        <PerformanceAdsSection />
         <AIVideoShowcase />
         <WebsitesIBuilt />
         <Pricing />
         <About />
         <Services />
-        <PerformanceAdsSection />
         <Results />
         <Testimonials />
         <Contact />
