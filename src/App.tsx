@@ -76,6 +76,32 @@ const WhatsAppIcon: React.FC<{ className?: string }> = ({ className }) => (
 function Navbar() {
   const { t, lang, setLang } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const menuPanelRef = React.useRef<HTMLDivElement | null>(null);
+
+  React.useEffect(() => {
+    // #region agent log
+    fetch('http://127.0.0.1:7816/ingest/9356e440-0058-48b7-89ce-d642a8118df8',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'6138cf'},body:JSON.stringify({sessionId:'6138cf',runId:'pre-fix',hypothesisId:'H1',location:'src/App.tsx:Navbar:mount',message:'navbar mounted on device',data:{innerWidth:window.innerWidth,innerHeight:window.innerHeight,userAgent:navigator.userAgent},timestamp:Date.now()})}).catch(()=>{});
+    // #endregion
+  }, []);
+
+  React.useEffect(() => {
+    const panel = menuPanelRef.current;
+    // #region agent log
+    fetch('http://127.0.0.1:7816/ingest/9356e440-0058-48b7-89ce-d642a8118df8',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'6138cf'},body:JSON.stringify({sessionId:'6138cf',runId:'pre-fix',hypothesisId:'H2',location:'src/App.tsx:Navbar:menuStateEffect',message:'menu state changed',data:{isMenuOpen,innerWidth:window.innerWidth,panelExists:Boolean(panel),panelClasses:panel?.className ?? null,pointerEvents:panel ? window.getComputedStyle(panel).pointerEvents : null,opacity:panel ? window.getComputedStyle(panel).opacity : null},timestamp:Date.now()})}).catch(()=>{});
+    // #endregion
+  }, [isMenuOpen]);
+
+  React.useEffect(() => {
+    const panel = menuPanelRef.current;
+    if (!panel) return;
+    const onTransitionEnd = () => {
+      // #region agent log
+      fetch('http://127.0.0.1:7816/ingest/9356e440-0058-48b7-89ce-d642a8118df8',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'6138cf'},body:JSON.stringify({sessionId:'6138cf',runId:'pre-fix',hypothesisId:'H5',location:'src/App.tsx:Navbar:transitionEnd',message:'menu transition ended',data:{isMenuOpen,innerWidth:window.innerWidth,computedOpacity:window.getComputedStyle(panel).opacity,computedPointerEvents:window.getComputedStyle(panel).pointerEvents,transform:window.getComputedStyle(panel).transform},timestamp:Date.now()})}).catch(()=>{});
+      // #endregion
+    };
+    panel.addEventListener('transitionend', onTransitionEnd);
+    return () => panel.removeEventListener('transitionend', onTransitionEnd);
+  }, [isMenuOpen]);
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-primary/20 bg-background-dark/95 md:bg-background-light/80 dark:bg-background-dark/85 backdrop-blur-md">
@@ -84,7 +110,7 @@ function Navbar() {
           <img src={logoImg} alt="Kholy Digital" className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg object-cover" />
           <span className="text-base sm:text-lg font-black tracking-tight">Kholy<span className="text-primary"> Digital</span></span>
         </a>
-        <div className={`fixed inset-0 bg-background-dark/95 backdrop-blur-xl z-[45] flex flex-col items-center justify-center gap-8 transition-all duration-300 md:static md:bg-transparent md:dark:bg-transparent md:flex-row md:gap-8 md:p-0 ${isMenuOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-full pointer-events-none md:opacity-100 md:translate-y-0 md:pointer-events-auto'}`}>
+        <div ref={menuPanelRef} className={`fixed inset-0 bg-background-dark/95 backdrop-blur-xl z-[45] flex flex-col items-center justify-center gap-8 transition-all duration-300 md:static md:bg-transparent md:dark:bg-transparent md:flex-row md:gap-8 md:p-0 ${isMenuOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-full pointer-events-none md:opacity-100 md:translate-y-0 md:pointer-events-auto'}`}>
           <a onClick={() => setIsMenuOpen(false)} className="text-2xl md:text-sm font-medium hover:text-primary transition-colors cursor-pointer" href="#video-ads">{t.nav.portfolio}</a>
           <a onClick={() => setIsMenuOpen(false)} className="text-2xl md:text-sm font-medium hover:text-primary transition-colors cursor-pointer" href="#about">{t.nav.about}</a>
           <a onClick={() => setIsMenuOpen(false)} className="text-2xl md:text-sm font-medium hover:text-primary transition-colors cursor-pointer" href="#services">{t.nav.services}</a>
@@ -103,7 +129,13 @@ function Navbar() {
             {t.nav.contact}
           </a>
         </div>
-        <button className="md:hidden text-primary z-50 relative" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+        <button className="md:hidden text-primary z-50 relative" onClick={() => {
+          const nextOpen = !isMenuOpen;
+          // #region agent log
+          fetch('http://127.0.0.1:7816/ingest/9356e440-0058-48b7-89ce-d642a8118df8',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'6138cf'},body:JSON.stringify({sessionId:'6138cf',runId:'pre-fix',hypothesisId:'H2',location:'src/App.tsx:Navbar:menuToggle',message:'mobile menu toggle pressed',data:{from:isMenuOpen,to:nextOpen,scrollY:window.scrollY},timestamp:Date.now()})}).catch(()=>{});
+          // #endregion
+          setIsMenuOpen(nextOpen);
+        }}>
           <span className="material-symbols-outlined">{isMenuOpen ? 'close' : 'menu'}</span>
         </button>
       </div>
@@ -118,6 +150,19 @@ function Hero() {
   const typingWords = lang === 'ar' 
     ? ["نمو مبيعاتك 🚀", 2000, "انتشار علامتك التجارية 🌟", 2000, "نتائج حقيقية 📈", 2000] 
     : ["Sales Growth 🚀", 2000, "Brand Awareness 🌟", 2000, "Real Results 📈", 2000];
+
+  React.useEffect(() => {
+    // #region agent log
+    fetch('http://127.0.0.1:7816/ingest/9356e440-0058-48b7-89ce-d642a8118df8',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'6138cf'},body:JSON.stringify({sessionId:'6138cf',runId:'pre-fix-lang',hypothesisId:'H6',location:'src/App.tsx:Hero:langEffect',message:'hero language state changed',data:{lang,heroTitle:t.hero.title,typingFirst:String(typingWords[0])},timestamp:Date.now()})}).catch(()=>{});
+    // #endregion
+  }, [lang, t.hero.title, typingWords]);
+
+  React.useEffect(() => {
+    const target = document.querySelector('.type-hero-text');
+    // #region agent log
+    fetch('http://127.0.0.1:7816/ingest/9356e440-0058-48b7-89ce-d642a8118df8',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'6138cf'},body:JSON.stringify({sessionId:'6138cf',runId:'pre-fix-lang',hypothesisId:'H7',location:'src/App.tsx:Hero:domProbe',message:'type animation dom snapshot',data:{lang,domText:target?.textContent ?? null},timestamp:Date.now()})}).catch(()=>{});
+    // #endregion
+  }, [lang]);
 
   return (
     <section
@@ -162,7 +207,7 @@ function Hero() {
               wrapper="span"
               speed={50}
               repeat={Infinity}
-              className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-400 to-primary inline-block min-w-[200px]"
+              className="type-hero-text text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-400 to-primary inline-block min-w-[200px]"
             />
           </h1>
           <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
@@ -945,6 +990,34 @@ function Footer() {
 }
 
 export default function App() {
+  const debugScrollState = React.useRef({ touchCount: 0, scrollCount: 0 });
+
+  React.useEffect(() => {
+    const onTouchMove = () => {
+      if (debugScrollState.current.touchCount >= 4) return;
+      debugScrollState.current.touchCount += 1;
+      const target = document.elementFromPoint(window.innerWidth / 2, 120) as HTMLElement | null;
+      // #region agent log
+      fetch('http://127.0.0.1:7816/ingest/9356e440-0058-48b7-89ce-d642a8118df8',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'6138cf'},body:JSON.stringify({sessionId:'6138cf',runId:'pre-fix',hypothesisId:'H3',location:'src/App.tsx:App:onTouchMove',message:'touchmove detected',data:{count:debugScrollState.current.touchCount,scrollY:window.scrollY,bodyOverflowY:window.getComputedStyle(document.body).overflowY,bodyOverscroll:window.getComputedStyle(document.body).overscrollBehaviorY,centerElementClass:target?.className ?? null,centerElementTag:target?.tagName ?? null},timestamp:Date.now()})}).catch(()=>{});
+      // #endregion
+    };
+
+    const onScroll = () => {
+      if (debugScrollState.current.scrollCount >= 4) return;
+      debugScrollState.current.scrollCount += 1;
+      // #region agent log
+      fetch('http://127.0.0.1:7816/ingest/9356e440-0058-48b7-89ce-d642a8118df8',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'6138cf'},body:JSON.stringify({sessionId:'6138cf',runId:'pre-fix',hypothesisId:'H4',location:'src/App.tsx:App:onScroll',message:'window scroll event fired',data:{count:debugScrollState.current.scrollCount,scrollY:window.scrollY,innerHeight:window.innerHeight,docHeight:document.documentElement.scrollHeight},timestamp:Date.now()})}).catch(()=>{});
+      // #endregion
+    };
+
+    window.addEventListener('touchmove', onTouchMove, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('touchmove', onTouchMove);
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, []);
+
   return (
     <LanguageProvider>
       <div id="top" className="min-h-screen overflow-x-hidden">
