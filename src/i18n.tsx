@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const translations = {
   ar: {
-    nav: { about: "من أنا", services: "الخدمات", portfolio: "أعمالي", results: "النتائج", contact: "تواصل معي" },
+    nav: { about: "من أنا", services: "الخدمات", portfolio: "أعمالي", pricing: "الباقات", results: "النتائج", contact: "تواصل معي" },
     hero: {
       badge: "متاح لمشاريع جديدة",
       title: "إعلانات فيديو بالذكاء الاصطناعي وتصميم مواقع احترافية تضمن لك",
@@ -16,13 +16,14 @@ const translations = {
       tag: "من أنا",
       title: "خبير إنتاج إعلانات فيديو بالذكاء الاصطناعي ومطور مواقع",
       desc: "أجمع بين قوة الذكاء الاصطناعي في إنتاج محتوى بصري مبهر وخبرة تقنية عميقة في بناء المواقع والمتاجر الإلكترونية. لا حدود للخيال: أي فكرة لمنتجك أو شركتك أو حتى لك شخصياً، يمكنني تحويلها إلى فيديو إعلاني احترافي يخطف الأنظار ويحقق نتائج ملموسة.",
-      skills: ["إعلانات فيديو بالـ AI", "تطوير المواقع والمتاجر", "تحسين SEO", "الحملات الإعلانية", "محتوى بصري إبداعي", "استراتيجيات النمو الرقمي"]
+      skills: ["إعلانات فيديو بالـ AI", "تطوير المواقع والمتاجر", "تحسين SEO", "إدارة إعلانات فيسبوك وجوجل", "إنشاء صفحات السوشيال ميديا", "استراتيجيات النمو الرقمي"]
     },
     videoShowcase: {
       tag: "معرض الأعمال الإعلانية",
       title: "إعلانات فيديو احترافية بالذكاء الاصطناعي",
       desc: "شاهد أمثلة حقيقية من أعمالي: إعلانات تجارية لمنتجات وشركات، ومحتوى إبداعي تم إنتاجه بالكامل باستخدام أحدث تقنيات الذكاء الاصطناعي. كل الفيديوهات تعمل مباشرة هنا بدون الخروج من الموقع.",
       commercialTag: "إعلانات تجارية لوكالة",
+      adVideosTag: "فيديوهات إعلانية",
       creativeTag: "أعمال إبداعية متنوعة",
       englishTag: "محتوى إبداعي باللغة الإنجليزية"
     },
@@ -33,10 +34,28 @@ const translations = {
         { title: "إعلانات فيديو بالـ AI", desc: "تحويل أي فكرة إلى فيديو إعلاني احترافي يخطف الأنظار ويحقق أعلى نسب تفاعل ومبيعات." },
         { title: "إنشاء وإدارة صفحات السوشيال ميديا", desc: "إنشاء وإدارة صفحاتك على فيسبوك وانستغرام وتيك توك بشكل كامل، مع تصميم المحتوى وجدولة النشر وإدارة الحملات الإعلانية لضمان وصول أكبر عدد من العملاء والجمهور." },
         { title: "تطوير المواقع والمتاجر", desc: "بناء مواقع ومتاجر إلكترونية سريعة، متجاوبة، ومحسنة لتحقيق أعلى تحويلات." },
+        { title: "إدارة إعلانات فيسبوك وجوجل", desc: "تخطيط وإطلاق حملات إعلانية ممولة احترافية على منصات جوجل وميتا، مع استهداف دقيق لجمهورك لضمان تحقيق أعلى عائد على الاستثمار ومضاعفة المبيعات." },
         { title: "تحسين محركات البحث", desc: "تصدر نتائج البحث العضوية وزيادة الزيارات المستهدفة لموقعك." },
-        { title: "محتوى بصري إبداعي", desc: "إنتاج محتوى مرئي مبتكر يعزز هوية علامتك التجارية ويجذب جمهورك المستهدف." },
         { title: "استراتيجيات النمو الرقمي", desc: "بناء خطط تسويقية شاملة تدمج الإعلانات والمحتوى والتقنية لتحقيق نمو مستدام." }
       ]
+    },
+    performanceAds: {
+      tag: "إعلانات Google وMeta",
+      title: "تخطيط وإدارة حملات ممولة تحقق مبيعات حقيقية",
+      desc: "أدير لك حملات إعلانية احترافية على جوجل وفيسبوك/إنستغرام من الصفر: بداية من دراسة السوق وتحليل المنافسين، وحتى تحسين الأداء اليومي للوصول لأعلى عائد على الإنفاق الإعلاني.",
+      points: [
+        "تحليل جمهورك وتقسيمه إلى شرائح دقيقة لرفع جودة الاستهداف.",
+        "بناء خطة حملات متكاملة: Awareness + Leads + Sales.",
+        "كتابة نصوص إعلانية مقنعة وتصميم عروض واضحة ترفع التحويل.",
+        "اختبار مستمر للإعلانات (A/B Testing) وتطوير الأداء بالأرقام.",
+        "تقارير دورية واضحة تشرح كل نتيجة وما الخطوة القادمة."
+      ],
+      outcomes: [
+        "تقليل تكلفة الحصول على العميل (CPA)",
+        "زيادة المبيعات والعملاء المحتملين",
+        "تحسين عائد الإنفاق الإعلاني (ROAS)"
+      ],
+      cta: "ابدأ حملة إعلانية الآن"
     },
     websites: {
       tag: "مواقع قمت ببنائها",
@@ -123,13 +142,44 @@ const translations = {
       messagePlaceholder: "أخبرني المزيد عن مشروعك...",
       submit: "إرسال الرسالة"
     },
+    pricing: {
+      tag: "باقات الأسعار",
+      title: "اختر الباقة المناسبة لمشروعك",
+      desc: "أسعار تنافسية لإنتاج إعلانات فيديو احترافية بالذكاء الاصطناعي",
+      currency: "ج.م",
+      cta: "اطلب الآن",
+      popular: "الأكثر طلباً",
+      packages: [
+        {
+          name: "الباقة الأساسية",
+          price: "1,500",
+          videos: "3",
+          duration: "دقيقة واحدة",
+          features: ["3 فيديوهات إعلانية", "مدة كل فيديو: دقيقة", "جودة عالية Full HD", "تسليم خلال 5 أيام", "مراجعة واحدة مجانية"]
+        },
+        {
+          name: "الباقة المتقدمة",
+          price: "2,000",
+          videos: "5",
+          duration: "دقيقة واحدة",
+          features: ["5 فيديوهات إعلانية", "مدة كل فيديو: دقيقة", "جودة عالية Full HD", "تسليم خلال 7 أيام", "مراجعتين مجانيتين", "موسيقى مخصصة"]
+        },
+        {
+          name: "الباقة الاحترافية",
+          price: "3,000",
+          videos: "3",
+          duration: "دقيقتين",
+          features: ["3 فيديوهات إعلانية", "مدة كل فيديو: دقيقتين", "جودة 4K Ultra HD", "تسليم خلال 10 أيام", "3 مراجعات مجانية", "موسيقى + مؤثرات صوتية", "ملفات المصدر"]
+        }
+      ]
+    },
     footer: {
       privacy: "سياسة الخصوصية",
       terms: "شروط الخدمة"
     }
   },
   en: {
-    nav: { about: "About", services: "Services", portfolio: "Portfolio", results: "Results", contact: "Contact Me" },
+    nav: { about: "About", services: "Services", portfolio: "Portfolio", pricing: "Packages", results: "Results", contact: "Contact Me" },
     hero: {
       badge: "Available for new projects",
       title: "AI Video Ads & Professional Website Design That Guarantee",
@@ -143,13 +193,14 @@ const translations = {
       tag: "About Me",
       title: "AI Video Ads Expert & Full-Stack Web Developer",
       desc: "I combine the power of AI in producing stunning visual content with deep technical expertise in building websites and e-commerce stores. No limits to imagination: any idea for your product, company, or even for you personally, I can turn it into a professional video ad that captures attention and delivers real results.",
-      skills: ["AI Video Ads", "Web & E-commerce Dev", "SEO Optimization", "Ad Campaigns", "Creative Visual Content", "Digital Growth Strategies"]
+      skills: ["AI Video Ads", "Web & E-commerce Dev", "SEO Optimization", "Google & Facebook Ads", "Social Media Management", "Digital Growth Strategies"]
     },
     videoShowcase: {
       tag: "Ad Portfolio",
       title: "Professional AI-Powered Video Ads",
       desc: "Watch real examples of my work: commercial ads for products and companies, and creative content produced entirely using the latest AI technologies. All videos play right here without leaving the site.",
       commercialTag: "Commercial Ads for Agency",
+      adVideosTag: "Ad Videos",
       creativeTag: "Various Creative Works",
       englishTag: "English Creative Content"
     },
@@ -160,10 +211,28 @@ const translations = {
         { title: "AI Video Ads", desc: "Turning any idea into a professional video ad that captures attention and achieves the highest engagement and sales rates." },
         { title: "Social Media Page Management", desc: "Full creation and management of your Facebook, Instagram, and TikTok pages including content design, scheduling, and running ad campaigns to reach the maximum number of clients and audience." },
         { title: "Web & E-commerce Dev", desc: "Building fast, responsive websites and online stores optimized for maximum conversions." },
+        { title: "Google & Facebook Ads", desc: "Planning and launching highly targeted ad campaigns on Google and Meta platforms, designed to maximize your ROI and skyrocket your sales." },
         { title: "SEO Optimization", desc: "Dominating organic search results and driving targeted traffic to your website." },
-        { title: "Creative Visual Content", desc: "Producing innovative visual content that strengthens your brand identity and attracts your target audience." },
         { title: "Digital Growth Strategies", desc: "Building comprehensive marketing plans that integrate ads, content, and technology for sustainable growth." }
       ]
+    },
+    performanceAds: {
+      tag: "Google & Meta Ads",
+      title: "Professional Campaign Management That Drives Real Sales",
+      desc: "I plan, launch, and optimize paid campaigns on Google and Meta from end to end, starting with market and competitor research, then daily optimization to maximize your return on ad spend.",
+      points: [
+        "Deep audience research and precise segmentation for smarter targeting.",
+        "Full-funnel campaign planning: Awareness, Leads, and Sales.",
+        "High-converting ad copy and clear offers tailored to your audience.",
+        "Continuous A/B testing to improve performance with real data.",
+        "Transparent reports with insights, decisions, and next actions."
+      ],
+      outcomes: [
+        "Lower customer acquisition cost (CPA)",
+        "Higher leads and qualified sales",
+        "Stronger return on ad spend (ROAS)"
+      ],
+      cta: "Start Your Ad Campaign"
     },
     websites: {
       tag: "Websites I Built",
@@ -249,6 +318,37 @@ const translations = {
       messageLabel: "Message",
       messagePlaceholder: "Tell me more about your project...",
       submit: "Send Message"
+    },
+    pricing: {
+      tag: "Pricing Plans",
+      title: "Choose the Right Package for Your Project",
+      desc: "Competitive prices for professional AI-powered video ad production",
+      currency: "EGP",
+      cta: "Order Now",
+      popular: "Most Popular",
+      packages: [
+        {
+          name: "Basic Package",
+          price: "1,500",
+          videos: "3",
+          duration: "1 minute",
+          features: ["3 video ads", "Duration: 1 min each", "Full HD quality", "Delivery in 5 days", "1 free revision"]
+        },
+        {
+          name: "Advanced Package",
+          price: "2,000",
+          videos: "5",
+          duration: "1 minute",
+          features: ["5 video ads", "Duration: 1 min each", "Full HD quality", "Delivery in 7 days", "2 free revisions", "Custom music"]
+        },
+        {
+          name: "Professional Package",
+          price: "3,000",
+          videos: "3",
+          duration: "2 minutes",
+          features: ["3 video ads", "Duration: 2 min each", "4K Ultra HD quality", "Delivery in 10 days", "3 free revisions", "Music + sound effects", "Source files"]
+        }
+      ]
     },
     footer: {
       privacy: "Privacy Policy",

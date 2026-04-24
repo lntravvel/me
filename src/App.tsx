@@ -1,13 +1,40 @@
 import React from 'react';
 import { LanguageProvider, useLanguage } from './i18n';
-// Profile image removed
+import logoImg from './assets/logo.png';
 import heroTechBg from './assets/ai/hero-tech-bg.png';
 import about1 from './assets/ai/about-1.png';
 import about2 from './assets/ai/about-2.png';
 import portfolioAiWidget from './assets/ai/portfolio-ai-widget.png';
 import websiteXman from './assets/websites/xman.png';
 import websitePyramid from './assets/websites/pyramid.png';
+import { TypeAnimation } from 'react-type-animation';
 import websiteAlShams from './assets/websites/alshams.png';
+import { motion } from 'motion/react';
+import { TechParticles } from './TechParticles';
+import Tilt from 'react-parallax-tilt';
+
+// Scroll Reveal Wrapper
+export const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 40 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: "-50px" }}
+    transition={{ duration: 0.7, delay, ease: "easeOut" }}
+    className={className}
+  >
+    {children}
+  </motion.div>
+);
+
+export const getDirectionalAnimation = (index: number) => {
+  const directions = [
+    { opacity: 0, x: -60, y: 0 },   // Left
+    { opacity: 0, x: 0, y: 60 },    // Bottom
+    { opacity: 0, x: 60, y: 0 },    // Right
+    { opacity: 0, x: 0, y: -60 }    // Top
+  ];
+  return directions[index % 4];
+};
 
 const FacebookIcon: React.FC<{ className?: string }> = ({ className }) => (
   <svg
@@ -41,17 +68,16 @@ function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-primary/10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
-      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
         <a href="#top" className="flex items-center gap-2 group cursor-pointer z-50">
-          <div className="bg-primary p-1.5 rounded-lg">
-            <span className="material-symbols-outlined text-white">rocket_launch</span>
-          </div>
-          <span className="text-xl font-black tracking-tighter">{lang === 'ar' ? 'مصطفى ' : 'Mostafa '}<span className="text-primary">{lang === 'ar' ? 'الخولي' : 'Elkholy'}</span></span>
+          <img src={logoImg} alt="Kholy Digital" className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg object-cover" />
+          <span className="text-base sm:text-lg font-black tracking-tight">Kholy<span className="text-primary"> Digital</span></span>
         </a>
         <div className={`fixed inset-0 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-xl z-[45] flex flex-col items-center justify-center gap-8 transition-all duration-300 md:static md:bg-transparent md:dark:bg-transparent md:flex-row md:gap-8 md:p-0 ${isMenuOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-full pointer-events-none md:opacity-100 md:translate-y-0 md:pointer-events-auto'}`}>
           <a onClick={() => setIsMenuOpen(false)} className="text-2xl md:text-sm font-medium hover:text-primary transition-colors cursor-pointer" href="#video-ads">{t.nav.portfolio}</a>
           <a onClick={() => setIsMenuOpen(false)} className="text-2xl md:text-sm font-medium hover:text-primary transition-colors cursor-pointer" href="#about">{t.nav.about}</a>
           <a onClick={() => setIsMenuOpen(false)} className="text-2xl md:text-sm font-medium hover:text-primary transition-colors cursor-pointer" href="#services">{t.nav.services}</a>
+          <a onClick={() => setIsMenuOpen(false)} className="text-2xl md:text-sm font-medium hover:text-primary transition-colors cursor-pointer" href="#pricing">{t.nav.pricing}</a>
           <a onClick={() => setIsMenuOpen(false)} className="text-2xl md:text-sm font-medium hover:text-primary transition-colors cursor-pointer" href="#results">{t.nav.results}</a>
           <div className="flex items-center justify-center gap-4 md:border-x border-primary/20 md:px-4 z-[50] w-full">
             <button type="button" onClick={() => { setLang('en'); setIsMenuOpen(false); }} className={`px-4 py-2 text-lg md:text-xs font-bold transition-colors cursor-pointer ${lang === 'en' ? 'text-primary' : 'text-slate-500 hover:text-primary'}`}>EN</button>
@@ -75,8 +101,13 @@ function Navbar() {
 }
 
 function Hero() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [spot, setSpot] = React.useState({ x: 50, y: 35 });
+
+  const typingWords = lang === 'ar' 
+    ? ["نمو مبيعاتك 🚀", 2000, "انتشار علامتك التجارية 🌟", 2000, "نتائج حقيقية 📈", 2000] 
+    : ["Sales Growth 🚀", 2000, "Brand Awareness 🌟", 2000, "Real Results 📈", 2000];
+
   return (
     <section
       className="relative overflow-hidden py-14 sm:py-20 md:py-28"
@@ -95,7 +126,7 @@ function Hero() {
           backgroundPosition: 'center',
         }}
       />
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-tech-grid opacity-70" />
+      <TechParticles />
       <div className="pointer-events-none absolute inset-0 -z-10 bg-scanlines" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-20 dark:opacity-40">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/30 rounded-full blur-[120px]"></div>
@@ -113,8 +144,15 @@ function Hero() {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-wider">
             <span className="material-symbols-outlined text-sm">verified</span> {t.hero.badge}
           </div>
-          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[1.1] tracking-tight">
-            {t.hero.title} <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-400 to-primary">{t.hero.titleHighlight}</span>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[1.1] tracking-tight min-h-[4rem] sm:min-h-[5rem] md:min-h-[6rem]">
+            {t.hero.title} <br className="hidden sm:block" />
+            <TypeAnimation
+              sequence={typingWords}
+              wrapper="span"
+              speed={50}
+              repeat={Infinity}
+              className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-400 to-primary inline-block min-w-[200px]"
+            />
           </h1>
           <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
             {t.hero.desc}
@@ -163,6 +201,22 @@ function Hero() {
           </div>
         </div>
       </div>
+      
+      {/* Tech Marquee */}
+      <div className="mt-16 w-full overflow-hidden border-y border-primary/10 bg-primary/5 py-3 sm:py-4 relative z-10">
+        <div className="marquee-track flex items-center gap-8 sm:gap-16 opacity-70">
+          {[...Array(2)].map((_, j) => (
+            <React.Fragment key={j}>
+              {['React.js', 'Next.js', 'Tailwind CSS', 'Node.js', 'FFmpeg', 'OpenAI', 'Gemini', 'ElevenLabs', 'Claude', 'TypeScript', 'SEO', 'Meta Ads'].map((tech, i) => (
+                <div key={`${j}-${i}`} className="flex items-center gap-2 whitespace-nowrap">
+                  <span className="material-symbols-outlined text-primary text-sm sm:text-base">verified</span>
+                  <span className="font-bold text-sm sm:text-base">{tech}</span>
+                </div>
+              ))}
+            </React.Fragment>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }
@@ -170,7 +224,7 @@ function Hero() {
 function About() {
   const { t } = useLanguage();
   return (
-    <section className="py-12 sm:py-16 bg-slate-50 dark:bg-slate-900/30" id="about">
+    <FadeIn className="py-12 sm:py-16 bg-slate-50 dark:bg-slate-900/30" id="about">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
           <div className="grid grid-cols-2 gap-4">
@@ -209,13 +263,13 @@ function About() {
           </div>
         </div>
       </div>
-    </section>
+    </FadeIn>
   );
 }
 
 function Services() {
   const { t, lang } = useLanguage();
-  const icons = ["play_circle", "share", "devices", "search_insights", "palette", "trending_up"];
+  const icons = ["play_circle", "share", "devices", "ads_click", "search_insights", "trending_up"];
   return (
     <section className="relative py-12 sm:py-16 overflow-hidden" id="services">
       <div className="pointer-events-none absolute inset-0 bg-tech-grid opacity-50" />
@@ -229,29 +283,99 @@ function Services() {
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 md:gap-8">
           {t.services.items.map((item, i) => (
-            <div key={i} className="glass-card p-4 sm:p-6 md:p-10 rounded-2xl md:rounded-[2rem] cursor-default neon-border hover-lift group flex flex-col">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 sm:mb-8">
-                <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-primary/15 border border-primary/25 flex items-center justify-center text-primary shadow-[0_0_0_1px_rgba(100,103,242,0.10)] group-hover:shadow-[0_0_40px_rgba(34,211,238,0.18)] transition-shadow">
-                  <span className="material-symbols-outlined text-[22px] sm:text-3xl">{icons[i]}</span>
+            <motion.div
+              key={i}
+              initial={getDirectionalAnimation(i)}
+              whileInView={{ opacity: 1, x: 0, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: i * 0.15, ease: "easeOut" }}
+            >
+              <div className="glass-card p-4 sm:p-6 md:p-10 rounded-2xl md:rounded-[2rem] cursor-default neon-border hover-lift group flex flex-col h-full">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 sm:mb-8">
+                  <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-primary/15 border border-primary/25 flex items-center justify-center text-primary shadow-[0_0_0_1px_rgba(100,103,242,0.10)] group-hover:shadow-[0_0_40px_rgba(34,211,238,0.18)] transition-shadow">
+                    <span className="material-symbols-outlined text-[22px] sm:text-3xl">{icons[i]}</span>
+                  </div>
+                  <div className="text-primary/70 text-[10px] sm:text-xs font-black tracking-widest uppercase self-end sm:self-auto pt-1 sm:pt-2">
+                    {String(i + 1).padStart(2, '0')}
+                  </div>
                 </div>
-                <div className="text-primary/70 text-[10px] sm:text-xs font-black tracking-widest uppercase self-end sm:self-auto pt-1 sm:pt-2">
-                  {String(i + 1).padStart(2, '0')}
+
+                <h4 className="text-sm sm:text-lg md:text-xl font-black mb-2 sm:mb-3 tracking-tight group-hover:text-primary transition-colors">
+                  {item.title}
+                </h4>
+                <p className="text-[11px] sm:text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed flex-grow">
+                  {item.desc}
+                </p>
+
+                <div className="mt-4 sm:mt-8 pt-3 sm:pt-6 border-t border-primary/10 text-[9px] sm:text-[11px] md:text-xs font-bold text-slate-500 dark:text-slate-400 flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2 mt-auto">
+                  <span className="material-symbols-outlined text-xs sm:text-sm text-primary">bolt</span>
+                  {lang === 'ar' ? 'نتائج قابلة للقياس + تنفيذ سريع' : 'Measurable Results + Fast Delivery'}
                 </div>
               </div>
-
-              <h4 className="text-sm sm:text-lg md:text-xl font-black mb-2 sm:mb-3 tracking-tight group-hover:text-primary transition-colors">
-                {item.title}
-              </h4>
-              <p className="text-[11px] sm:text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed flex-grow">
-                {item.desc}
-              </p>
-
-              <div className="mt-4 sm:mt-8 pt-3 sm:pt-6 border-t border-primary/10 text-[9px] sm:text-[11px] md:text-xs font-bold text-slate-500 dark:text-slate-400 flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2">
-                <span className="material-symbols-outlined text-xs sm:text-sm text-primary">bolt</span>
-                {lang === 'ar' ? 'نتائج قابلة للقياس + تنفيذ سريع' : 'Measurable Results + Fast Delivery'}
-              </div>
-            </div>
+            </motion.div>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PerformanceAdsSection() {
+  const { t, lang } = useLanguage();
+
+  return (
+    <section className="relative py-12 sm:py-16 overflow-hidden bg-slate-50 dark:bg-slate-900/30" id="ad-management">
+      <div className="pointer-events-none absolute inset-0 bg-tech-grid opacity-35" />
+      <div className="pointer-events-none absolute -top-24 -left-24 w-[26rem] h-[26rem] bg-primary/20 rounded-full blur-[100px]" />
+      <div className="pointer-events-none absolute -bottom-24 -right-24 w-[24rem] h-[24rem] bg-cyan-500/10 rounded-full blur-[100px]" />
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-primary font-bold uppercase tracking-widest mb-3">{t.performanceAds.tag}</h2>
+          <h3 className="text-3xl md:text-4xl font-black mb-4">{t.performanceAds.title}</h3>
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
+            {t.performanceAds.desc}
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-3 gap-6 sm:gap-8">
+          <div className="lg:col-span-2 glass-card rounded-3xl p-6 sm:p-8 neon-border">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="material-symbols-outlined text-primary text-2xl">ads_click</span>
+              <h4 className="text-xl font-black">{lang === 'ar' ? 'ماذا يشمل التنفيذ؟' : 'What is included?'}</h4>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
+              {t.performanceAds.points.map((point, i) => (
+                <div key={i} className="rounded-2xl border border-primary/15 bg-white/60 dark:bg-slate-950/30 p-4 flex items-start gap-3">
+                  <span className="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
+                  <p className="text-sm text-slate-700 dark:text-slate-200 leading-relaxed">{point}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="glass-card rounded-3xl p-6 sm:p-8 neon-border flex flex-col">
+            <div className="flex items-center gap-3 mb-5">
+              <span className="material-symbols-outlined text-primary text-2xl">trending_up</span>
+              <h4 className="text-xl font-black">{lang === 'ar' ? 'النتائج المتوقعة' : 'Expected outcomes'}</h4>
+            </div>
+            <div className="space-y-3 mb-8">
+              {t.performanceAds.outcomes.map((outcome, i) => (
+                <div key={i} className="flex items-center gap-3 text-sm font-bold text-slate-700 dark:text-slate-200">
+                  <span className="material-symbols-outlined text-primary">bolt</span>
+                  <span>{outcome}</span>
+                </div>
+              ))}
+            </div>
+            <a
+              href="https://wa.me/201127718978"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-auto w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-xl font-bold text-center transition-all hover:shadow-[0_0_30px_rgba(100,103,242,0.35)]"
+            >
+              {t.performanceAds.cta}
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -284,13 +408,20 @@ function WebsitesIBuilt() {
             const previewUrl = getWebsiteScreenshot(site.title);
 
             return (
-              <a
+              <motion.div
                 key={index}
-                href={site.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="glass-card rounded-2xl md:rounded-[2rem] overflow-hidden group transition-all duration-500 cursor-pointer neon-border hover-lift flex flex-col"
+                initial={getDirectionalAnimation(index)}
+                whileInView={{ opacity: 1, x: 0, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
+                className="flex flex-col"
               >
+                <a
+                  href={site.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="glass-card rounded-2xl md:rounded-[2rem] overflow-hidden group transition-all duration-500 cursor-pointer neon-border hover-lift flex flex-col h-full"
+                >
                 <div className="p-2 sm:p-3 md:p-4 pb-0">
                   <div className="rounded-xl md:rounded-2xl overflow-hidden border border-primary/15 bg-slate-950/30">
                     <div className="h-6 sm:h-8 md:h-9 flex items-center justify-between px-2 md:px-3 border-b border-primary/10 bg-white/70 dark:bg-slate-950/40 backdrop-blur min-w-0 gap-2 md:gap-3">
@@ -341,6 +472,7 @@ function WebsitesIBuilt() {
                   </div>
                 </div>
               </a>
+              </motion.div>
             );
           })}
         </div>
@@ -355,14 +487,19 @@ function AIVideoShowcase() {
   // Agency commercial ads - Vertical
   const commercialVertical = [
     { type: 'fb', id: '1472681251240450' },
+    { type: 'yt', id: '_EB5fRzWhhY' },
   ];
   // Agency commercial ads - Landscape (horizontal)
   const commercialLandscape = [
     { type: 'fb', id: '2358849327945161' },
     { type: 'fb', id: '1196649792393051' },
   ];
-  // Creative works - Arabic YouTube
+  // Creative works - Mix of FB & YouTube
   const creativeVideos = [
+    { type: 'fb', id: '1211916704062377' }, // FB Reel
+    { type: 'fb', id: '25488178070861283' }, // FB Reel
+    { type: 'fb', id: '3843357899129439' }, // FB Reel
+    { type: 'fb', id: '2359776037837161' }, // FB Reel
     { type: 'yt', id: '9UrwxO4C8TE' },
     { type: 'yt', id: 'bTKv6BfYec0' },
     { type: 'yt', id: '5OjOQ6ykHAs' },
@@ -391,12 +528,19 @@ function AIVideoShowcase() {
     { type: 'yt', id: 'qV-mjR78Fqc' },
   ];
 
-  const VideoEmbed = ({ video, landscape = false }: { video: { type: string; id: string }; landscape?: boolean }) => {
+  const VideoEmbed = ({ video, landscape = false, index = 0 }: { video: { type: string; id: string }; landscape?: boolean; index?: number }) => {
     const aspectClass = landscape ? 'aspect-video' : 'aspect-[9/16]';
+    const staggerDelay = (index % 5) * 0.15;
 
     if (video.type === 'yt') {
       return (
-        <div className={`${aspectClass} rounded-2xl overflow-hidden bg-slate-900 border border-primary/15`}>
+        <motion.div 
+          initial={getDirectionalAnimation(index)}
+          whileInView={{ opacity: 1, x: 0, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6, delay: staggerDelay, ease: "easeOut" }}
+          className={`${aspectClass} rounded-2xl overflow-hidden bg-slate-900 border border-primary/15`}
+        >
           <iframe
             src={`https://www.youtube.com/embed/${video.id}`}
             title="YouTube video"
@@ -405,7 +549,7 @@ function AIVideoShowcase() {
             className="w-full h-full"
             loading="lazy"
           />
-        </div>
+        </motion.div>
       );
     }
 
@@ -415,7 +559,13 @@ function AIVideoShowcase() {
       : `https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F${video.id}%2F&show_text=false&width=267&t=0`;
 
     return (
-      <div className={`${aspectClass} rounded-2xl overflow-hidden bg-slate-900 border border-primary/15 relative group`}>
+      <motion.div 
+        initial={getDirectionalAnimation(index)}
+        whileInView={{ opacity: 1, x: 0, y: 0 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: 0.6, delay: staggerDelay, ease: "easeOut" }}
+        className={`${aspectClass} rounded-2xl overflow-hidden bg-slate-900 border border-primary/15 relative group`}
+      >
         <iframe
           src={fbSrc}
           title="Facebook video"
@@ -435,12 +585,12 @@ function AIVideoShowcase() {
         >
           <span className="material-symbols-outlined text-sm">open_in_new</span>
         </a>
-      </div>
+      </motion.div>
     );
   };
 
   return (
-    <section className="relative py-16 sm:py-24 overflow-hidden" id="video-ads">
+    <FadeIn className="relative py-16 sm:py-24 overflow-hidden" id="video-ads">
       <div className="pointer-events-none absolute inset-0 bg-tech-grid opacity-40" />
       <div className="pointer-events-none absolute -top-32 -left-32 w-[34rem] h-[34rem] bg-primary/20 rounded-full blur-[110px]" />
       <div className="pointer-events-none absolute -bottom-32 -right-32 w-[30rem] h-[30rem] bg-primary/15 rounded-full blur-[110px]" />
@@ -461,9 +611,9 @@ function AIVideoShowcase() {
             </div>
             <h4 className="text-lg sm:text-xl font-black">{t.videoShowcase.commercialTag}</h4>
           </div>
-          <div className="grid grid-cols-1 gap-3 sm:gap-4 max-w-xs">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-xs sm:max-w-none">
             {commercialVertical.map((video, i) => (
-              <VideoEmbed key={`cv-${i}`} video={video} />
+              <VideoEmbed key={`cv-${i}`} video={video} index={i} />
             ))}
           </div>
         </div>
@@ -474,14 +624,15 @@ function AIVideoShowcase() {
             <div className="w-10 h-10 rounded-xl bg-primary/15 border border-primary/25 flex items-center justify-center text-primary">
               <span className="material-symbols-outlined">desktop_windows</span>
             </div>
-            <h4 className="text-lg sm:text-xl font-black">{lang === 'ar' ? 'فيديوهات إعلانية' : 'Ad Videos'}</h4>
+            <h4 className="text-lg sm:text-xl font-black">{t.videoShowcase.adVideosTag}</h4>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             {commercialLandscape.map((video, i) => (
-              <VideoEmbed key={`cl-${i}`} video={video} landscape />
+              <VideoEmbed key={`cl-${i}`} video={video} landscape index={i} />
             ))}
           </div>
         </div>
+
 
         {/* Creative Works - Vertical */}
         <div>
@@ -493,7 +644,7 @@ function AIVideoShowcase() {
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
             {creativeVideos.map((video, i) => (
-              <VideoEmbed key={`cr-${i}`} video={video} />
+              <VideoEmbed key={`cr-${i}`} video={video} index={i} />
             ))}
           </div>
         </div>
@@ -504,23 +655,23 @@ function AIVideoShowcase() {
             <div className="w-10 h-10 rounded-xl bg-primary/15 border border-primary/25 flex items-center justify-center text-primary">
               <span className="material-symbols-outlined">language</span>
             </div>
-            <h4 className="text-lg sm:text-xl font-black">{lang === 'ar' ? 'محتوى إبداعي باللغة الإنجليزية' : 'English Creative Content'}</h4>
+            <h4 className="text-lg sm:text-xl font-black">{t.videoShowcase.englishTag}</h4>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
             {englishVideos.map((video, i) => (
-              <VideoEmbed key={`en-${i}`} video={video} />
+              <VideoEmbed key={`en-${i}`} video={video} index={i} />
             ))}
           </div>
         </div>
       </div>
-    </section>
+    </FadeIn>
   );
 }
 
 function Results() {
   const { t } = useLanguage();
   return (
-    <section className="py-14 sm:py-16 bg-primary text-white overflow-hidden relative" id="results">
+    <FadeIn className="py-14 sm:py-16 bg-primary text-white overflow-hidden relative" id="results">
       <div className="absolute top-0 right-0 w-1/2 h-full bg-white/5 skew-x-12 translate-x-1/2"></div>
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 text-center">
@@ -532,7 +683,7 @@ function Results() {
           ))}
         </div>
       </div>
-    </section>
+    </FadeIn>
   );
 }
 
@@ -544,7 +695,7 @@ function Testimonials() {
     "https://lh3.googleusercontent.com/aida-public/AB6AXuAxSRkbjEUDTPXhfntxC1MD146ViHtZl3Pi_wagWW8gavSRyZ3uwiFpHEyQylSOpGEr14E7IituVV5xfvLT4WqPn3oG8LGEgl3VZksWrKRKaX5G1GwhfpRB_zwCmLtu1L-25q6gzMme2hlIiEC28A0n8CL_okbQVIkJuxO8rEL6hUMuA5dG0ln2FhJjKbZUqUh3x2DtmH7W1zuPCdMh4gNkJDsP1Y1RCyvRwtRm-sULwhsHWDFc57diEjkRYYOZJKu54DgMTQF63ZM"
   ];
   return (
-    <section className="py-12 sm:py-16">
+    <FadeIn className="py-12 sm:py-16">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-primary font-bold uppercase tracking-widest mb-4">{t.testimonials.tag}</h2>
@@ -552,7 +703,14 @@ function Testimonials() {
         </div>
         <div className="flex overflow-x-auto overflow-y-hidden snap-x snap-mandatory hide-scrollbar gap-4 sm:gap-6 pb-6 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible">
           {t.testimonials.items.map((item, i) => (
-            <div key={i} className="min-w-[85vw] sm:min-w-[400px] md:min-w-0 snap-center glass-card p-6 sm:p-8 md:p-10 rounded-3xl relative flex-shrink-0">
+            <motion.div
+              key={i}
+              initial={getDirectionalAnimation(i)}
+              whileInView={{ opacity: 1, x: 0, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: i * 0.15, ease: "easeOut" }}
+              className="min-w-[85vw] sm:min-w-[400px] md:min-w-0 snap-center glass-card p-6 sm:p-8 md:p-10 rounded-3xl relative flex-shrink-0"
+            >
               <span className="material-symbols-outlined text-primary text-5xl md:text-6xl opacity-20 absolute top-4 right-5 sm:right-8">format_quote</span>
               <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 italic mb-6 sm:mb-8 leading-relaxed mt-4 sm:mt-0 relative z-10 w-full whitespace-normal">"{item.quote}"</p>
               <div className="flex items-center gap-4 border-t border-primary/10 pt-5">
@@ -562,18 +720,18 @@ function Testimonials() {
                   <div className="text-[11px] sm:text-xs text-slate-500 uppercase font-medium">{item.role}</div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
-    </section>
+    </FadeIn>
   );
 }
 
 function Contact() {
   const { t, lang } = useLanguage();
   return (
-    <section className="py-12 sm:py-16 bg-slate-50 dark:bg-slate-900/30" id="contact">
+    <FadeIn className="py-12 sm:py-16 bg-slate-50 dark:bg-slate-900/30" id="contact">
       <div className="max-w-4xl mx-auto px-6">
         <div className="text-center mb-8 sm:mb-12">
           <h3 className="text-3xl lg:text-4xl font-black mb-3">{t.contact.title}</h3>
@@ -600,7 +758,7 @@ function Contact() {
 
           {/* Email CTA */}
           <a
-            href="mailto:mostafa.elkholy.dp@gmail.com"
+            href="mailto:info@kholy.co"
             className="glass-card rounded-2xl p-6 sm:p-8 flex flex-col items-center text-center gap-4 group hover:shadow-[0_0_40px_rgba(100,103,242,0.2)] transition-all neon-border cursor-pointer"
           >
             <div className="w-16 h-16 rounded-2xl bg-primary/15 border border-primary/25 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
@@ -608,7 +766,7 @@ function Contact() {
             </div>
             <div>
               <h4 className="text-lg font-black mb-1 group-hover:text-primary transition-colors">{lang === 'ar' ? 'أرسل بريد إلكتروني' : 'Send an Email'}</h4>
-              <p className="text-sm text-slate-500 break-all">mostafa.elkholy.dp@gmail.com</p>
+              <p className="text-sm text-slate-500 break-all">info@kholy.co</p>
               <p className="text-xs text-primary font-bold mt-2">{lang === 'ar' ? 'رد خلال 24 ساعة 📩' : 'Reply within 24 hours 📩'}</p>
             </div>
           </a>
@@ -618,7 +776,7 @@ function Contact() {
         <div className="flex justify-center gap-4">
           <a
             className="w-11 h-11 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center hover:bg-[#1877F2] hover:text-white transition-all"
-            href="https://www.facebook.com/mostafakholy007/"
+            href="https://www.facebook.com/"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -634,7 +792,74 @@ function Contact() {
           </a>
         </div>
       </div>
-    </section>
+    </FadeIn>
+  );
+}
+
+function Pricing() {
+  const { t } = useLanguage();
+  return (
+    <FadeIn className="relative py-12 sm:py-16 overflow-hidden bg-slate-50 dark:bg-slate-900/30" id="pricing">
+      <div className="pointer-events-none absolute inset-0 bg-tech-grid opacity-35" />
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="text-center mb-10 sm:mb-16">
+          <h2 className="text-primary font-bold uppercase tracking-widest mb-3">{t.pricing.tag}</h2>
+          <h3 className="text-3xl md:text-4xl font-black mb-4">{t.pricing.title}</h3>
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">{t.pricing.desc}</p>
+        </div>
+        
+        <div className="grid md:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
+          {t.pricing.packages.map((pkg, i) => (
+            <motion.div
+              key={i}
+              initial={getDirectionalAnimation(i)}
+              whileInView={{ opacity: 1, x: 0, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: i * 0.15, ease: "easeOut" }}
+              className="h-full"
+            >
+              <Tilt 
+                tiltMaxAngleX={10} 
+                tiltMaxAngleY={10} 
+                scale={1.02} 
+                transitionSpeed={2000}
+                className={`glass-card rounded-3xl p-6 sm:p-8 flex flex-col h-full relative overflow-hidden ${i === 1 ? 'pricing-popular transform md:-translate-y-4 shadow-[0_20px_40px_rgba(100,103,242,0.15)]' : ''}`}
+              >
+                {i === 1 && (
+                  <div className="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-4 py-1.5 rounded-bl-2xl uppercase tracking-wider">
+                    {t.pricing.popular}
+                  </div>
+                )}
+                <h4 className="text-xl font-black mb-2">{pkg.name}</h4>
+                <div className="flex items-baseline gap-1 mb-6 border-b border-primary/10 pb-6">
+                  <span className="text-4xl font-black text-primary">{pkg.price}</span>
+                  <span className="text-sm text-slate-500 font-bold">{t.pricing.currency}</span>
+                </div>
+                
+                <ul className="space-y-4 mb-8 flex-grow">
+                  {pkg.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-start gap-3 text-sm">
+                      <span className="material-symbols-outlined text-green-500 text-lg shrink-0">check_circle</span>
+                      <span className="text-slate-700 dark:text-slate-300">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                
+                <a 
+                  href="https://wa.me/201127718978" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all mt-auto ${i === 1 ? 'bg-primary text-white hover:shadow-[0_0_20px_rgba(100,103,242,0.4)]' : 'bg-primary/10 text-primary hover:bg-primary hover:text-white'}`}
+                >
+                  {t.pricing.cta}
+                  <WhatsAppIcon className="w-5 h-5" />
+                </a>
+              </Tilt>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </FadeIn>
   );
 }
 
@@ -644,7 +869,7 @@ function Footer() {
     <footer className="py-8 sm:py-10 border-t border-primary/10 bg-white/40 dark:bg-slate-950/20 backdrop-blur">
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-8 text-sm">
         <div className="text-slate-600 dark:text-slate-400 font-bold">
-          © {new Date().getFullYear()} Mostafa Elkholy
+          © {new Date().getFullYear()} Kholy Digital
         </div>
         <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
           <a className="hover:text-primary transition-colors font-bold" href="#">{t.footer.privacy}</a>
@@ -684,8 +909,10 @@ export default function App() {
         <Hero />
         <AIVideoShowcase />
         <WebsitesIBuilt />
+        <Pricing />
         <About />
         <Services />
+        <PerformanceAdsSection />
         <Results />
         <Testimonials />
         <Contact />
