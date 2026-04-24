@@ -137,10 +137,13 @@
 
 html {
   scroll-behavior: smooth;
+  background-color: var(--color-background-dark);
 }
 
 html, body {
   overflow-x: hidden;
+  background-color: var(--color-background-dark);
+  overscroll-behavior-y: contain;
 }
 
 .line-clamp-2 {
@@ -157,17 +160,25 @@ html, body {
 }
 
 @media (max-width: 767px) {
+  html {
+    scroll-behavior: auto;
+  }
+
   .glass-card {
     backdrop-filter: none;
-    box-shadow: 0 8px 20px rgba(2, 6, 23, 0.18);
+    box-shadow: 0 6px 14px rgba(2, 6, 23, 0.22);
   }
 
   .bg-tech-grid {
-    background-size: 90px 90px;
-    opacity: 0.45;
+    background-size: 110px 110px;
+    opacity: 0.3;
+  }
+
+  .bg-scanlines {
+    opacity: 0.03;
   }
 
   .marquee-track {
-    animation-duration: 45s;
+    animation-duration: 60s;
   }
 }

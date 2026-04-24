@@ -14,17 +14,28 @@ import { TechParticles } from './TechParticles';
 import Tilt from 'react-parallax-tilt';
 
 // Scroll Reveal Wrapper
-export const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 40 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-50px" }}
-    transition={{ duration: 0.7, delay, ease: "easeOut" }}
-    className={className}
-  >
-    {children}
-  </motion.div>
-);
+export const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => {
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return (
+    <motion.div
+      initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: isMobile ? "-10px" : "-50px" }}
+      transition={{ duration: isMobile ? 0.25 : 0.7, delay: isMobile ? 0 : delay, ease: "easeOut" }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+};
 
 export const getDirectionalAnimation = (index: number) => {
   const directions = [
@@ -67,13 +78,13 @@ function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-primary/10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+    <nav className="sticky top-0 z-50 w-full border-b border-primary/20 bg-background-dark/95 md:bg-background-light/80 dark:bg-background-dark/85 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
         <a href="#top" className="flex items-center gap-2 group cursor-pointer z-50">
           <img src={logoImg} alt="Kholy Digital" className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg object-cover" />
           <span className="text-base sm:text-lg font-black tracking-tight">Kholy<span className="text-primary"> Digital</span></span>
         </a>
-        <div className={`fixed inset-0 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-xl z-[45] flex flex-col items-center justify-center gap-8 transition-all duration-300 md:static md:bg-transparent md:dark:bg-transparent md:flex-row md:gap-8 md:p-0 ${isMenuOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-full pointer-events-none md:opacity-100 md:translate-y-0 md:pointer-events-auto'}`}>
+        <div className={`fixed inset-0 bg-background-dark/95 backdrop-blur-xl z-[45] flex flex-col items-center justify-center gap-8 transition-all duration-300 md:static md:bg-transparent md:dark:bg-transparent md:flex-row md:gap-8 md:p-0 ${isMenuOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-full pointer-events-none md:opacity-100 md:translate-y-0 md:pointer-events-auto'}`}>
           <a onClick={() => setIsMenuOpen(false)} className="text-2xl md:text-sm font-medium hover:text-primary transition-colors cursor-pointer" href="#video-ads">{t.nav.portfolio}</a>
           <a onClick={() => setIsMenuOpen(false)} className="text-2xl md:text-sm font-medium hover:text-primary transition-colors cursor-pointer" href="#about">{t.nav.about}</a>
           <a onClick={() => setIsMenuOpen(false)} className="text-2xl md:text-sm font-medium hover:text-primary transition-colors cursor-pointer" href="#services">{t.nav.services}</a>
@@ -224,7 +235,7 @@ function Hero() {
 function About() {
   const { t } = useLanguage();
   return (
-    <FadeIn className="py-12 sm:py-16 bg-slate-100 dark:bg-slate-950/80" id="about">
+    <FadeIn className="py-12 sm:py-16 bg-background-dark" id="about">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
           <div className="grid grid-cols-2 gap-4">
@@ -249,15 +260,15 @@ function About() {
               ></div>
             </div>
           </div>
-          <div className="rounded-3xl bg-white/70 dark:bg-slate-900/65 border border-primary/10 p-5 sm:p-7">
+          <div className="rounded-3xl bg-slate-900/65 border border-primary/10 p-5 sm:p-7">
             <h2 className="text-primary font-bold uppercase tracking-widest mb-4">{t.about.tag}</h2>
-            <h3 className="text-2xl sm:text-3xl md:text-4xl text-slate-900 dark:text-slate-100 font-black mb-6 leading-tight">{t.about.title}</h3>
-            <p className="text-sm sm:text-base text-slate-700 dark:text-slate-200 mb-8 leading-relaxed">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl text-slate-100 font-black mb-6 leading-tight">{t.about.title}</h3>
+            <p className="text-sm sm:text-base text-slate-200 mb-8 leading-relaxed">
               {t.about.desc}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-y-6">
               {t.about.skills.map((skill, i) => (
-                <div key={i} className="flex items-center gap-3"><span className="material-symbols-outlined text-primary">check_circle</span><span className="font-bold text-slate-800 dark:text-slate-100">{skill}</span></div>
+                <div key={i} className="flex items-center gap-3"><span className="material-symbols-outlined text-primary">check_circle</span><span className="font-bold text-slate-100">{skill}</span></div>
               ))}
             </div>
           </div>
@@ -324,7 +335,7 @@ function PerformanceAdsSection() {
   const { t, lang } = useLanguage();
 
   return (
-    <section className="relative py-12 sm:py-16 overflow-hidden bg-slate-100 dark:bg-slate-950/85" id="ad-management">
+    <section className="relative py-12 sm:py-16 overflow-hidden bg-background-dark" id="ad-management">
       <div className="pointer-events-none absolute inset-0 bg-tech-grid opacity-35" />
       <div className="pointer-events-none absolute -top-24 -left-24 w-[26rem] h-[26rem] bg-primary/20 rounded-full blur-[100px]" />
       <div className="pointer-events-none absolute -bottom-24 -right-24 w-[24rem] h-[24rem] bg-cyan-500/10 rounded-full blur-[100px]" />
@@ -333,7 +344,7 @@ function PerformanceAdsSection() {
         <div className="text-center mb-8 sm:mb-12">
           <h2 className="text-primary font-bold uppercase tracking-widest mb-3">{t.performanceAds.tag}</h2>
           <h3 className="text-3xl md:text-4xl font-black mb-4">{t.performanceAds.title}</h3>
-          <p className="text-sm sm:text-base text-slate-700 dark:text-slate-100 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base text-slate-200 max-w-3xl mx-auto leading-relaxed">
             {t.performanceAds.desc}
           </p>
         </div>
@@ -342,13 +353,13 @@ function PerformanceAdsSection() {
           <div className="lg:col-span-2 glass-card rounded-3xl p-6 sm:p-8 neon-border">
             <div className="flex items-center gap-3 mb-6">
               <span className="material-symbols-outlined text-primary text-2xl">ads_click</span>
-              <h4 className="text-xl text-slate-900 dark:text-slate-100 font-black">{lang === 'ar' ? 'ماذا يشمل التنفيذ؟' : 'What is included?'}</h4>
+              <h4 className="text-xl text-slate-100 font-black">{lang === 'ar' ? 'ماذا يشمل التنفيذ؟' : 'What is included?'}</h4>
             </div>
             <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
               {t.performanceAds.points.map((point, i) => (
-                <div key={i} className="rounded-2xl border border-primary/15 bg-white/60 dark:bg-slate-950/30 p-4 flex items-start gap-3">
+                <div key={i} className="rounded-2xl border border-primary/15 bg-slate-900/45 p-4 flex items-start gap-3">
                   <span className="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
-                  <p className="text-sm text-slate-800 dark:text-slate-100 leading-relaxed">{point}</p>
+                  <p className="text-sm text-slate-100 leading-relaxed">{point}</p>
                 </div>
               ))}
             </div>
@@ -357,11 +368,11 @@ function PerformanceAdsSection() {
           <div className="glass-card rounded-3xl p-6 sm:p-8 neon-border flex flex-col">
             <div className="flex items-center gap-3 mb-5">
               <span className="material-symbols-outlined text-primary text-2xl">trending_up</span>
-              <h4 className="text-xl text-slate-900 dark:text-slate-100 font-black">{lang === 'ar' ? 'النتائج المتوقعة' : 'Expected outcomes'}</h4>
+              <h4 className="text-xl text-slate-100 font-black">{lang === 'ar' ? 'النتائج المتوقعة' : 'Expected outcomes'}</h4>
             </div>
             <div className="space-y-3 mb-8">
               {t.performanceAds.outcomes.map((outcome, i) => (
-                <div key={i} className="flex items-center gap-3 text-sm font-bold text-slate-800 dark:text-slate-100">
+                <div key={i} className="flex items-center gap-3 text-sm font-bold text-slate-100">
                   <span className="material-symbols-outlined text-primary">bolt</span>
                   <span>{outcome}</span>
                 </div>
@@ -484,6 +495,7 @@ function WebsitesIBuilt() {
 function AIVideoShowcase() {
   const { t, lang } = useLanguage();
   const [isMobile, setIsMobile] = React.useState(false);
+  const [showAllLandscape, setShowAllLandscape] = React.useState(false);
   const [showAllCreative, setShowAllCreative] = React.useState(false);
   const [showAllEnglish, setShowAllEnglish] = React.useState(false);
 
@@ -545,6 +557,10 @@ function AIVideoShowcase() {
   const VideoEmbed = ({ video, landscape = false, index = 0 }: { video: { type: string; id: string }; landscape?: boolean; index?: number }) => {
     const aspectClass = landscape ? 'aspect-video' : 'aspect-[9/16]';
     const staggerDelay = (index % 5) * 0.15;
+    const animationTransition = { duration: isMobile ? 0.25 : 0.6, delay: isMobile ? 0 : staggerDelay, ease: "easeOut" as const };
+    const frameClass = isMobile
+      ? `${aspectClass} rounded-2xl overflow-hidden bg-slate-900 border border-primary/15`
+      : `${aspectClass} rounded-2xl overflow-hidden bg-slate-900 border border-primary/15 shadow-[0_10px_25px_rgba(2,6,23,0.35)] hover:shadow-[0_18px_40px_rgba(15,23,42,0.45)] transition-shadow`;
 
     if (video.type === 'yt') {
       return (
@@ -552,8 +568,8 @@ function AIVideoShowcase() {
           initial={getDirectionalAnimation(index)}
           whileInView={{ opacity: 1, x: 0, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, delay: staggerDelay, ease: "easeOut" }}
-          className={`${aspectClass} rounded-2xl overflow-hidden bg-slate-900 border border-primary/15 shadow-[0_10px_25px_rgba(2,6,23,0.35)] hover:shadow-[0_18px_40px_rgba(15,23,42,0.45)] transition-shadow`}
+          transition={animationTransition}
+          className={frameClass}
         >
           <iframe
             src={`https://www.youtube.com/embed/${video.id}`}
@@ -577,8 +593,8 @@ function AIVideoShowcase() {
         initial={getDirectionalAnimation(index)}
         whileInView={{ opacity: 1, x: 0, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
-        transition={{ duration: 0.6, delay: staggerDelay, ease: "easeOut" }}
-        className={`${aspectClass} rounded-2xl overflow-hidden bg-slate-900 border border-primary/15 relative group shadow-[0_10px_25px_rgba(2,6,23,0.35)] hover:shadow-[0_18px_40px_rgba(15,23,42,0.45)] transition-shadow`}
+        transition={animationTransition}
+        className={`${frameClass} relative group`}
       >
         <iframe
           src={fbSrc}
@@ -641,10 +657,21 @@ function AIVideoShowcase() {
             <h4 className="text-lg sm:text-xl font-black">{t.videoShowcase.adVideosTag}</h4>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-            {commercialLandscape.map((video, i) => (
+            {(isMobile && !showAllLandscape ? commercialLandscape.slice(0, 1) : commercialLandscape).map((video, i) => (
               <VideoEmbed key={`cl-${i}`} video={video} landscape index={i} />
             ))}
           </div>
+          {isMobile && commercialLandscape.length > 1 && (
+            <div className="mt-5 flex justify-center">
+              <button
+                type="button"
+                onClick={() => setShowAllLandscape((prev) => !prev)}
+                className="px-5 py-2 rounded-xl bg-primary/10 text-primary font-bold text-sm border border-primary/20"
+              >
+                {showAllLandscape ? (lang === 'ar' ? 'إظهار فيديو واحد' : 'Show one video') : (lang === 'ar' ? 'عرض كل الفيديوهات' : 'Show all videos')}
+              </button>
+            </div>
+          )}
         </div>
 
 
@@ -767,11 +794,11 @@ function Testimonials() {
 function Contact() {
   const { t, lang } = useLanguage();
   return (
-    <FadeIn className="py-12 sm:py-16 bg-slate-100 dark:bg-slate-950/80" id="contact">
+    <FadeIn className="py-12 sm:py-16 bg-background-dark" id="contact">
       <div className="max-w-4xl mx-auto px-6">
         <div className="text-center mb-8 sm:mb-12">
-          <h3 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 font-black mb-3">{t.contact.title}</h3>
-          <p className="text-sm sm:text-base text-slate-700 dark:text-slate-200 max-w-xl mx-auto">{t.contact.desc}</p>
+          <h3 className="text-2xl sm:text-3xl lg:text-4xl text-slate-100 font-black mb-3">{t.contact.title}</h3>
+          <p className="text-sm sm:text-base text-slate-200 max-w-xl mx-auto">{t.contact.desc}</p>
         </div>
 
         <div className="grid sm:grid-cols-2 gap-3 sm:gap-6 mb-8">
@@ -835,13 +862,13 @@ function Contact() {
 function Pricing() {
   const { t } = useLanguage();
   return (
-    <FadeIn className="relative py-12 sm:py-16 overflow-hidden bg-slate-50 dark:bg-slate-900/30" id="pricing">
+    <FadeIn className="relative py-12 sm:py-16 overflow-hidden bg-background-dark" id="pricing">
       <div className="pointer-events-none absolute inset-0 bg-tech-grid opacity-35" />
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="text-center mb-10 sm:mb-16">
           <h2 className="text-primary font-bold uppercase tracking-widest mb-3">{t.pricing.tag}</h2>
           <h3 className="text-3xl md:text-4xl font-black mb-4">{t.pricing.title}</h3>
-          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">{t.pricing.desc}</p>
+          <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto">{t.pricing.desc}</p>
         </div>
         
         <div className="grid md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto">
@@ -859,24 +886,24 @@ function Pricing() {
                 tiltMaxAngleY={6} 
                 scale={1.01} 
                 transitionSpeed={2000}
-                className={`glass-card rounded-3xl p-4 sm:p-6 md:p-8 flex flex-col h-full relative overflow-hidden ${i === 1 ? 'pricing-popular transform md:-translate-y-4 shadow-[0_20px_40px_rgba(100,103,242,0.15)]' : ''}`}
+                className={`glass-card rounded-3xl p-3 sm:p-6 md:p-8 flex flex-col h-full relative overflow-hidden ${i === 1 ? 'pricing-popular transform md:-translate-y-4 shadow-[0_20px_40px_rgba(100,103,242,0.15)]' : ''}`}
               >
                 {i === 1 && (
                   <div className="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-4 py-1.5 rounded-bl-2xl uppercase tracking-wider">
                     {t.pricing.popular}
                   </div>
                 )}
-                <h4 className="text-lg sm:text-xl font-black mb-2">{pkg.name}</h4>
-                <div className="flex items-baseline gap-1 mb-4 sm:mb-6 border-b border-primary/10 pb-4 sm:pb-6">
-                  <span className="text-3xl sm:text-4xl font-black text-primary">{pkg.price}</span>
-                  <span className="text-sm text-slate-500 font-bold">{t.pricing.currency}</span>
+                <h4 className="text-base sm:text-xl font-black mb-1.5 sm:mb-2">{pkg.name}</h4>
+                <div className="flex items-baseline gap-1 mb-3 sm:mb-6 border-b border-primary/10 pb-3 sm:pb-6">
+                  <span className="text-2xl sm:text-4xl font-black text-primary">{pkg.price}</span>
+                  <span className="text-xs sm:text-sm text-slate-400 font-bold">{t.pricing.currency}</span>
                 </div>
                 
-                <ul className="space-y-3 mb-6 sm:mb-8 flex-grow">
+                <ul className="space-y-2.5 mb-4 sm:mb-8 flex-grow">
                   {pkg.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start gap-2.5 text-[13px] sm:text-sm">
-                      <span className="material-symbols-outlined text-green-500 text-lg shrink-0">check_circle</span>
-                      <span className="text-slate-700 dark:text-slate-300">{feature}</span>
+                    <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm leading-5">
+                      <span className="material-symbols-outlined text-green-500 text-base sm:text-lg shrink-0">check_circle</span>
+                      <span className="text-slate-300">{feature}</span>
                     </li>
                   ))}
                 </ul>
