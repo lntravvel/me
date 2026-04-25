@@ -78,30 +78,10 @@ function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const menuPanelRef = React.useRef<HTMLDivElement | null>(null);
 
-  React.useEffect(() => {
-    // #region agent log
-    fetch('http://127.0.0.1:7816/ingest/9356e440-0058-48b7-89ce-d642a8118df8',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'6138cf'},body:JSON.stringify({sessionId:'6138cf',runId:'pre-fix',hypothesisId:'H1',location:'src/App.tsx:Navbar:mount',message:'navbar mounted on device',data:{innerWidth:window.innerWidth,innerHeight:window.innerHeight,userAgent:navigator.userAgent},timestamp:Date.now()})}).catch(()=>{});
-    // #endregion
-  }, []);
 
-  React.useEffect(() => {
-    const panel = menuPanelRef.current;
-    // #region agent log
-    fetch('http://127.0.0.1:7816/ingest/9356e440-0058-48b7-89ce-d642a8118df8',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'6138cf'},body:JSON.stringify({sessionId:'6138cf',runId:'pre-fix',hypothesisId:'H2',location:'src/App.tsx:Navbar:menuStateEffect',message:'menu state changed',data:{isMenuOpen,innerWidth:window.innerWidth,panelExists:Boolean(panel),panelClasses:panel?.className ?? null,pointerEvents:panel ? window.getComputedStyle(panel).pointerEvents : null,opacity:panel ? window.getComputedStyle(panel).opacity : null},timestamp:Date.now()})}).catch(()=>{});
-    // #endregion
-  }, [isMenuOpen]);
 
-  React.useEffect(() => {
-    const panel = menuPanelRef.current;
-    if (!panel) return;
-    const onTransitionEnd = () => {
-      // #region agent log
-      fetch('http://127.0.0.1:7816/ingest/9356e440-0058-48b7-89ce-d642a8118df8',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'6138cf'},body:JSON.stringify({sessionId:'6138cf',runId:'pre-fix',hypothesisId:'H5',location:'src/App.tsx:Navbar:transitionEnd',message:'menu transition ended',data:{isMenuOpen,innerWidth:window.innerWidth,computedOpacity:window.getComputedStyle(panel).opacity,computedPointerEvents:window.getComputedStyle(panel).pointerEvents,transform:window.getComputedStyle(panel).transform},timestamp:Date.now()})}).catch(()=>{});
-      // #endregion
-    };
-    panel.addEventListener('transitionend', onTransitionEnd);
-    return () => panel.removeEventListener('transitionend', onTransitionEnd);
-  }, [isMenuOpen]);
+
+
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-primary/20 bg-background-dark/95 md:bg-background-light/80 dark:bg-background-dark/85 backdrop-blur-md">
@@ -110,13 +90,13 @@ function Navbar() {
           <img src={logoImg} alt="Kholy Digital" className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg object-cover" />
           <span className="text-base sm:text-lg font-black tracking-tight">Kholy<span className="text-primary"> Digital</span></span>
         </a>
-        <div ref={menuPanelRef} className={`fixed inset-0 bg-background-dark/95 backdrop-blur-xl z-[45] flex flex-col items-center justify-center gap-8 transition-all duration-300 md:static md:bg-transparent md:dark:bg-transparent md:flex-row md:gap-8 md:p-0 ${isMenuOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-full pointer-events-none md:opacity-100 md:translate-y-0 md:pointer-events-auto'}`}>
+        <div ref={menuPanelRef} className={`fixed top-14 sm:top-16 inset-x-3 rounded-2xl border border-primary/25 bg-background-dark/95 backdrop-blur-xl shadow-[0_18px_60px_rgba(0,0,0,0.5)] z-[45] flex flex-col items-stretch justify-start gap-4 p-4 transition-all duration-300 md:static md:inset-auto md:rounded-none md:border-0 md:shadow-none md:bg-transparent md:dark:bg-transparent md:flex-row md:items-center md:justify-center md:gap-8 md:p-0 ${isMenuOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-4 pointer-events-none md:opacity-100 md:translate-y-0 md:pointer-events-auto'}`}>
           <a onClick={() => setIsMenuOpen(false)} className="text-2xl md:text-sm font-medium hover:text-primary transition-colors cursor-pointer" href="#video-ads">{t.nav.portfolio}</a>
           <a onClick={() => setIsMenuOpen(false)} className="text-2xl md:text-sm font-medium hover:text-primary transition-colors cursor-pointer" href="#about">{t.nav.about}</a>
           <a onClick={() => setIsMenuOpen(false)} className="text-2xl md:text-sm font-medium hover:text-primary transition-colors cursor-pointer" href="#services">{t.nav.services}</a>
           <a onClick={() => setIsMenuOpen(false)} className="text-2xl md:text-sm font-medium hover:text-primary transition-colors cursor-pointer" href="#pricing">{t.nav.pricing}</a>
           <a onClick={() => setIsMenuOpen(false)} className="text-2xl md:text-sm font-medium hover:text-primary transition-colors cursor-pointer" href="#results">{t.nav.results}</a>
-          <div className="flex items-center justify-center gap-4 md:border-x border-primary/20 md:px-4 z-[50] w-full">
+          <div data-lang-switcher="true" className="hidden md:flex items-center justify-center gap-4 md:border-x border-primary/20 md:px-4 z-[50] w-full md:w-auto">
             <button type="button" onClick={() => { setLang('en'); setIsMenuOpen(false); }} className={`px-4 py-2 text-lg md:text-xs font-bold transition-colors cursor-pointer ${lang === 'en' ? 'text-primary' : 'text-slate-500 hover:text-primary'}`}>EN</button>
             <span className="text-primary text-lg md:text-xs">/</span>
             <button type="button" onClick={() => { setLang('ar'); setIsMenuOpen(false); }} className={`px-4 py-2 text-lg md:text-xs font-bold transition-colors cursor-pointer ${lang === 'ar' ? 'text-primary' : 'text-slate-500 hover:text-primary'}`}>AR</button>
@@ -131,13 +111,18 @@ function Navbar() {
         </div>
         <button className="md:hidden text-primary z-50 relative" onClick={() => {
           const nextOpen = !isMenuOpen;
-          // #region agent log
-          fetch('http://127.0.0.1:7816/ingest/9356e440-0058-48b7-89ce-d642a8118df8',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'6138cf'},body:JSON.stringify({sessionId:'6138cf',runId:'pre-fix',hypothesisId:'H2',location:'src/App.tsx:Navbar:menuToggle',message:'mobile menu toggle pressed',data:{from:isMenuOpen,to:nextOpen,scrollY:window.scrollY},timestamp:Date.now()})}).catch(()=>{});
-          // #endregion
+
           setIsMenuOpen(nextOpen);
         }}>
           <span className="material-symbols-outlined">{isMenuOpen ? 'close' : 'menu'}</span>
         </button>
+      </div>
+      <div className="md:hidden border-t border-primary/15 bg-background-dark/90 backdrop-blur-sm">
+        <div data-lang-switcher="true" className="max-w-7xl mx-auto px-4 h-10 flex items-center justify-center gap-4">
+          <button type="button" onClick={() => setLang('en')} className={`px-3 py-1 text-sm font-bold transition-colors cursor-pointer ${lang === 'en' ? 'text-primary' : 'text-slate-400 hover:text-primary'}`}>EN</button>
+          <span className="text-primary text-xs">/</span>
+          <button type="button" onClick={() => setLang('ar')} className={`px-3 py-1 text-sm font-bold transition-colors cursor-pointer ${lang === 'ar' ? 'text-primary' : 'text-slate-400 hover:text-primary'}`}>AR</button>
+        </div>
       </div>
     </nav>
   );
@@ -147,22 +132,11 @@ function Hero() {
   const { t, lang } = useLanguage();
   const [spot, setSpot] = React.useState({ x: 50, y: 35 });
 
-  const typingWords = lang === 'ar' 
-    ? ["نمو مبيعاتك 🚀", 2000, "انتشار علامتك التجارية 🌟", 2000, "نتائج حقيقية 📈", 2000] 
-    : ["Sales Growth 🚀", 2000, "Brand Awareness 🌟", 2000, "Real Results 📈", 2000];
+  const typingWords = React.useMemo(() => (lang === 'ar'
+    ? ["نمو مبيعاتك 🚀", 2000, "انتشار علامتك التجارية 🌟", 2000, "نتائج حقيقية 📈", 2000]
+    : ["Sales Growth 🚀", 2000, "Brand Awareness 🌟", 2000, "Real Results 📈", 2000]), [lang]);
 
-  React.useEffect(() => {
-    // #region agent log
-    fetch('http://127.0.0.1:7816/ingest/9356e440-0058-48b7-89ce-d642a8118df8',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'6138cf'},body:JSON.stringify({sessionId:'6138cf',runId:'pre-fix-lang',hypothesisId:'H6',location:'src/App.tsx:Hero:langEffect',message:'hero language state changed',data:{lang,heroTitle:t.hero.title,typingFirst:String(typingWords[0])},timestamp:Date.now()})}).catch(()=>{});
-    // #endregion
-  }, [lang, t.hero.title, typingWords]);
 
-  React.useEffect(() => {
-    const target = document.querySelector('.type-hero-text');
-    // #region agent log
-    fetch('http://127.0.0.1:7816/ingest/9356e440-0058-48b7-89ce-d642a8118df8',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'6138cf'},body:JSON.stringify({sessionId:'6138cf',runId:'pre-fix-lang',hypothesisId:'H7',location:'src/App.tsx:Hero:domProbe',message:'type animation dom snapshot',data:{lang,domText:target?.textContent ?? null},timestamp:Date.now()})}).catch(()=>{});
-    // #endregion
-  }, [lang]);
 
   return (
     <section
@@ -175,34 +149,35 @@ function Hero() {
       }}
     >
       <div
-        className="pointer-events-none absolute inset-0 -z-10 opacity-25"
+        className="pointer-events-none absolute inset-0 z-0 opacity-40"
         style={{
           backgroundImage: `url(${heroTechBg})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
       />
-      <TechParticles />
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-scanlines" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-20 dark:opacity-40">
+
+      <div className="pointer-events-none absolute inset-0 z-[2] bg-scanlines" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full z-[2] opacity-20 dark:opacity-40 pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/30 rounded-full blur-[120px]"></div>
         <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-primary/20 rounded-full blur-[100px]"></div>
         <div className="absolute top-[20%] right-[20%] w-[25%] h-[25%] bg-cyan-500/15 rounded-full blur-[100px]"></div>
       </div>
       <div
-        className="pointer-events-none absolute inset-0 -z-10 hero-spotlight"
+        className="pointer-events-none absolute inset-0 z-[3] hero-spotlight"
         style={{
           background: `radial-gradient(600px circle at ${spot.x}% ${spot.y}%, rgba(100, 103, 242, 0.22), rgba(100, 103, 242, 0) 55%)`,
         }}
       />
-      <div className="max-w-5xl mx-auto px-6 text-center">
+      <div className="max-w-5xl mx-auto px-6 text-center relative z-10">
         <div className="space-y-6 md:space-y-8">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-wider">
             <span className="material-symbols-outlined text-sm">verified</span> {t.hero.badge}
           </div>
           <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[1.1] tracking-tight min-h-[4rem] sm:min-h-[5rem] md:min-h-[6rem]">
-            {t.hero.title} <br className="hidden sm:block" />
+            {t.hero.title} <span className="text-primary">{t.hero.titleHighlight}</span> <br className="hidden sm:block" />
             <TypeAnimation
+              key={`hero-typing-${lang}`}
               sequence={typingWords}
               wrapper="span"
               speed={50}
@@ -990,37 +965,10 @@ function Footer() {
 }
 
 export default function App() {
-  const debugScrollState = React.useRef({ touchCount: 0, scrollCount: 0 });
-
-  React.useEffect(() => {
-    const onTouchMove = () => {
-      if (debugScrollState.current.touchCount >= 4) return;
-      debugScrollState.current.touchCount += 1;
-      const target = document.elementFromPoint(window.innerWidth / 2, 120) as HTMLElement | null;
-      // #region agent log
-      fetch('http://127.0.0.1:7816/ingest/9356e440-0058-48b7-89ce-d642a8118df8',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'6138cf'},body:JSON.stringify({sessionId:'6138cf',runId:'pre-fix',hypothesisId:'H3',location:'src/App.tsx:App:onTouchMove',message:'touchmove detected',data:{count:debugScrollState.current.touchCount,scrollY:window.scrollY,bodyOverflowY:window.getComputedStyle(document.body).overflowY,bodyOverscroll:window.getComputedStyle(document.body).overscrollBehaviorY,centerElementClass:target?.className ?? null,centerElementTag:target?.tagName ?? null},timestamp:Date.now()})}).catch(()=>{});
-      // #endregion
-    };
-
-    const onScroll = () => {
-      if (debugScrollState.current.scrollCount >= 4) return;
-      debugScrollState.current.scrollCount += 1;
-      // #region agent log
-      fetch('http://127.0.0.1:7816/ingest/9356e440-0058-48b7-89ce-d642a8118df8',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'6138cf'},body:JSON.stringify({sessionId:'6138cf',runId:'pre-fix',hypothesisId:'H4',location:'src/App.tsx:App:onScroll',message:'window scroll event fired',data:{count:debugScrollState.current.scrollCount,scrollY:window.scrollY,innerHeight:window.innerHeight,docHeight:document.documentElement.scrollHeight},timestamp:Date.now()})}).catch(()=>{});
-      // #endregion
-    };
-
-    window.addEventListener('touchmove', onTouchMove, { passive: true });
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => {
-      window.removeEventListener('touchmove', onTouchMove);
-      window.removeEventListener('scroll', onScroll);
-    };
-  }, []);
-
   return (
     <LanguageProvider>
-      <div id="top" className="min-h-screen overflow-x-hidden">
+      <div id="top" className="min-h-screen relative">
+        <TechParticles />
         <style>
           {`
             .hide-scrollbar::-webkit-scrollbar {
@@ -1031,13 +979,8 @@ export default function App() {
               scrollbar-width: none;
             }
             @media (max-width: 768px) {
-              .hover-lift {
-                transform: none !important;
-              }
-              .hover-lift:hover {
-                transform: none !important;
-                box-shadow: inherit !important;
-              }
+              .hover-lift { transition-duration: 180ms !important; }
+              .hover-lift:hover { transform: translateY(-2px) !important; }
             }
           `}
         </style>

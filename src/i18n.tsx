@@ -22,7 +22,7 @@ const translations = {
       tag: "معرض الأعمال الإعلانية",
       title: "إعلانات فيديو احترافية بالذكاء الاصطناعي",
       desc: "شاهد أمثلة حقيقية من أعمالي: إعلانات تجارية لمنتجات وشركات، ومحتوى إبداعي تم إنتاجه بالكامل باستخدام أحدث تقنيات الذكاء الاصطناعي. كل الفيديوهات تعمل مباشرة هنا بدون الخروج من الموقع.",
-      commercialTag: "إعلانات تجارية لوكالة",
+      commercialTag: "إعلانات تجارية",
       adVideosTag: "فيديوهات إعلانية",
       creativeTag: "أعمال إبداعية متنوعة",
       englishTag: "محتوى إبداعي باللغة الإنجليزية"
@@ -199,7 +199,7 @@ const translations = {
       tag: "Ad Portfolio",
       title: "Professional AI-Powered Video Ads",
       desc: "Watch real examples of my work: commercial ads for products and companies, and creative content produced entirely using the latest AI technologies. All videos play right here without leaving the site.",
-      commercialTag: "Commercial Ads for Agency",
+      commercialTag: "Commercial Ads",
       adVideosTag: "Ad Videos",
       creativeTag: "Various Creative Works",
       englishTag: "English Creative Content"
