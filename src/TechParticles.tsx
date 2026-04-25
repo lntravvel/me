@@ -11,7 +11,7 @@ export function TechParticles() {
 
     let animationId: number;
     const isMobile = window.innerWidth < 768;
-    const particleCount = isMobile ? 45 : 140;
+    const particleCount = isMobile ? 25 : 140;
     const primaryR = 100, primaryG = 103, primaryB = 242;
     const cyanR = 34, cyanG = 211, cyanB = 238;
 
@@ -88,7 +88,7 @@ export function TechParticles() {
         }
       }
 
-      // Draw particles with glow effect
+      // Draw particles
       for (const p of particles) {
         p.x += p.vx;
         p.y += p.vy;
@@ -98,31 +98,34 @@ export function TechParticles() {
         p.x = Math.max(0, Math.min(canvas.width, p.x));
         p.y = Math.max(0, Math.min(canvas.height, p.y));
 
-        // Pulse effect
         const pulse = 0.5 + 0.5 * Math.sin(frame * p.pulseSpeed + p.pulseOffset);
         const currentSize = p.size * (0.8 + 0.4 * pulse);
         const currentAlpha = 0.4 + 0.3 * pulse;
 
-        // Outer glow
-        const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, currentSize * 4);
-        gradient.addColorStop(0, `rgba(${p.color}, ${currentAlpha * 0.4})`);
-        gradient.addColorStop(1, `rgba(${p.color}, 0)`);
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, currentSize * 4, 0, Math.PI * 2);
-        ctx.fillStyle = gradient;
-        ctx.fill();
+        if (!isMobile) {
+          // Desktop: Full glow effect
+          const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, currentSize * 4);
+          gradient.addColorStop(0, `rgba(${p.color}, ${currentAlpha * 0.4})`);
+          gradient.addColorStop(1, `rgba(${p.color}, 0)`);
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, currentSize * 4, 0, Math.PI * 2);
+          ctx.fillStyle = gradient;
+          ctx.fill();
+        }
 
-        // Inner bright dot
+        // Particle dot
         ctx.beginPath();
         ctx.arc(p.x, p.y, currentSize, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${p.color}, ${currentAlpha})`;
         ctx.fill();
 
-        // White core for brightness
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, currentSize * 0.4, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${currentAlpha * 0.6})`;
-        ctx.fill();
+        if (!isMobile) {
+          // White core (desktop only)
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, currentSize * 0.4, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 255, 255, ${currentAlpha * 0.6})`;
+          ctx.fill();
+        }
       }
 
       animationId = requestAnimationFrame(draw);

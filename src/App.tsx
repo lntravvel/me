@@ -140,7 +140,7 @@ function Hero() {
 
   return (
     <section
-      className="relative overflow-hidden py-14 sm:py-20 md:py-28"
+      className="relative overflow-hidden py-10 sm:py-20 md:py-28"
       onMouseMove={(e) => {
         const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
         const x = ((e.clientX - rect.left) / rect.width) * 100;
@@ -185,7 +185,7 @@ function Hero() {
               className="type-hero-text text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-400 to-primary inline-block min-w-[200px]"
             />
           </h1>
-          <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base md:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
             {t.hero.desc}
           </p>
           <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center pt-2">
@@ -355,57 +355,72 @@ function PerformanceAdsSection() {
   const { t, lang } = useLanguage();
 
   return (
-    <section className="relative py-12 sm:py-16 overflow-hidden bg-background-dark" id="ad-management">
-      <div className="pointer-events-none absolute inset-0 bg-tech-grid opacity-35" />
-      <div className="pointer-events-none absolute -top-24 -left-24 w-[26rem] h-[26rem] bg-primary/20 rounded-full blur-[100px]" />
-      <div className="pointer-events-none absolute -bottom-24 -right-24 w-[24rem] h-[24rem] bg-cyan-500/10 rounded-full blur-[100px]" />
-
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="text-center mb-8 sm:mb-12">
-          <h2 className="text-primary font-bold uppercase tracking-widest mb-3">{t.performanceAds.tag}</h2>
-          <h3 className="text-3xl md:text-4xl font-black mb-4">{t.performanceAds.title}</h3>
-          <p className="text-sm sm:text-base text-slate-200 max-w-3xl mx-auto leading-relaxed">
-            {t.performanceAds.desc}
-          </p>
+    <section className="relative py-8 sm:py-12 md:py-16 overflow-hidden bg-background-dark" id="ad-management">
+      <div className="pointer-events-none absolute inset-0 bg-tech-grid opacity-25" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+        <div className="text-center mb-4 sm:mb-8">
+          <h2 className="text-primary font-bold uppercase tracking-widest text-xs sm:text-sm mb-1.5 sm:mb-3">{t.performanceAds.tag}</h2>
+          <h3 className="text-lg sm:text-2xl md:text-4xl font-black mb-2 sm:mb-4">{t.performanceAds.title}</h3>
+          <p className="text-xs sm:text-sm text-slate-400 max-w-2xl mx-auto leading-relaxed hidden sm:block">{t.performanceAds.desc}</p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-6 sm:gap-8">
-          <div className="lg:col-span-2 glass-card rounded-3xl p-6 sm:p-8 neon-border">
-            <div className="flex items-center gap-3 mb-6">
-              <span className="material-symbols-outlined text-primary text-2xl">ads_click</span>
-              <h4 className="text-xl text-slate-100 font-black">{lang === 'ar' ? 'ماذا يشمل التنفيذ؟' : 'What is included?'}</h4>
-            </div>
-            <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
-              {t.performanceAds.points.map((point, i) => (
-                <div key={i} className="rounded-2xl border border-primary/15 bg-slate-900/45 p-4 flex items-start gap-3">
-                  <span className="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
-                  <p className="text-sm text-slate-100 leading-relaxed">{point}</p>
+        {/* Mobile: Compact cards */}
+        <div className="sm:hidden space-y-3">
+          <div className="glass-card rounded-xl p-3">
+            <div className="grid grid-cols-2 gap-1.5">
+              {t.performanceAds.points.slice(0, 4).map((point, i) => (
+                <div key={i} className="rounded-lg border border-primary/10 bg-slate-900/40 p-2 flex items-start gap-1.5">
+                  <span className="material-symbols-outlined text-primary text-xs mt-0.5">check_circle</span>
+                  <p className="text-[10px] text-slate-200 leading-tight">{point}</p>
                 </div>
               ))}
             </div>
           </div>
-
-          <div className="glass-card rounded-3xl p-6 sm:p-8 neon-border flex flex-col">
-            <div className="flex items-center gap-3 mb-5">
-              <span className="material-symbols-outlined text-primary text-2xl">trending_up</span>
-              <h4 className="text-xl text-slate-100 font-black">{lang === 'ar' ? 'النتائج المتوقعة' : 'Expected outcomes'}</h4>
-            </div>
-            <div className="space-y-3 mb-8">
+          <div className="glass-card rounded-xl p-3 flex flex-col gap-2.5">
+            <div className="flex flex-wrap gap-1.5">
               {t.performanceAds.outcomes.map((outcome, i) => (
-                <div key={i} className="flex items-center gap-3 text-sm font-bold text-slate-100">
-                  <span className="material-symbols-outlined text-primary">bolt</span>
+                <span key={i} className="flex items-center gap-1 text-[10px] font-bold text-slate-200 bg-primary/10 rounded-full px-2.5 py-1">
+                  <span className="material-symbols-outlined text-primary text-[10px]">bolt</span>
+                  {outcome}
+                </span>
+              ))}
+            </div>
+            <a href="https://wa.me/201127718978" target="_blank" rel="noopener noreferrer"
+              className="w-full bg-primary text-white py-2 rounded-lg font-bold text-xs text-center block">{t.performanceAds.cta}</a>
+          </div>
+        </div>
+
+        {/* Desktop: Grid layout */}
+        <div className="hidden sm:grid lg:grid-cols-3 gap-5">
+          <div className="lg:col-span-2 glass-card rounded-2xl p-5 neon-border">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="material-symbols-outlined text-primary text-xl">ads_click</span>
+              <h4 className="text-base text-slate-100 font-black">{lang === 'ar' ? 'ماذا يشمل التنفيذ؟' : 'What is included?'}</h4>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-2.5">
+              {t.performanceAds.points.map((point, i) => (
+                <div key={i} className="rounded-xl border border-primary/15 bg-slate-900/45 p-3 flex items-start gap-2">
+                  <span className="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span>
+                  <p className="text-xs text-slate-100 leading-relaxed">{point}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="glass-card rounded-2xl p-5 neon-border flex flex-col">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="material-symbols-outlined text-primary text-xl">trending_up</span>
+              <h4 className="text-base text-slate-100 font-black">{lang === 'ar' ? 'النتائج المتوقعة' : 'Expected outcomes'}</h4>
+            </div>
+            <div className="space-y-2 mb-5">
+              {t.performanceAds.outcomes.map((outcome, i) => (
+                <div key={i} className="flex items-center gap-2 text-xs font-bold text-slate-100">
+                  <span className="material-symbols-outlined text-primary text-sm">bolt</span>
                   <span>{outcome}</span>
                 </div>
               ))}
             </div>
-            <a
-              href="https://wa.me/201127718978"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-auto w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-xl font-bold text-center transition-all hover:shadow-[0_0_30px_rgba(100,103,242,0.35)]"
-            >
-              {t.performanceAds.cta}
-            </a>
+            <a href="https://wa.me/201127718978" target="_blank" rel="noopener noreferrer"
+              className="mt-auto w-full bg-primary hover:bg-primary/90 text-white py-2.5 rounded-xl font-bold text-sm text-center transition-all">{t.performanceAds.cta}</a>
           </div>
         </div>
       </div>
@@ -986,12 +1001,12 @@ export default function App() {
         </style>
         <Navbar />
         <Hero />
-        <PerformanceAdsSection />
         <AIVideoShowcase />
+        <PerformanceAdsSection />
         <WebsitesIBuilt />
+        <Services />
         <Pricing />
         <About />
-        <Services />
         <Results />
         <Testimonials />
         <Contact />
@@ -1002,7 +1017,7 @@ export default function App() {
           href="https://wa.me/201127718978"
           target="_blank"
           rel="noopener noreferrer"
-          className="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center shadow-[0_4px_20px_rgba(34,197,94,0.5)] hover:shadow-[0_4px_30px_rgba(34,197,94,0.7)] transition-all hover:scale-110 animate-bounce-slow"
+          className="fixed bottom-4 right-4 z-50 bg-green-500 hover:bg-green-600 text-white w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center shadow-[0_4px_20px_rgba(34,197,94,0.5)] hover:shadow-[0_4px_30px_rgba(34,197,94,0.7)] transition-all hover:scale-110 animate-bounce-slow"
           aria-label="Chat on WhatsApp"
         >
           <WhatsAppIcon className="w-7 h-7 sm:w-8 sm:h-8" />

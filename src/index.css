@@ -165,21 +165,49 @@ body {
     scroll-behavior: auto;
   }
 
+  /* Disable expensive GPU effects on mobile */
   .glass-card {
     backdrop-filter: none;
-    box-shadow: 0 6px 14px rgba(2, 6, 23, 0.22);
+    box-shadow: 0 4px 10px rgba(2, 6, 23, 0.18);
+  }
+
+  .neon-border::before {
+    display: none !important;
+  }
+
+  .hero-spotlight {
+    display: none;
   }
 
   .bg-tech-grid {
     background-size: 110px 110px;
-    opacity: 0.3;
+    opacity: 0.15;
   }
 
   .bg-scanlines {
-    opacity: 0.03;
+    display: none;
   }
 
   .marquee-track {
     animation-duration: 42s;
+  }
+
+  /* Smooth hardware-accelerated scrolling */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Reduce motion for better performance */
+  .animate-bounce-slow {
+    animation: none;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
