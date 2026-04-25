@@ -202,7 +202,7 @@ function Hero() {
               <span className="material-symbols-outlined rtl:rotate-0 ltr:rotate-180">arrow_back</span>
             </a>
             <a
-              href="https://wa.me/201127718978"
+              href="https://wa.me/201101030128"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-green-500 text-white px-8 py-4 rounded-xl font-bold hover:bg-green-600 transition-all flex items-center justify-center gap-2 btn-neon text-lg hover:shadow-[0_0_30px_rgba(34,197,94,0.4)]"
@@ -385,7 +385,7 @@ function PerformanceAdsSection() {
                 </span>
               ))}
             </div>
-            <a href="https://wa.me/201127718978" target="_blank" rel="noopener noreferrer"
+            <a href="https://wa.me/201101030128" target="_blank" rel="noopener noreferrer"
               className="w-full bg-primary text-white py-2 rounded-lg font-bold text-xs text-center block">{t.performanceAds.cta}</a>
           </div>
         </div>
@@ -419,7 +419,7 @@ function PerformanceAdsSection() {
                 </div>
               ))}
             </div>
-            <a href="https://wa.me/201127718978" target="_blank" rel="noopener noreferrer"
+            <a href="https://wa.me/201101030128" target="_blank" rel="noopener noreferrer"
               className="mt-auto w-full bg-primary hover:bg-primary/90 text-white py-2.5 rounded-xl font-bold text-sm text-center transition-all">{t.performanceAds.cta}</a>
           </div>
         </div>
@@ -839,7 +839,7 @@ function Contact() {
         <div className="grid sm:grid-cols-2 gap-3 sm:gap-6 mb-8">
           {/* WhatsApp CTA */}
           <a
-            href="https://wa.me/201127718978"
+            href="https://wa.me/201101030128"
             target="_blank"
             rel="noopener noreferrer"
             className="glass-card rounded-2xl p-4 sm:p-8 flex flex-col items-center text-center gap-3 sm:gap-4 group hover:shadow-[0_0_40px_rgba(34,197,94,0.2)] transition-all neon-border cursor-pointer"
@@ -849,7 +849,7 @@ function Contact() {
             </div>
             <div>
               <h4 className="text-base sm:text-lg font-black mb-1 group-hover:text-green-500 transition-colors">{lang === 'ar' ? 'تواصل عبر واتساب' : 'Chat on WhatsApp'}</h4>
-              <p className="text-sm text-slate-600 dark:text-slate-300" dir="ltr">01127718978</p>
+              <p className="text-sm text-slate-600 dark:text-slate-300" dir="ltr">01101030128</p>
               <p className="text-xs text-green-500 font-bold mt-2">{lang === 'ar' ? 'رد فوري خلال دقائق ⚡' : 'Instant reply within minutes ⚡'}</p>
             </div>
           </a>
@@ -882,7 +882,7 @@ function Contact() {
           </a>
           <a
             className="w-11 h-11 rounded-full bg-green-500/10 text-green-500 flex items-center justify-center hover:bg-green-500 hover:text-white transition-all"
-            href="https://wa.me/201127718978"
+            href="https://wa.me/201101030128"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -944,7 +944,7 @@ function Pricing() {
                 </ul>
                 
                 <a 
-                  href="https://wa.me/201127718978" 
+                  href="https://wa.me/201101030128" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all mt-auto ${i === 1 ? 'bg-primary text-white hover:shadow-[0_0_20px_rgba(100,103,242,0.4)]' : 'bg-primary/10 text-primary hover:bg-primary hover:text-white'}`}
@@ -1014,7 +1014,7 @@ export default function App() {
 
         {/* Floating WhatsApp Button */}
         <a
-          href="https://wa.me/201127718978"
+          href="https://wa.me/201101030128"
           target="_blank"
           rel="noopener noreferrer"
           className="fixed bottom-4 right-4 z-50 bg-green-500 hover:bg-green-600 text-white w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center shadow-[0_4px_20px_rgba(34,197,94,0.5)] hover:shadow-[0_4px_30px_rgba(34,197,94,0.7)] transition-all hover:scale-110 animate-bounce-slow"
