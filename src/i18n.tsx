@@ -5,8 +5,8 @@ const translations = {
     nav: { about: "من أنا", services: "الخدمات", portfolio: "أعمالي", pricing: "الباقات", results: "النتائج", contact: "تواصل معي" },
     hero: {
       badge: "متاح لمشاريع جديدة",
-      title: "إعلانات فيديو بالذكاء الاصطناعي وتصميم مواقع احترافية تضمن لك",
-      titleHighlight: "مضاعفة مبيعاتك",
+      title: "نحوّل أفكارك إلى إعلانات تبيع ومواقع تُبهر بقوة",
+      titleHighlight: "الذكاء الاصطناعي",
       desc: "أقدم لك حلولاً تسويقية ورقمية متكاملة: من إنتاج إعلانات فيديو مبهرة بأحدث تقنيات الـ AI، إلى تصميم وبناء مواقع ومتاجر إلكترونية عصرية، مع إنشاء وإدارة صفحات السوشيال ميديا والحملات الإعلانية لتحقيق أهداف بيزنسك.",
       btnWork: "شاهد أعمالي",
       btnContact: "اطلب خدمتك الآن",
@@ -182,8 +182,8 @@ const translations = {
     nav: { about: "About", services: "Services", portfolio: "Portfolio", pricing: "Packages", results: "Results", contact: "Contact Me" },
     hero: {
       badge: "Available for new projects",
-      title: "AI Video Ads & Professional Website Design That Guarantee",
-      titleHighlight: "Doubling Your Sales",
+      title: "We Turn Your Ideas Into Ads That Sell & Sites That Impress With",
+      titleHighlight: "The Power of AI",
       desc: "I provide complete digital & marketing solutions: from producing stunning AI-powered video ads, to designing and building modern websites and e-commerce stores, plus full social media page management and ad campaigns to achieve your business goals.",
       btnWork: "View My Work",
       btnContact: "Order Your Service Now",

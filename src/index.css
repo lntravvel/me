@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "lenis/dist/lenis.css";
 
 @theme {
   --color-primary: #6467f2;
@@ -132,6 +133,78 @@
   .pricing-popular {
     border: 2px solid var(--color-primary);
     box-shadow: 0 0 40px rgba(100, 103, 242, 0.25);
+  }
+
+  /* Liquid Metal Chrome Effect */
+  .liquid-metal {
+    --mx: 50%;
+    --my: 50%;
+    position: relative;
+    overflow: hidden;
+  }
+  .liquid-metal::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    background:
+      radial-gradient(
+        350px circle at var(--mx) var(--my),
+        rgba(255, 255, 255, 0.12) 0%,
+        rgba(100, 103, 242, 0.08) 25%,
+        rgba(34, 211, 238, 0.06) 50%,
+        transparent 70%
+      );
+    mix-blend-mode: overlay;
+  }
+  .liquid-metal::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    background:
+      conic-gradient(
+        from 0deg at var(--mx) var(--my),
+        rgba(100, 103, 242, 0.08),
+        rgba(34, 211, 238, 0.06),
+        rgba(167, 139, 250, 0.08),
+        rgba(255, 255, 255, 0.05),
+        rgba(100, 103, 242, 0.08)
+      );
+    mix-blend-mode: screen;
+  }
+  .liquid-metal:hover::before,
+  .liquid-metal:hover::after {
+    opacity: 1;
+  }
+  /* Chrome reflection line */
+  .liquid-metal-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.04),
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.04),
+      transparent
+    );
+    transform: skewX(-15deg);
+    z-index: 3;
+    pointer-events: none;
+    transition: left 0.7s ease;
+  }
+  .liquid-metal:hover .liquid-metal-shine {
+    left: 130%;
   }
 }
 

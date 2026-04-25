@@ -12,6 +12,7 @@ import websiteAlShams from './assets/websites/alshams.png';
 import { motion } from 'motion/react';
 import { TechParticles } from './TechParticles';
 import Tilt from 'react-parallax-tilt';
+import Lenis from 'lenis';
 
 // Scroll Reveal Wrapper
 export const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => {
@@ -45,6 +46,15 @@ export const getDirectionalAnimation = (index: number) => {
     { opacity: 0, x: 0, y: -60 }    // Top
   ];
   return directions[index % 4];
+};
+
+// Liquid Metal mouse tracker
+const liquidMetalHandler = (e: React.MouseEvent<HTMLElement>) => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const x = ((e.clientX - rect.left) / rect.width) * 100;
+  const y = ((e.clientY - rect.top) / rect.height) * 100;
+  e.currentTarget.style.setProperty('--mx', `${x}%`);
+  e.currentTarget.style.setProperty('--my', `${y}%`);
 };
 
 const FacebookIcon: React.FC<{ className?: string }> = ({ className }) => (
@@ -133,8 +143,8 @@ function Hero() {
   const [spot, setSpot] = React.useState({ x: 50, y: 35 });
 
   const typingWords = React.useMemo(() => (lang === 'ar'
-    ? ["نمو مبيعاتك 🚀", 2000, "انتشار علامتك التجارية 🌟", 2000, "نتائج حقيقية 📈", 2000]
-    : ["Sales Growth 🚀", 2000, "Brand Awareness 🌟", 2000, "Real Results 📈", 2000]), [lang]);
+    ? ["مبيعات أكثر 🚀", 2000, "حضور رقمي قوي 🌟", 2000, "نتائج تتكلم 📈", 2000]
+    : ["More Sales 🚀", 2000, "Stronger Presence 🌟", 2000, "Real Results 📈", 2000]), [lang]);
 
 
 
@@ -216,6 +226,15 @@ function Hero() {
               <WhatsAppIcon className="w-6 h-6" />
             </a>
           </div>
+          {/* Quick nav to pricing */}
+          <a
+            href="#pricing"
+            className="inline-flex items-center gap-1.5 mt-3 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs sm:text-sm font-bold hover:bg-primary/20 transition-all cursor-pointer group"
+          >
+            <span className="material-symbols-outlined text-sm sm:text-base">sell</span>
+            {lang === 'ar' ? 'شاهد أسعار الباقات' : 'View Packages & Pricing'}
+            <span className="material-symbols-outlined text-sm group-hover:translate-y-0.5 transition-transform">arrow_downward</span>
+          </a>
           {/* Stats row */}
           <div className="flex flex-wrap justify-center gap-6 sm:gap-10 pt-6 border-t border-primary/10 mt-6">
             {[{ icon: 'play_circle', val: '50+', label: t.hero.statsGrowth }, { icon: 'devices', val: '10+', label: 'مواقع و متاجر' }, { icon: 'groups', val: '15M+', label: 'وصول اجتماعي' }].map((s, i) => (
@@ -354,76 +373,111 @@ function Services() {
 function PerformanceAdsSection() {
   const { t, lang } = useLanguage();
 
+  const stats = lang === 'ar'
+    ? [{ value: '500+', label: 'حملة ناجحة' }, { value: '3x', label: 'متوسط العائد' }, { value: '24/7', label: 'متابعة مستمرة' }]
+    : [{ value: '500+', label: 'Campaigns' }, { value: '3x', label: 'Avg. ROAS' }, { value: '24/7', label: 'Monitoring' }];
+
   return (
-    <section className="relative py-8 sm:py-12 md:py-16 overflow-hidden bg-background-dark" id="ad-management">
-      <div className="pointer-events-none absolute inset-0 bg-tech-grid opacity-25" />
+    <section className="relative py-8 sm:py-14 md:py-20 overflow-hidden bg-background-dark" id="ad-management">
+      <div className="pointer-events-none absolute inset-0 bg-tech-grid opacity-20" />
+      {/* Gradient accent */}
+      <div className="pointer-events-none absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-60" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-        <div className="text-center mb-4 sm:mb-8">
+
+        {/* Header with brand logos */}
+        <div className="text-center mb-5 sm:mb-10">
+          <div className="flex items-center justify-center gap-3 sm:gap-4 mb-3 sm:mb-5">
+            <div className="flex items-center gap-1.5 bg-slate-900/60 border border-primary/15 rounded-full px-3 sm:px-4 py-1.5 sm:py-2">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+              <span className="text-[10px] sm:text-xs font-black text-slate-200">Google Ads</span>
+            </div>
+            <div className="flex items-center gap-1.5 bg-slate-900/60 border border-primary/15 rounded-full px-3 sm:px-4 py-1.5 sm:py-2">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24"><defs><linearGradient id="meta-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#0081FB"/><stop offset="100%" stopColor="#00C2FF"/></linearGradient></defs><path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879v-6.988h-2.54v-2.89h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562v1.876h2.773l-.443 2.89h-2.33v6.988C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z" fill="url(#meta-g)"/></svg>
+              <span className="text-[10px] sm:text-xs font-black text-slate-200">Meta Ads</span>
+            </div>
+          </div>
           <h2 className="text-primary font-bold uppercase tracking-widest text-xs sm:text-sm mb-1.5 sm:mb-3">{t.performanceAds.tag}</h2>
           <h3 className="text-lg sm:text-2xl md:text-4xl font-black mb-2 sm:mb-4">{t.performanceAds.title}</h3>
-          <p className="text-xs sm:text-sm text-slate-400 max-w-2xl mx-auto leading-relaxed hidden sm:block">{t.performanceAds.desc}</p>
+          <p className="text-[11px] sm:text-sm text-slate-400 max-w-2xl mx-auto leading-relaxed">{t.performanceAds.desc}</p>
         </div>
 
-        {/* Mobile: Compact cards */}
-        <div className="sm:hidden space-y-3">
-          <div className="glass-card rounded-xl p-3">
-            <div className="grid grid-cols-2 gap-1.5">
-              {t.performanceAds.points.slice(0, 4).map((point, i) => (
-                <div key={i} className="rounded-lg border border-primary/10 bg-slate-900/40 p-2 flex items-start gap-1.5">
-                  <span className="material-symbols-outlined text-primary text-xs mt-0.5">check_circle</span>
-                  <p className="text-[10px] text-slate-200 leading-tight">{point}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="glass-card rounded-xl p-3 flex flex-col gap-2.5">
-            <div className="flex flex-wrap gap-1.5">
-              {t.performanceAds.outcomes.map((outcome, i) => (
-                <span key={i} className="flex items-center gap-1 text-[10px] font-bold text-slate-200 bg-primary/10 rounded-full px-2.5 py-1">
-                  <span className="material-symbols-outlined text-primary text-[10px]">bolt</span>
-                  {outcome}
-                </span>
-              ))}
-            </div>
-            <a href="https://wa.me/201101030128" target="_blank" rel="noopener noreferrer"
-              className="w-full bg-primary text-white py-2 rounded-lg font-bold text-xs text-center block">{t.performanceAds.cta}</a>
-          </div>
+        {/* Animated Stats Bar */}
+        <div className="flex justify-center gap-2 sm:gap-6 mb-5 sm:mb-10">
+          {stats.map((stat, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.15 }}
+              className="text-center px-3 sm:px-6 py-2 sm:py-3 rounded-xl sm:rounded-2xl bg-primary/5 border border-primary/15"
+            >
+              <div className="text-lg sm:text-3xl font-black text-primary">{stat.value}</div>
+              <div className="text-[9px] sm:text-xs text-slate-400 font-bold mt-0.5">{stat.label}</div>
+            </motion.div>
+          ))}
         </div>
 
-        {/* Desktop: Grid layout */}
-        <div className="hidden sm:grid lg:grid-cols-3 gap-5">
-          <div className="lg:col-span-2 glass-card rounded-2xl p-5 neon-border">
-            <div className="flex items-center gap-2 mb-4">
-              <span className="material-symbols-outlined text-primary text-xl">ads_click</span>
-              <h4 className="text-base text-slate-100 font-black">{lang === 'ar' ? 'ماذا يشمل التنفيذ؟' : 'What is included?'}</h4>
+        {/* Content Grid */}
+        <div className="grid lg:grid-cols-3 gap-3 sm:gap-5">
+          <div className="lg:col-span-2 glass-card liquid-metal rounded-xl sm:rounded-2xl p-3 sm:p-5 neon-border relative overflow-hidden" onMouseMove={liquidMetalHandler}>
+            <div className="liquid-metal-shine" />
+            {/* Gradient line at top */}
+            <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-primary via-cyan-400 to-primary" />
+            <div className="flex items-center gap-2 mb-3 sm:mb-4">
+              <span className="material-symbols-outlined text-primary text-lg sm:text-xl">ads_click</span>
+              <h4 className="text-xs sm:text-base text-slate-100 font-black">{lang === 'ar' ? 'ماذا يشمل التنفيذ؟' : 'What is included?'}</h4>
             </div>
-            <div className="grid sm:grid-cols-2 gap-2.5">
+            <div className="grid grid-cols-2 gap-1.5 sm:gap-2.5">
               {t.performanceAds.points.map((point, i) => (
-                <div key={i} className="rounded-xl border border-primary/15 bg-slate-900/45 p-3 flex items-start gap-2">
-                  <span className="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span>
-                  <p className="text-xs text-slate-100 leading-relaxed">{point}</p>
-                </div>
+                <motion.div 
+                  key={i}
+                  initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.1 }}
+                  className="rounded-lg sm:rounded-xl border border-primary/10 bg-slate-900/40 p-2 sm:p-3 flex items-start gap-1.5 sm:gap-2"
+                >
+                  <span className="material-symbols-outlined text-primary text-xs sm:text-sm mt-0.5">check_circle</span>
+                  <p className="text-[10px] sm:text-xs text-slate-200 leading-tight sm:leading-relaxed">{point}</p>
+                </motion.div>
               ))}
             </div>
           </div>
-          <div className="glass-card rounded-2xl p-5 neon-border flex flex-col">
-            <div className="flex items-center gap-2 mb-4">
-              <span className="material-symbols-outlined text-primary text-xl">trending_up</span>
-              <h4 className="text-base text-slate-100 font-black">{lang === 'ar' ? 'النتائج المتوقعة' : 'Expected outcomes'}</h4>
+
+          <div className="glass-card liquid-metal rounded-xl sm:rounded-2xl p-3 sm:p-5 neon-border flex flex-col relative overflow-hidden" onMouseMove={liquidMetalHandler}>
+            <div className="liquid-metal-shine" />
+            <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-cyan-400 via-primary to-cyan-400" />
+            <div className="flex items-center gap-2 mb-3 sm:mb-4">
+              <span className="material-symbols-outlined text-primary text-lg sm:text-xl">trending_up</span>
+              <h4 className="text-xs sm:text-base text-slate-100 font-black">{lang === 'ar' ? 'النتائج المتوقعة' : 'Expected outcomes'}</h4>
             </div>
-            <div className="space-y-2 mb-5">
+            <div className="space-y-1.5 sm:space-y-2 mb-3 sm:mb-5">
               {t.performanceAds.outcomes.map((outcome, i) => (
-                <div key={i} className="flex items-center gap-2 text-xs font-bold text-slate-100">
-                  <span className="material-symbols-outlined text-primary text-sm">bolt</span>
+                <motion.div 
+                  key={i}
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.12 }}
+                  className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-bold text-slate-100"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
                   <span>{outcome}</span>
-                </div>
+                </motion.div>
               ))}
             </div>
             <a href="https://wa.me/201101030128" target="_blank" rel="noopener noreferrer"
-              className="mt-auto w-full bg-primary hover:bg-primary/90 text-white py-2.5 rounded-xl font-bold text-sm text-center transition-all">{t.performanceAds.cta}</a>
+              className="mt-auto w-full bg-primary hover:bg-primary/90 text-white py-2 sm:py-2.5 rounded-lg sm:rounded-xl font-bold text-xs sm:text-sm text-center transition-all flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(100,103,242,0.35)]">
+              {t.performanceAds.cta}
+              <span className="material-symbols-outlined text-sm">arrow_forward</span>
+            </a>
           </div>
         </div>
       </div>
+      {/* Bottom gradient line */}
+      <div className="pointer-events-none absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
     </section>
   );
 }
@@ -895,49 +949,101 @@ function Contact() {
 }
 
 function Pricing() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const [currency, setCurrency] = React.useState<'EGP' | 'SAR' | 'USD' | 'AED'>('EGP');
+
+  const rates: Record<string, { rate: number; symbol: string; labelAr: string; labelEn: string }> = {
+    EGP: { rate: 1, symbol: 'ج.م', labelAr: 'جنيه', labelEn: 'EGP' },
+    SAR: { rate: 0.074, symbol: 'ر.س', labelAr: 'ريال', labelEn: 'SAR' },
+    USD: { rate: 0.02, symbol: '$', labelAr: 'دولار', labelEn: 'USD' },
+    AED: { rate: 0.073, symbol: 'د.إ', labelAr: 'درهم', labelEn: 'AED' },
+  };
+
+  const convertPrice = (egpPrice: string) => {
+    const num = parseFloat(egpPrice.replace(/,/g, ''));
+    const converted = Math.round(num * rates[currency].rate);
+    return converted.toLocaleString();
+  };
+
+  const currencyKeys = ['EGP', 'SAR', 'USD', 'AED'] as const;
+
   return (
     <FadeIn className="relative py-12 sm:py-16 overflow-hidden bg-background-dark" id="pricing">
       <div className="pointer-events-none absolute inset-0 bg-tech-grid opacity-35" />
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="text-center mb-10 sm:mb-16">
-          <h2 className="text-primary font-bold uppercase tracking-widest mb-3">{t.pricing.tag}</h2>
-          <h3 className="text-3xl md:text-4xl font-black mb-4">{t.pricing.title}</h3>
-          <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto">{t.pricing.desc}</p>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+        <div className="text-center mb-6 sm:mb-10">
+          <h2 className="text-primary font-bold uppercase tracking-widest text-xs sm:text-sm mb-2 sm:mb-3">{t.pricing.tag}</h2>
+          <h3 className="text-xl sm:text-3xl md:text-4xl font-black mb-3 sm:mb-4">{t.pricing.title}</h3>
+          <p className="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto mb-4 sm:mb-6">{t.pricing.desc}</p>
+          
+          {/* Currency Switcher */}
+          <div className="inline-flex items-center bg-slate-900/80 border border-primary/20 rounded-full p-1 gap-0.5">
+            {currencyKeys.map((key) => (
+              <button
+                key={key}
+                onClick={() => setCurrency(key)}
+                className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-xs font-bold transition-all duration-300 cursor-pointer ${
+                  currency === key
+                    ? 'bg-primary text-white shadow-[0_0_15px_rgba(100,103,242,0.4)]'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                {lang === 'ar' ? `${rates[key].symbol} ${rates[key].labelAr}` : `${rates[key].labelEn} ${rates[key].symbol}`}
+              </button>
+            ))}
+          </div>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-3 sm:gap-5 max-w-5xl mx-auto">
           {t.pricing.packages.map((pkg, i) => (
             <motion.div
-              key={i}
+              key={`${i}-${currency}`}
               initial={getDirectionalAnimation(i)}
               whileInView={{ opacity: 1, x: 0, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: i * 0.15, ease: "easeOut" }}
               className="h-full"
+              onMouseMove={liquidMetalHandler}
             >
               <Tilt 
                 tiltMaxAngleX={6} 
                 tiltMaxAngleY={6} 
                 scale={1.01} 
                 transitionSpeed={2000}
-                className={`glass-card rounded-3xl p-3 sm:p-6 md:p-8 flex flex-col h-full relative overflow-hidden ${i === 1 ? 'pricing-popular transform md:-translate-y-4 shadow-[0_20px_40px_rgba(100,103,242,0.15)]' : ''}`}
+                className={`glass-card liquid-metal rounded-2xl sm:rounded-3xl p-3 sm:p-6 md:p-8 flex flex-col h-full relative overflow-hidden ${i === 1 ? 'pricing-popular transform md:-translate-y-4 shadow-[0_20px_40px_rgba(100,103,242,0.15)]' : ''}`}
               >
+                <div className="liquid-metal-shine" />
                 {i === 1 && (
-                  <div className="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-4 py-1.5 rounded-bl-2xl uppercase tracking-wider">
+                  <div className="absolute top-0 right-0 bg-primary text-white text-[10px] sm:text-xs font-bold px-3 sm:px-4 py-1 sm:py-1.5 rounded-bl-2xl uppercase tracking-wider">
                     {t.pricing.popular}
                   </div>
                 )}
-                <h4 className="text-base sm:text-xl font-black mb-1.5 sm:mb-2">{pkg.name}</h4>
-                <div className="flex items-baseline gap-1 mb-3 sm:mb-6 border-b border-primary/10 pb-3 sm:pb-6">
-                  <span className="text-2xl sm:text-4xl font-black text-primary">{pkg.price}</span>
-                  <span className="text-xs sm:text-sm text-slate-400 font-bold">{t.pricing.currency}</span>
+                <h4 className="text-sm sm:text-xl font-black mb-1 sm:mb-2">{pkg.name}</h4>
+                <div className="flex items-baseline gap-1 mb-2 sm:mb-6 border-b border-primary/10 pb-2 sm:pb-6">
+                  <motion.span 
+                    key={`price-${i}-${currency}`}
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="text-xl sm:text-4xl font-black text-primary"
+                  >
+                    {convertPrice(pkg.price)}
+                  </motion.span>
+                  <motion.span 
+                    key={`curr-${i}-${currency}`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3, delay: 0.1 }}
+                    className="text-[10px] sm:text-sm text-slate-400 font-bold"
+                  >
+                    {rates[currency].symbol}
+                  </motion.span>
                 </div>
                 
-                <ul className="space-y-2.5 mb-4 sm:mb-8 flex-grow">
+                <ul className="space-y-1.5 sm:space-y-2.5 mb-3 sm:mb-8 flex-grow">
                   {pkg.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm leading-5">
-                      <span className="material-symbols-outlined text-green-500 text-base sm:text-lg shrink-0">check_circle</span>
+                    <li key={idx} className="flex items-start gap-1.5 sm:gap-2 text-[11px] sm:text-sm leading-4 sm:leading-5">
+                      <span className="material-symbols-outlined text-green-500 text-sm sm:text-lg shrink-0">check_circle</span>
                       <span className="text-slate-300">{feature}</span>
                     </li>
                   ))}
@@ -947,10 +1053,10 @@ function Pricing() {
                   href="https://wa.me/201101030128" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all mt-auto ${i === 1 ? 'bg-primary text-white hover:shadow-[0_0_20px_rgba(100,103,242,0.4)]' : 'bg-primary/10 text-primary hover:bg-primary hover:text-white'}`}
+                  className={`w-full py-2.5 sm:py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all mt-auto text-xs sm:text-base ${i === 1 ? 'bg-primary text-white hover:shadow-[0_0_20px_rgba(100,103,242,0.4)]' : 'bg-primary/10 text-primary hover:bg-primary hover:text-white'}`}
                 >
                   {t.pricing.cta}
-                  <WhatsAppIcon className="w-5 h-5" />
+                  <WhatsAppIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                 </a>
               </Tilt>
             </motion.div>
@@ -980,6 +1086,22 @@ function Footer() {
 }
 
 export default function App() {
+  // Lenis smooth scroll (desktop only)
+  React.useEffect(() => {
+    if (window.innerWidth < 768) return;
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+    return () => lenis.destroy();
+  }, []);
+
   return (
     <LanguageProvider>
       <div id="top" className="min-h-screen relative">
