@@ -14,17 +14,22 @@ import { TechParticles } from './TechParticles';
 import Tilt from 'react-parallax-tilt';
 import Lenis from 'lenis';
 
+// Shared mobile detection (single listener for all components)
+const mobileQuery = typeof window !== 'undefined' ? window.matchMedia('(max-width: 767px)') : null;
+const useIsMobile = () => {
+  const [m, setM] = React.useState(mobileQuery?.matches ?? false);
+  React.useEffect(() => {
+    if (!mobileQuery) return;
+    const handler = (e: MediaQueryListEvent) => setM(e.matches);
+    mobileQuery.addEventListener('change', handler);
+    return () => mobileQuery.removeEventListener('change', handler);
+  }, []);
+  return m;
+};
+
 // Scroll Reveal Wrapper
 export const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => {
-  const [isMobile, setIsMobile] = React.useState(false);
-
-  React.useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
+  const isMobile = useIsMobile();
   return (
     <motion.div
       initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
@@ -644,6 +649,7 @@ function AIVideoShowcase() {
   const visibleEnglishVideos = isMobile && !showAllEnglish ? englishVideos.slice(0, 4) : englishVideos;
 
   const VideoEmbed = ({ video, landscape = false, index = 0 }: { video: { type: string; id: string }; landscape?: boolean; index?: number }) => {
+    const [isPlaying, setIsPlaying] = React.useState(false);
     const aspectClass = landscape ? 'aspect-video' : 'aspect-[9/16]';
     const staggerDelay = (index % 5) * 0.15;
     const animationTransition = { duration: isMobile ? 0.25 : 0.6, delay: isMobile ? 0 : staggerDelay, ease: "easeOut" as const };
@@ -658,16 +664,33 @@ function AIVideoShowcase() {
           whileInView={{ opacity: 1, x: 0, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={animationTransition}
-          className={frameClass}
+          className={`${frameClass} cursor-pointer`}
+          onClick={() => setIsPlaying(true)}
         >
-          <iframe
-            src={`https://www.youtube.com/embed/${video.id}`}
-            title="YouTube video"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            className="w-full h-full"
-            loading="lazy"
-          />
+          {isPlaying ? (
+            <iframe
+              src={`https://www.youtube.com/embed/${video.id}?autoplay=1`}
+              title="YouTube video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="w-full h-full"
+            />
+          ) : (
+            <div className="relative w-full h-full bg-slate-900">
+              <img
+                src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
+                alt="Video thumbnail"
+                className="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <div className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/10 transition-colors">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-red-600 flex items-center justify-center shadow-[0_0_20px_rgba(239,68,68,0.4)]">
+                  <span className="material-symbols-outlined text-white text-2xl sm:text-3xl ml-1">play_arrow</span>
+                </div>
+              </div>
+            </div>
+          )}
         </motion.div>
       );
     }
