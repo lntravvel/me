@@ -152,24 +152,24 @@ const translations = {
       packages: [
         {
           name: "الباقة الأساسية",
-          price: "1,500",
+          price: "3,000",
           videos: "3",
           duration: "دقيقة واحدة",
           features: ["3 فيديوهات إعلانية", "مدة كل فيديو: دقيقة", "جودة عالية Full HD", "تسليم خلال 5 أيام", "مراجعة واحدة مجانية"]
         },
         {
           name: "الباقة المتقدمة",
-          price: "2,000",
+          price: "4,000",
           videos: "5",
           duration: "دقيقة واحدة",
           features: ["5 فيديوهات إعلانية", "مدة كل فيديو: دقيقة", "جودة عالية Full HD", "تسليم خلال 7 أيام", "مراجعتين مجانيتين", "موسيقى مخصصة"]
         },
         {
           name: "الباقة الاحترافية",
-          price: "3,000",
+          price: "5,500",
           videos: "3",
           duration: "دقيقتين",
-          features: ["3 فيديوهات إعلانية", "مدة كل فيديو: دقيقتين", "جودة 4K Ultra HD", "تسليم خلال 10 أيام", "3 مراجعات مجانية", "موسيقى + مؤثرات صوتية", "ملفات المصدر"]
+          features: ["3 فيديوهات إعلانية", "مدة كل فيديو: دقيقتين", "جودة فائقة 4K Ultra HD", "تسليم خلال 10 أيام", "3 مراجعات مجانية", "موسيقى + مؤثرات صوتية", "تسليم ملفات المصدر"]
         }
       ]
     },
@@ -329,21 +329,21 @@ const translations = {
       packages: [
         {
           name: "Basic Package",
-          price: "1,500",
+          price: "3,000",
           videos: "3",
           duration: "1 minute",
           features: ["3 video ads", "Duration: 1 min each", "Full HD quality", "Delivery in 5 days", "1 free revision"]
         },
         {
           name: "Advanced Package",
-          price: "2,000",
+          price: "4,000",
           videos: "5",
           duration: "1 minute",
           features: ["5 video ads", "Duration: 1 min each", "Full HD quality", "Delivery in 7 days", "2 free revisions", "Custom music"]
         },
         {
           name: "Professional Package",
-          price: "3,000",
+          price: "5,500",
           videos: "3",
           duration: "2 minutes",
           features: ["3 video ads", "Duration: 2 min each", "4K Ultra HD quality", "Delivery in 10 days", "3 free revisions", "Music + sound effects", "Source files"]

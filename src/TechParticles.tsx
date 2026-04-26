@@ -6,27 +6,32 @@ export function TechParticles() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
     let animationId: number;
     const isMobile = window.innerWidth < 768;
-    const particleCount = isMobile ? 25 : 140;
+    const particleCount = isMobile ? 20 : 80;
     const primaryR = 100, primaryG = 103, primaryB = 242;
     const cyanR = 34, cyanG = 211, cyanB = 238;
 
     const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = document.documentElement.scrollHeight;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = document.documentElement.scrollHeight * dpr;
+      ctx.scale(dpr, dpr);
+      canvas.style.width = window.innerWidth + 'px';
+      canvas.style.height = document.documentElement.scrollHeight + 'px';
     };
     resize();
-    window.addEventListener("resize", resize);
-
-    const resizeObserver = new ResizeObserver(() => {
-      canvas.width = window.innerWidth;
-      canvas.height = document.documentElement.scrollHeight;
-    });
-    resizeObserver.observe(document.documentElement);
+    
+    // Debounced resize
+    let resizeTimer: number;
+    const debouncedResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(resize, 200);
+    };
+    window.addEventListener("resize", debouncedResize);
 
     interface Particle {
       x: number;
@@ -35,10 +40,11 @@ export function TechParticles() {
       vy: number;
       size: number;
       color: string;
-      glow: string;
-      pulseSpeed: number;
-      pulseOffset: number;
+      alpha: number;
     }
+
+    const w = window.innerWidth;
+    const h = document.documentElement.scrollHeight;
     const particles: Particle[] = [];
     for (let i = 0; i < particleCount; i++) {
       const useCyan = Math.random() > 0.7;
@@ -46,86 +52,80 @@ export function TechParticles() {
       const g = useCyan ? cyanG : primaryG;
       const b = useCyan ? cyanB : primaryB;
       particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 1.2,
-        vy: (Math.random() - 0.5) * 1.2,
-        size: Math.random() * 3 + 1.5,
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.8,
+        vy: (Math.random() - 0.5) * 0.8,
+        size: Math.random() * 2.5 + 1.5,
         color: `${r}, ${g}, ${b}`,
-        glow: `rgba(${r}, ${g}, ${b}, 0.6)`,
-        pulseSpeed: 0.02 + Math.random() * 0.03,
-        pulseOffset: Math.random() * Math.PI * 2,
+        alpha: 0.3 + Math.random() * 0.4,
       });
     }
 
-    const linkDistance = 160;
+    const linkDistance = isMobile ? 100 : 140;
+    const linkDistSq = linkDistance * linkDistance;
     let frame = 0;
+
+    // Skip frames on mobile for better perf
+    const frameSkip = isMobile ? 2 : 1;
 
     const draw = () => {
       frame++;
-      const docHeight = document.documentElement.scrollHeight;
-      if (canvas.height !== docHeight || canvas.width !== window.innerWidth) {
-        canvas.width = window.innerWidth;
-        canvas.height = docHeight;
+      if (frame % frameSkip !== 0) {
+        animationId = requestAnimationFrame(draw);
+        return;
       }
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw links first (behind particles)
+      const cw = window.innerWidth;
+      const ch = document.documentElement.scrollHeight;
+      ctx.clearRect(0, 0, cw, ch);
+
+      // Update positions
+      for (const p of particles) {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > cw) p.vx *= -1;
+        if (p.y < 0 || p.y > ch) p.vy *= -1;
+        p.x = Math.max(0, Math.min(cw, p.x));
+        p.y = Math.max(0, Math.min(ch, p.y));
+      }
+
+      // Get visible range (only draw what's on screen)
+      const scrollY = window.scrollY;
+      const viewH = window.innerHeight;
+      const viewTop = scrollY - 100;
+      const viewBottom = scrollY + viewH + 100;
+
+      // Draw links (only between visible particles)
+      ctx.lineWidth = 0.8;
       for (let i = 0; i < particles.length; i++) {
+        const pi = particles[i];
+        if (pi.y < viewTop || pi.y > viewBottom) continue;
         for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < linkDistance) {
-            const alpha = 0.22 * (1 - dist / linkDistance);
+          const pj = particles[j];
+          if (pj.y < viewTop || pj.y > viewBottom) continue;
+          const dx = pi.x - pj.x;
+          const dy = pi.y - pj.y;
+          const distSq = dx * dx + dy * dy;
+          if (distSq < linkDistSq) {
+            const alpha = 0.18 * (1 - Math.sqrt(distSq) / linkDistance);
             ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.moveTo(pi.x, pi.y);
+            ctx.lineTo(pj.x, pj.y);
             ctx.strokeStyle = `rgba(${primaryR}, ${primaryG}, ${primaryB}, ${alpha})`;
-            ctx.lineWidth = 1;
             ctx.stroke();
           }
         }
       }
 
-      // Draw particles
+      // Draw particles (only visible)
       for (const p of particles) {
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-        p.x = Math.max(0, Math.min(canvas.width, p.x));
-        p.y = Math.max(0, Math.min(canvas.height, p.y));
-
-        const pulse = 0.5 + 0.5 * Math.sin(frame * p.pulseSpeed + p.pulseOffset);
-        const currentSize = p.size * (0.8 + 0.4 * pulse);
-        const currentAlpha = 0.4 + 0.3 * pulse;
-
-        if (!isMobile) {
-          // Desktop: Full glow effect
-          const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, currentSize * 4);
-          gradient.addColorStop(0, `rgba(${p.color}, ${currentAlpha * 0.4})`);
-          gradient.addColorStop(1, `rgba(${p.color}, 0)`);
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, currentSize * 4, 0, Math.PI * 2);
-          ctx.fillStyle = gradient;
-          ctx.fill();
-        }
-
-        // Particle dot
+        if (p.y < viewTop || p.y > viewBottom) continue;
+        
         ctx.beginPath();
-        ctx.arc(p.x, p.y, currentSize, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${p.color}, ${currentAlpha})`;
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${p.color}, ${p.alpha})`;
         ctx.fill();
-
-        if (!isMobile) {
-          // White core (desktop only)
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, currentSize * 0.4, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255, 255, 255, ${currentAlpha * 0.6})`;
-          ctx.fill();
-        }
       }
 
       animationId = requestAnimationFrame(draw);
@@ -135,8 +135,8 @@ export function TechParticles() {
 
     return () => {
       cancelAnimationFrame(animationId);
-      window.removeEventListener("resize", resize);
-      resizeObserver.disconnect();
+      window.removeEventListener("resize", debouncedResize);
+      clearTimeout(resizeTimer);
     };
   }, []);
 
