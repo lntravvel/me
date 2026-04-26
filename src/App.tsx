@@ -1116,13 +1116,33 @@ export default function App() {
       duration: 1.2,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
+      autoResize: true,
     });
+
+    // Handle anchor link clicks with Lenis
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const anchor = target.closest('a[href^="#"]') as HTMLAnchorElement;
+      if (!anchor) return;
+      const hash = anchor.getAttribute('href');
+      if (!hash || hash === '#') return;
+      const el = document.querySelector(hash);
+      if (el) {
+        e.preventDefault();
+        lenis.scrollTo(el as HTMLElement, { offset: -60 });
+      }
+    };
+    document.addEventListener('click', handleAnchorClick);
+
     function raf(time: number) {
       lenis.raf(time);
       requestAnimationFrame(raf);
     }
     requestAnimationFrame(raf);
-    return () => lenis.destroy();
+    return () => {
+      document.removeEventListener('click', handleAnchorClick);
+      lenis.destroy();
+    };
   }, []);
 
   return (
