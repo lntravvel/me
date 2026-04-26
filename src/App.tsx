@@ -28,10 +28,11 @@ const useIsMobile = () => {
 };
 
 // Scroll Reveal Wrapper
-export const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => {
+export const FadeIn = ({ children, delay = 0, className = "", id }: { children: React.ReactNode, delay?: number, className?: string, id?: string }) => {
   const isMobile = useIsMobile();
   return (
     <motion.div
+      id={id}
       initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: isMobile ? "-10px" : "-50px" }}
