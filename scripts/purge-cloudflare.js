@@ -8,8 +8,8 @@ const ZONE_ID = process.env.CF_ZONE_ID || 'your_zone_id_here';
 const API_TOKEN = process.env.CF_API_TOKEN || 'your_api_token_here';
 
 if (!ZONE_ID || !API_TOKEN || ZONE_ID === 'your_zone_id_here') {
-  console.error('Error: Please provide your Cloudflare ZONE_ID and API_TOKEN.');
-  process.exit(1);
+  console.warn('⚠️ Cloudflare Purge Skipped: CF_ZONE_ID or CF_API_TOKEN not found in environment variables. Add them in Vercel to enable auto-purge.');
+  process.exit(0);
 }
 
 const data = JSON.stringify({ purge_everything: true });
