@@ -18,10 +18,10 @@ export function TechParticles() {
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = window.innerWidth * dpr;
-      canvas.height = document.documentElement.scrollHeight * dpr;
+      canvas.height = window.innerHeight * dpr;
       ctx.scale(dpr, dpr);
       canvas.style.width = window.innerWidth + 'px';
-      canvas.style.height = document.documentElement.scrollHeight + 'px';
+      canvas.style.height = window.innerHeight + 'px';
     };
     resize();
     
@@ -44,7 +44,7 @@ export function TechParticles() {
     }
 
     const w = window.innerWidth;
-    const h = document.documentElement.scrollHeight;
+    const h = window.innerHeight;
     const particles: Particle[] = [];
     for (let i = 0; i < particleCount; i++) {
       const useCyan = Math.random() > 0.7;
@@ -77,7 +77,7 @@ export function TechParticles() {
       }
 
       const cw = window.innerWidth;
-      const ch = document.documentElement.scrollHeight;
+      const ch = window.innerHeight;
       ctx.clearRect(0, 0, cw, ch);
 
       // Update positions
@@ -91,10 +91,9 @@ export function TechParticles() {
       }
 
       // Get visible range (only draw what's on screen)
-      const scrollY = window.scrollY;
       const viewH = window.innerHeight;
-      const viewTop = scrollY - 100;
-      const viewBottom = scrollY + viewH + 100;
+      const viewTop = 0;
+      const viewBottom = viewH;
 
       // Draw links (only between visible particles)
       ctx.lineWidth = 0.8;
@@ -144,11 +143,11 @@ export function TechParticles() {
     <canvas
       ref={canvasRef}
       style={{
-        position: "absolute",
+        position: "fixed",
         top: 0,
         left: 0,
-        width: "100%",
-        height: "100%",
+        width: "100vw",
+        height: "100vh",
         pointerEvents: "none",
         zIndex: 0,
       }}

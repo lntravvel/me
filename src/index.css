@@ -1,5 +1,10 @@
 @import "tailwindcss";
-@import "lenis/dist/lenis.css";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+}
 
 @theme {
   --color-primary: #6467f2;

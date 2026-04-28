@@ -12,7 +12,6 @@ import websiteAlShams from './assets/websites/alshams.png';
 import { motion } from 'motion/react';
 import { TechParticles } from './TechParticles';
 import Tilt from 'react-parallax-tilt';
-import Lenis from 'lenis';
 
 // Shared mobile detection (single listener for all components)
 const mobileQuery = typeof window !== 'undefined' ? window.matchMedia('(max-width: 767px)') : null;
@@ -1110,42 +1109,6 @@ function Footer() {
 }
 
 export default function App() {
-  // Lenis smooth scroll (desktop only)
-  React.useEffect(() => {
-    if (window.innerWidth < 768) return;
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      autoResize: true,
-    });
-
-    // Handle anchor link clicks with Lenis
-    const handleAnchorClick = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      const anchor = target.closest('a[href^="#"]') as HTMLAnchorElement;
-      if (!anchor) return;
-      const hash = anchor.getAttribute('href');
-      if (!hash || hash === '#') return;
-      const el = document.querySelector(hash);
-      if (el) {
-        e.preventDefault();
-        lenis.scrollTo(el as HTMLElement, { offset: -60 });
-      }
-    };
-    document.addEventListener('click', handleAnchorClick);
-
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-    return () => {
-      document.removeEventListener('click', handleAnchorClick);
-      lenis.destroy();
-    };
-  }, []);
-
   return (
     <LanguageProvider>
       <div id="top" className="min-h-screen relative">

@@ -1,4 +1,4 @@
-const https = require('https');
+import https from 'node:https';
 
 // Cloudflare Purge Cache Script (Node.js)
 // Usage: node purge-cloudflare.js
