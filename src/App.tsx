@@ -9,6 +9,7 @@ import websiteXman from './assets/websites/xman.png';
 import websitePyramid from './assets/websites/pyramid.png';
 import { TypeAnimation } from 'react-type-animation';
 import websiteAlShams from './assets/websites/alshams.png';
+import websiteFlorida from './assets/websites/florida.png';
 import { motion } from 'motion/react';
 import { TechParticles } from './TechParticles';
 import Tilt from 'react-parallax-tilt';
@@ -494,6 +495,7 @@ function WebsitesIBuilt() {
     if (title === 'XMan') return websiteXman;
     if (title === 'Al-Shams Furniture') return websiteAlShams;
     if (title === 'AI Nexus Hub') return portfolioAiWidget;
+    if (title === 'Florida Fried Chicken') return websiteFlorida;
     return portfolioAiWidget;
   };
   return (
@@ -602,6 +604,7 @@ function AIVideoShowcase() {
 
   // Agency commercial ads - Vertical
   const commercialVertical = [
+    { type: 'yt', id: 'qGjcGBOlpMM' },
     { type: 'yt', id: 'QI9ROeA6FEE' },
     { type: 'fb', id: '1472681251240450' },
     { type: 'yt', id: '_EB5fRzWhhY' },
@@ -1130,9 +1133,9 @@ export default function App() {
         </style>
         <Navbar />
         <Hero />
+        <WebsitesIBuilt />
         <AIVideoShowcase />
         <PerformanceAdsSection />
-        <WebsitesIBuilt />
         <Services />
         <Pricing />
         <About />

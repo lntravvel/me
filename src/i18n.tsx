@@ -71,6 +71,13 @@ const translations = {
           link: "https://ai-nexus-huub.vercel.app/"
         },
         {
+          title: "Florida Fried Chicken",
+          description: "موقع إلكتروني احترافي لمطعم وجبات سريعة يتميز بتصميم جذاب وتجربة مستخدم سلسة لعرض المنيو.",
+          category: "موقع مطعم",
+          technologies: ["React", "Tailwind CSS", "Frontend Development"],
+          link: "https://florida-fried-chicken.vercel.app/"
+        },
+        {
           title: "Pyramids",
           description: "موقع حديث يعرض خدمات ومنتجات بشكل احترافي مع تصميم متجاوب وأداء عالي.",
           category: "مدونة سياحية",
@@ -240,6 +247,13 @@ const translations = {
       desc: "A collection of real websites I designed and developed, focusing on user experience and fast performance.",
       visit: "Visit Website",
       projects: [
+        {
+          title: "Florida Fried Chicken",
+          description: "A professional fast-food restaurant website featuring an attractive design and seamless user experience for menu display.",
+          category: "Restaurant Website",
+          technologies: ["React", "Tailwind CSS", "Frontend Development"],
+          link: "https://florida-fried-chicken.vercel.app/"
+        },
         {
           title: "AI Nexus Hub",
           description: "An integrated AI platform bringing AI tools and services into one professional place.",
